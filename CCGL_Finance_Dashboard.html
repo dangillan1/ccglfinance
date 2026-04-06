@@ -254,9 +254,48 @@ ul.actions li b{color:var(--navy)}
   .cf-weeks{grid-template-columns:1fr}
 }
 @media print{body{background:#fff}.card,.kpi-card{box-shadow:none;border-color:#ccc}}
+
+/* ── Password overlay ──────────────────────────────────────────── */
+#pw-overlay{position:fixed;inset:0;background:#0d1f2d;display:flex;align-items:center;
+  justify-content:center;z-index:9999;flex-direction:column;gap:16px}
+#pw-overlay input{background:#1a2f42;border:1px solid #2a4a63;color:#e8edf2;
+  padding:10px 16px;border-radius:8px;font-size:16px;outline:none;text-align:center;
+  font-family:inherit;letter-spacing:.15em;width:160px}
+#pw-overlay input:focus{border-color:#2dd4bf}
+#pw-overlay .pw-err{color:#e05555;font-size:12px;min-height:18px}
+#pw-overlay .pw-logo{font-size:13px;font-weight:700;letter-spacing:.12em;
+  color:#2dd4bf;text-transform:uppercase;margin-bottom:8px}
+
+/* ── AR sticky thead ──────────────────────────────────────────── */
+.ar-scroll-wrap{overflow-x:auto;overflow-y:auto;max-height:440px}
+table.ar thead th{position:sticky;top:0;background:#fff;z-index:2;box-shadow:0 1px 0 var(--border)}
+
+/* ── AP bucket rows ───────────────────────────────────────────── */
+table.ap{width:100%;border-collapse:collapse;font-size:13px}
+table.ap td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}
+table.ap td.ap-amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+table.ap td.ap-due{font-size:11px;color:var(--muted);white-space:nowrap;padding-left:14px}
+table.ap td.ap-age{font-size:11px;white-space:nowrap;text-align:right}
+table.ap tr.ap-bucket td{padding:5px 8px;font-size:10px;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;border-bottom:none;border-top:8px solid var(--panel-2)}
+table.ap tr.ap-bucket:first-child td{border-top:none}
+table.ap tr.ap-bucket.cur td{background:var(--green-light);color:var(--green)}
+table.ap tr.ap-bucket.od30 td{background:var(--gold-light);color:var(--gold)}
+table.ap tr.ap-bucket.od60 td{background:var(--red-light);color:var(--red)}
+table.ap tr.ap-bucket.od90 td{background:rgba(140,0,0,.06);color:#880000}
+table.ap tr.ap-sub td{font-weight:700;border-top:1px solid var(--border-2);background:var(--panel);font-size:12px}
+table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-size:13px}
+
 </style>
 </head>
 <body>
+<!-- password gate -->
+<div id="pw-overlay">
+  <div class="pw-logo">CCGL Finance</div>
+  <input id="pw-input" type="password" placeholder="password" autocomplete="off" />
+  <div class="pw-err" id="pw-err"></div>
+</div>
+
 <div class="wrap">
 
 <!-- ── HEADER ────────────────────────────────────────────── -->
@@ -359,8 +398,8 @@ ul.actions li b{color:var(--navy)}
   </div>
   <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
     <h3>April MTD Sales</h3>
-    <div class="kpi-val clr-lime">$33.4k</div>
-    <div class="kpi-sub"><b>6 days</b> · net $29.3k · ~$167k pace</div>
+    <div class="kpi-val clr-lime">$57.0k</div>
+    <div class="kpi-sub">Ship day <b>Apr 7</b> · estimates → invoices</div>
   </div>
 </div>
 
@@ -368,8 +407,8 @@ ul.actions li b{color:var(--navy)}
 <div class="alert">
   <div class="alert-icon">!</div>
   <div>
-    <h4>Rent (JAC Real Estate) dominates payables — $154,522 across March + April</h4>
-    <p>March rent ($77,261) past-due 36 days; April rent ($77,261) also open. Together = 66% of total AP. Eversource $16,097 past due. $60k cash call committed but not yet cleared — coordinate timing with AP obligations.</p>
+    <h4>⚠️ $118,965 clearing Wednesday — Rent $77,262 + Payroll $41,703</h4>
+    <p>Rent (JAC Real Estate) $77,262 + Payroll $41,703 both hit <b>Wed Apr 8</b>. March rent ($77,261) also past-due 37 days. Eversource $16,097 past due. $60k cash call received Apr 6 — operating balance $109,993.</p>
   </div>
 </div>
 
@@ -417,7 +456,7 @@ ul.actions li b{color:var(--navy)}
       <span class="ar-seg-c">50 invoices</span>
     </div>
   </div>
-  <div style="overflow-x:auto">
+  <div class="ar-scroll-wrap">
   <table class="ar">
     <thead><tr>
       <th>Customer</th>
@@ -459,41 +498,68 @@ ul.actions li b{color:var(--navy)}
   <div class="ap-aging">
     <div class="ap-seg ap-cur">
       <span class="ap-seg-l">Current</span>
-      <span class="ap-seg-v">$52.5k</span>
-      <span class="ap-seg-c">26 bills · not yet due</span>
+      <span class="ap-seg-v">$4.5k</span>
+      <span class="ap-seg-c">3 bills · not yet due</span>
     </div>
     <div class="ap-seg ap-od30">
       <span class="ap-seg-l">1–30 Days Past Due</span>
-      <span class="ap-seg-v">$104.0k</span>
-      <span class="ap-seg-c">JAC Apr · Eversource · G7</span>
+      <span class="ap-seg-v">$95.8k</span>
+      <span class="ap-seg-c">JAC Apr · Eversource · Airgas</span>
     </div>
     <div class="ap-seg ap-od60">
       <span class="ap-seg-l">31–60 Days Past Due</span>
-      <span class="ap-seg-v">$77.3k</span>
-      <span class="ap-seg-c">JAC March rent — 36d</span>
+      <span class="ap-seg-v">$84.1k</span>
+      <span class="ap-seg-c">JAC Mar rent 36d · HSA · Airgas</span>
     </div>
     <div class="ap-seg ap-od90">
       <span class="ap-seg-l">60+ Days Past Due</span>
-      <span class="ap-seg-v">—</span>
-      <span class="ap-seg-c">None</span>
+      <span class="ap-seg-v clr-red">$50.0k</span>
+      <span class="ap-seg-c">G7 · Cape Comp · Mass Bio · 26 bills</span>
     </div>
   </div>
-  <!-- AP Detail -->
+  <!-- AP Detail — grouped by aging bucket -->
   <table class="ap">
+    <thead><tr>
+      <th style="text-align:left;font-size:10px;font-weight:700;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border)">Vendor</th>
+      <th style="text-align:left;font-size:10px;font-weight:700;color:var(--muted);padding:6px 8px 6px 14px;border-bottom:1px solid var(--border)">Due</th>
+      <th style="text-align:right;font-size:10px;font-weight:700;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border)">Age</th>
+      <th style="text-align:right;font-size:10px;font-weight:700;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border)">Amount</th>
+    </tr></thead>
     <tbody>
-      <tr><td>Rent — JAC Real Estate <span class="tag red">PAST DUE</span></td><td class="clr-red">$154,522</td></tr>
-      <tr><td>Eversource <span class="tag red">OVERDUE</span></td><td>$16,097</td></tr>
-      <tr><td>G7 Lab</td><td>$10,660</td></tr>
-      <tr><td>Cape Computer Solutions</td><td>$10,463</td></tr>
-      <tr><td>Green Analytics MA</td><td>$6,755</td></tr>
-      <tr><td>Seaside Alarms</td><td>$5,699</td></tr>
-      <tr><td>HSA</td><td>$4,698</td></tr>
-      <tr><td>Mass Biolytics</td><td>$4,073</td></tr>
-      <tr><td>Earthwise</td><td>$3,846</td></tr>
-      <tr><td>GreenLight, LLC</td><td>$3,811</td></tr>
-      <tr><td>Airgas</td><td>$3,025</td></tr>
-      <tr><td style="color:var(--muted)">All other · 10 vendors</td><td style="color:var(--muted)">$10,089</td></tr>
-      <tr><td>Total Open AP</td><td>$233,738</td></tr>
+      <!-- 31–60 Days Past Due -->
+      <tr class="ap-bucket od60"><td colspan="3">31–60 Days Past Due</td><td class="ap-amt">$84,054</td></tr>
+      <tr><td>JAC Real Estate <span class="tag red">Mar Rent</span></td><td class="ap-due">Mar 1</td><td class="ap-age clr-red">36d</td><td class="ap-amt clr-red">$77,261</td></tr>
+      <tr><td>HSA</td><td class="ap-due">Feb 25</td><td class="ap-age clr-red">40d</td><td class="ap-amt">$4,698</td></tr>
+      <tr><td>MMM Transport</td><td class="ap-due">Feb 11</td><td class="ap-age clr-red">54d</td><td class="ap-amt">$1,014</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Mar 2</td><td class="ap-age clr-red">35d</td><td class="ap-amt">$761</td></tr>
+      <tr><td>Creative Services</td><td class="ap-due">Mar 3</td><td class="ap-age clr-red">34d</td><td class="ap-amt">$319</td></tr>
+
+      <!-- 1–30 Days Past Due -->
+      <tr class="ap-bucket od30"><td colspan="3">1–30 Days Past Due</td><td class="ap-amt">$95,782</td></tr>
+      <tr><td>JAC Real Estate <span class="tag gold">Apr Rent</span></td><td class="ap-due">Apr 1</td><td class="ap-age" style="color:var(--gold)">5d</td><td class="ap-amt" style="color:var(--gold)">$77,261</td></tr>
+      <tr><td>Eversource <span class="tag red">OVERDUE</span></td><td class="ap-due">Apr 5</td><td class="ap-age" style="color:var(--gold)">1d</td><td class="ap-amt">$16,097</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">3d</td><td class="ap-amt">$1,453</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Mar 30</td><td class="ap-age" style="color:var(--gold)">7d</td><td class="ap-amt">$799</td></tr>
+      <tr><td>Seaside Alarms</td><td class="ap-due">Mar 15</td><td class="ap-age" style="color:var(--gold)">22d</td><td class="ap-amt">$172</td></tr>
+
+      <!-- Current -->
+      <tr class="ap-bucket cur"><td colspan="3">Current — Not Yet Due</td><td class="ap-amt">$4,497</td></tr>
+      <tr><td>Earthwise</td><td class="ap-due">Apr 6</td><td class="ap-age" style="color:var(--green)">Today</td><td class="ap-amt">$3,846</td></tr>
+      <tr><td>Seaside Alarms</td><td class="ap-due">Apr 10</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$98</td></tr>
+      <tr><td>Cintas</td><td class="ap-due">May 6</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$553</td></tr>
+
+      <!-- 60+ Days Past Due -->
+      <tr class="ap-bucket od90"><td colspan="3">60+ Days Past Due</td><td class="ap-amt">$49,958</td></tr>
+      <tr><td>G7 Lab <span style="font-size:10px;color:var(--muted)">(4 bills)</span></td><td class="ap-due">Dec 21–Feb 4</td><td class="ap-age" style="color:#880000">61–107d</td><td class="ap-amt">$10,660</td></tr>
+      <tr><td>Cape Computer Solutions <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar '24–Jan '25</td><td class="ap-age" style="color:#880000">460–736d</td><td class="ap-amt">$10,463</td></tr>
+      <tr><td>Green Analytics MA</td><td class="ap-due">Oct 30 '25</td><td class="ap-age" style="color:#880000">158d</td><td class="ap-amt">$6,755</td></tr>
+      <tr><td>Seaside Alarms <span style="font-size:10px;color:var(--muted)">(prior)</span></td><td class="ap-due">Sep 29 '25</td><td class="ap-age" style="color:#880000">189d</td><td class="ap-amt">$5,429</td></tr>
+      <tr><td>Mass Biolytics</td><td class="ap-due">Dec 14 '24</td><td class="ap-age" style="color:#880000">478d</td><td class="ap-amt">$4,073</td></tr>
+      <tr><td>GreenLight LLC</td><td class="ap-due">Nov 20 '24</td><td class="ap-age" style="color:#880000">503d</td><td class="ap-amt">$3,811</td></tr>
+      <tr><td style="color:var(--muted)">Other · A&amp;A, TimRay, Northstar, etc.</td><td class="ap-due" style="color:var(--muted)">various</td><td class="ap-age" style="color:var(--muted)">—</td><td class="ap-amt" style="color:var(--muted)">$8,767</td></tr>
+
+      <!-- Grand Total -->
+      <tr class="ap-grand"><td colspan="3">Total Open AP</td><td class="ap-amt">$234,291</td></tr>
     </tbody>
   </table>
 </div>
@@ -503,11 +569,11 @@ ul.actions li b{color:var(--navy)}
 <div class="card">
   <div class="section-label">This Week's Priorities</div>
   <ul class="actions">
-    <li><span><b>$60k cash call committed — confirm ETA and route to Operating</b></span><span class="when">Today</span></li>
+    <li><span><b>Rent $77,262 + Payroll $41,703 clearing</b> — confirm operating has coverage ($109,993 on hand)</span><span class="when">Wed Apr 8</span></li>
     <li><span><b>Pay Eversource $16,097</b> — past due since Apr 5</span><span class="when">Today</span></li>
     <li><span><b>Collect on $76.0k overdue AR</b> — Firebrand $9.5k, Resinate $8.6k, Silver Roslindale $7.7k, Cannabis Healing $7.0k, Kush Groove $5.0k (79d)</span><span class="when">Mon–Fri</span></li>
     <li><span>Follow up on $27.2k due this week — Firehouse, Quincy, Seaside, Enlite ×2, Roadtrip</span><span class="when">Mon–Tue</span></li>
-    <li><span>Confirm rent plan with <b>JAC Real Estate</b> ($154k across 2 months — March 36 days past due)</span><span class="when">By Wed</span></li>
+    <li><span>Resolve March rent ($77,261) past-due 37 days with <b>JAC Real Estate</b> — April rent also open</span><span class="when">By Wed</span></li>
   </ul>
 </div>
 
@@ -675,6 +741,28 @@ bankInputs.forEach(inp => {
 
 // ── INIT ─────────────────────────────────────────────────────────────────
 loadBank();
+
+// ── Password gate ────────────────────────────────────────────────
+(function(){
+  var overlay = document.getElementById('pw-overlay');
+  var inp = document.getElementById('pw-input');
+  var err = document.getElementById('pw-err');
+  if(sessionStorage.getItem('ccgl_auth')==='1'){overlay.style.display='none';return;}
+  inp.focus();
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){
+      if(inp.value==='ccgl'){
+        sessionStorage.setItem('ccgl_auth','1');
+        overlay.style.display='none';
+      } else {
+        err.textContent='Incorrect password';
+        inp.value='';
+        inp.focus();
+      }
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
