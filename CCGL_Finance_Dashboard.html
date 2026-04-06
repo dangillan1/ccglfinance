@@ -76,7 +76,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .bank-warn label{color:var(--red)}
 
 /* ── KPIs ─────────────────────────────────────────────────── */
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
 .kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
 .kpi-card h3{margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .kpi-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:2px}
@@ -240,18 +240,36 @@ ul.actions li b{color:var(--navy)}
 /* ── Responsive ───────────────────────────────────────────── */
 @media(max-width:1200px){
   .cf-weeks{grid-template-columns:repeat(3,1fr)}
-  .kpis{grid-template-columns:repeat(3,1fr)}
+  .kpis{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:900px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:800px){
+  .wrap{padding:20px 14px 60px}
   .kpis{grid-template-columns:repeat(2,1fr)}
   .bank-grid{grid-template-columns:1fr}
   .cf-weeks{grid-template-columns:repeat(2,1fr)}
   .ar-bar,.ap-aging{flex-wrap:wrap}
   .ar-seg,.ap-seg{min-width:45%;border-right:1px solid var(--border)}
+  /* Table horizontal scroll on mobile */
+  .ar-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .ap-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table.ar{min-width:600px;font-size:11px}
+  table.ar th,table.ar td{padding:5px 6px}
+  table.ap{min-width:420px;font-size:12px}
+  table.ap td{padding:5px 6px}
+  /* AP aging bar stacks cleanly */
+  .ap-seg{min-width:48%}
+  .ar-seg{min-width:48%}
+  /* Tighter card padding */
+  .card{padding:16px 14px}
 }
 @media(max-width:500px){
-  .kpis{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpi-val{font-size:22px}
   .cf-weeks{grid-template-columns:1fr}
+  .bank-cell input{font-size:17px}
 }
 @media print{body{background:#fff}.card,.kpi-card{box-shadow:none;border-color:#ccc}}
 
@@ -338,7 +356,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
   <div class="header-right">
     <div class="live-dot">Live · QuickBooks Online</div>
-    <div class="week">Last refreshed: <b>Apr 6, 2026 · 5:30 PM</b></div>
+    <div class="week">Last refreshed: <b>Apr 6, 2026 · 6:20 PM</b></div>
   </div>
 </header>
 
@@ -347,14 +365,14 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="section-label">
     <span>Cash on Hand — Bay Coast Bank</span>
     <span class="meta">
-      <span style="color:var(--muted)">Updated: <span id="bankEdited">Apr 6, 5:30 PM</span></span>
+      <span style="color:var(--muted)">Updated: <span id="bankEdited">Apr 6, 6:20 PM</span></span>
     </span>
   </div>
   <div class="bank-grid">
     <div class="bank-cell">
       <label>Operating</label>
-      <input type="text" id="b_op" data-key="op" data-live="109992.87" data-qb="109992.87" inputmode="decimal" placeholder="0">
-      <div class="shadow-line">Bank: <b>$109,993</b> · QB: $109,993</div>
+      <input type="text" id="b_op" data-key="op" data-live="119065.37" data-qb="119065.37" inputmode="decimal" placeholder="0">
+      <div class="shadow-line">Bank: <b>$119,065</b> · +$9,073 Eastern pending</div>
     </div>
     <div class="bank-cell bank-warn">
       <label>Wholesale ⚠</label>
@@ -389,12 +407,22 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="kpi-card">
     <h3>Cash Call Received</h3>
     <div class="kpi-val clr-teal">$60.0k</div>
-    <div class="kpi-sub">Rick Roy · in operating acct</div>
+    <div class="kpi-sub">Received Apr 6 · in operating acct</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Collected This Week</h3>
+    <div class="kpi-val clr-green">$9.1k</div>
+    <div class="kpi-sub">Apr 6 · <b>1</b> payment · from QBO</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Collected Last Week</h3>
+    <div class="kpi-val clr-blue">$42.0k</div>
+    <div class="kpi-sub">Mar 30–Apr 5 · <b>7</b> payments · from QBO</div>
   </div>
   <div class="kpi-card">
     <h3>March Sales (P&amp;L)</h3>
-    <div class="kpi-val">$236.5k</div>
-    <div class="kpi-sub"><b>45</b> invoices + direct deposits · full month</div>
+    <div class="kpi-val">$219.9k</div>
+    <div class="kpi-sub"><b>45</b> invoices · full month · from QBO</div>
   </div>
   <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
     <h3>April MTD Sales</h3>
@@ -408,7 +436,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="alert-icon">!</div>
   <div>
     <h4>⚠️ $118,965 clearing Wednesday — Rent $77,262 + Payroll $41,703</h4>
-    <p>Rent (JAC Real Estate) $77,262 + Payroll $41,703 both hit <b>Wed Apr 8</b>. March rent ($77,261) also past-due 37 days. Eversource $16,097 past due. $60k cash call received Apr 6 — operating balance $109,993.</p>
+    <p>Rent (JAC Real Estate) $77,262 + Payroll $41,703 both hit <b>Wed Apr 8</b>. March rent ($77,261) also past-due 37 days. Eversource $16,097 past due. $60k cash call received Apr 6 + Eastern $9k pending — operating balance $119,065.</p>
   </div>
 </div>
 
@@ -518,6 +546,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     </div>
   </div>
   <!-- AP Detail — grouped by aging bucket -->
+  <div class="ap-scroll-wrap">
   <table class="ap">
     <thead><tr>
       <th style="text-align:left;font-size:10px;font-weight:700;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border)">Vendor</th>
@@ -561,6 +590,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <tr class="ap-grand"><td colspan="3">Total Open AP</td><td class="ap-amt">$230,445</td></tr>
     </tbody>
   </table>
+  </div>
 </div>
 
 
