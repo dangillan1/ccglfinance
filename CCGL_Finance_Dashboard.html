@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCGL Finance Dashboard</title>
+<style>
+:root{
+  --bg:#FFFFFF;
+  --panel:#F7FAFB;
+  --panel-2:#EFF4F5;
+  --border:#DDE6E8;
+  --border-2:#C8D6D9;
+  --navy:#0D2535;
+  --teal:#3EA99F;
+  --teal-dark:#2E8880;
+  --teal-light:#E4F5F4;
+  --lime:#6BBB38;
+  --lime-light:#EEF7E5;
+  --sky:#4B9EC9;
+  --sky-light:#E6F2FA;
+  --green:#1E9E5E;
+  --green-light:#E8F7EF;
+  --red:#C83535;
+  --red-light:#FCEAEA;
+  --gold:#B87316;
+  --gold-light:#FDF4E3;
+  --blue:#1A6FB5;
+  --blue-light:#E8F1FB;
+  --ink:#0D2535;
+  --muted:#6B8A93;
+  --shadow:0 1px 3px rgba(13,37,53,.07),0 4px 14px rgba(13,37,53,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1;}
+.wrap{max-width:1380px;margin:0 auto;padding:32px 28px 72px;}
+
+/* ── Header ───────────────────────────────────────────────── */
+header{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  margin-bottom:28px;padding-bottom:24px;border-bottom:2px solid var(--border);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-text h1{font-size:20px;margin:0;font-weight:800;color:var(--navy);line-height:1.2;letter-spacing:-.01em}
+.brand-text .sub{color:var(--muted);font-size:12px;margin-top:3px}
+.header-right{text-align:right}
+.live-dot{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;
+  color:var(--teal);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.live-dot::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.header-right .week{font-size:13px;color:var(--muted)}
+.header-right .week b{color:var(--ink);font-weight:600}
+
+/* ── Cards ────────────────────────────────────────────────── */
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--teal);border-left:3px solid var(--teal);padding-left:10px;
+  margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.section-label.lime{color:var(--lime);border-left-color:var(--lime)}
+.section-label.gold{color:var(--gold);border-left-color:var(--gold)}
+.section-label.sky{color:var(--sky);border-left-color:var(--sky)}
+.section-label .meta{font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted);border:none;padding:0}
+
+/* ── Bank ─────────────────────────────────────────────────── */
+.bank-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
+.bank-cell{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.bank-cell label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+.bank-cell input{background:transparent;border:none;outline:none;color:var(--ink);font-size:20px;font-weight:700;width:100%;font-family:inherit;padding:0;letter-spacing:-.01em}
+.bank-cell input:focus{color:var(--teal)}
+.bank-cell .shadow-line{font-size:10px;color:var(--muted);margin-top:3px}
+.bank-cell .shadow-line b{color:var(--green);font-weight:600}
+.bank-total{background:var(--teal-light);border-color:var(--teal) !important}
+.bank-total label{color:var(--teal)}
+.bank-total input{color:var(--teal) !important;font-size:22px}
+.bank-warn{border-color:rgba(200,53,53,.35) !important}
+.bank-warn label{color:var(--red)}
+
+/* ── KPIs ─────────────────────────────────────────────────── */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px}
+.kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-card h3{margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.kpi-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:2px}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5}
+.kpi-sub b{color:var(--ink);font-weight:600}
+.clr-green{color:var(--green)} .clr-red{color:var(--red)} .clr-gold{color:var(--gold)}
+.clr-blue{color:var(--blue)} .clr-teal{color:var(--teal)} .clr-lime{color:var(--lime)}
+
+/* ── Alert ────────────────────────────────────────────────── */
+.alert{background:var(--red-light);border:1px solid rgba(200,53,53,.25);border-radius:12px;
+  padding:14px 18px;display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+.alert-icon{width:28px;height:28px;border-radius:8px;background:rgba(200,53,53,.15);color:var(--red);
+  display:grid;place-items:center;font-weight:800;flex-shrink:0;font-size:13px}
+.alert h4{margin:0 0 3px;font-size:13px;color:var(--navy);font-weight:700}
+.alert p{margin:0;font-size:12px;color:var(--muted);line-height:1.55}
+
+/* ── AR Summary Bar ───────────────────────────────────────── */
+.ar-bar{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.ar-seg{flex:1;padding:10px 14px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--border)}
+.ar-seg:last-child{border-right:none;background:var(--teal-light)}
+.ar-seg-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.ar-seg-v{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.ar-seg-c{font-size:9px;color:var(--muted);margin-top:1px}
+.seg-red{background:var(--red-light)} .seg-red .ar-seg-v{color:var(--red)}
+.seg-gold{background:var(--gold-light)} .seg-gold .ar-seg-v{color:var(--gold)}
+.seg-grn{background:var(--green-light)} .seg-grn .ar-seg-v{color:var(--green)}
+.seg-blue{background:var(--blue-light)} .seg-blue .ar-seg-v{color:var(--blue)}
+.seg-slate{background:var(--panel)} .seg-slate .ar-seg-v{color:var(--muted)}
+.ar-seg:last-child .ar-seg-v{color:var(--teal)}
+
+/* ── AR table ─────────────────────────────────────────────── */
+table.ar{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+table.ar th,table.ar td{padding:7px 8px;text-align:right;font-variant-numeric:tabular-nums}
+table.ar th:first-child,table.ar td:first-child{text-align:left;font-weight:500}
+table.ar thead th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+  font-weight:700;border-bottom:2px solid var(--border);padding-bottom:10px}
+table.ar thead th .sub{display:block;font-size:9px;font-weight:500;text-transform:none;letter-spacing:0;margin-top:1px;color:var(--muted)}
+table.ar tbody tr:hover{filter:brightness(.97)}
+table.ar tbody td{border-bottom:1px solid var(--border)}
+table.ar tr.totals td{font-weight:700;border-top:2px solid var(--border-2);border-bottom:none;padding-top:12px;background:var(--panel)}
+table.ar tr.totals td:first-child{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+table.ar td.has{color:var(--ink)} table.ar td.empty{color:var(--border-2)}
+table.ar .col-overdue{color:var(--red)} table.ar .col-wk1{color:var(--gold)}
+table.ar .col-wk2,.col-wk3{color:var(--green)} table.ar .col-wk4,.col-later{color:var(--blue)}
+/* Heat map rows */
+tr.hm-90{background:rgba(140,0,0,.05) !important} tr.hm-90 td:first-child{border-left:3px solid #990000}
+tr.hm-60{background:rgba(200,53,53,.04) !important} tr.hm-60 td:first-child{border-left:3px solid var(--red)}
+tr.hm-30{background:rgba(184,115,22,.04) !important} tr.hm-30 td:first-child{border-left:3px solid var(--gold)}
+tr.hm-14{background:rgba(184,115,22,.02) !important} tr.hm-14 td:first-child{border-left:3px solid #D4A820}
+.days-od{font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:5px;vertical-align:middle}
+.od-90{background:rgba(140,0,0,.13);color:#880000} .od-60{background:rgba(200,53,53,.13);color:var(--red)}
+.od-30{background:rgba(184,115,22,.18);color:var(--gold)} .od-14{background:rgba(184,115,22,.1);color:#C09010}
+.due-note{display:block;font-size:9px;color:var(--muted);font-weight:400;margin-top:1px}
+
+/* ── AP Aging Bar ─────────────────────────────────────────── */
+.ap-aging{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.ap-seg{flex:1;padding:11px 16px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:2px}
+.ap-seg:last-child{border-right:none}
+.ap-seg-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.ap-seg-v{font-size:16px;font-weight:800}
+.ap-seg-c{font-size:10px;color:var(--muted);margin-top:1px}
+.ap-cur{background:var(--green-light)} .ap-cur .ap-seg-v{color:var(--green)}
+.ap-od30{background:var(--gold-light)} .ap-od30 .ap-seg-v{color:var(--gold)}
+.ap-od60{background:var(--red-light)} .ap-od60 .ap-seg-v{color:var(--red)}
+.ap-od90{background:rgba(140,0,0,.05)} .ap-od90 .ap-seg-v{color:#880000}
+
+/* ── AP table (compact) ───────────────────────────────────── */
+table.ap{width:100%;border-collapse:collapse;font-size:13px}
+table.ap td{padding:8px 4px;border-bottom:1px solid var(--border)}
+table.ap td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+table.ap tr:last-child td{border-bottom:none;font-weight:700;padding-top:12px;font-size:13px;color:var(--navy)}
+.tag{display:inline-block;font-size:9px;font-weight:700;padding:1px 7px;border-radius:999px;
+  margin-left:6px;vertical-align:middle;text-transform:uppercase;letter-spacing:.04em}
+.tag.red{background:var(--red-light);color:var(--red)}
+.tag.green{background:var(--green-light);color:var(--green)}
+
+/* ── CF Controls ──────────────────────────────────────────── */
+.cf-controls{display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:12px 16px;margin-bottom:18px}
+.cf-controls .ctrl-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.cf-ctrl-group{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.cf-ctrl-group label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.cf-ctrl-group input[type=number]{
+  width:54px;padding:4px 6px;border:1px solid var(--border-2);border-radius:6px;
+  font-size:13px;font-weight:700;color:var(--teal);text-align:center;
+  background:#fff;outline:none;font-family:inherit}
+.cf-ctrl-group input[type=number]:focus{border-color:var(--teal);background:var(--teal-light)}
+.cf-ctrl-note{font-size:10px;color:var(--muted);margin-left:auto;font-style:italic}
+.btn-autofill{background:var(--teal);color:#fff;border:none;border-radius:6px;
+  padding:5px 14px;font:inherit;font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;cursor:pointer}
+.btn-autofill:hover{background:var(--teal-dark)}
+
+/* ── CF Visual Tiles ──────────────────────────────────────── */
+.cf-weeks{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
+.cf-week{border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .15s;background:#fff}
+.cf-week.danger{border-color:rgba(200,53,53,.4);background:var(--red-light)}
+.cf-week.caution{border-color:rgba(184,115,22,.35);background:var(--gold-light)}
+.cf-week.ok{border-color:rgba(62,169,159,.3);background:var(--teal-light)}
+.cf-wk-header{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:1px}
+.cf-wk-dates{font-size:10px;color:var(--muted);margin-bottom:12px}
+.cf-bar-row{margin-bottom:7px}
+.cf-bar-label{font-size:9px;font-weight:600;color:var(--muted);margin-bottom:3px;display:flex;justify-content:space-between}
+.cf-bar-label span:last-child{font-variant-numeric:tabular-nums}
+.cf-bar-track{height:7px;background:var(--panel-2);border-radius:4px;overflow:hidden}
+.cf-bar-fill{height:100%;border-radius:4px;transition:width .4s ease}
+.cf-bar-fill.in{background:var(--teal)} .cf-bar-fill.out{background:var(--red)}
+.cf-ending{margin-top:12px;border-top:1px solid var(--border);padding-top:11px}
+.cf-ending-label{font-size:9px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:var(--muted);margin-bottom:2px}
+.cf-ending-val{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.cf-ending-val.ok{color:var(--teal)} .cf-ending-val.caution{color:var(--gold)} .cf-ending-val.danger{color:var(--red)}
+.cf-start-note{font-size:9px;color:var(--muted);margin-top:2px}
+
+/* ── CF Detail Table ──────────────────────────────────────── */
+table.cf-t{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:12px}
+table.cf-t th,table.cf-t td{padding:6px 7px;text-align:right;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--border)}
+table.cf-t th:first-child,table.cf-t td:first-child{text-align:left;min-width:175px;max-width:200px}
+table.cf-t thead tr th{font-size:9px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
+  color:var(--muted);background:var(--panel);border-bottom:2px solid var(--border);padding:8px 7px}
+table.cf-t th.cf-actual{background:var(--panel-2);color:var(--muted)}
+table.cf-t td.cf-actual{background:rgba(239,244,245,.6);color:var(--muted)}
+table.cf-t tr.cf-inflow td:not(:first-child):not(.cf-actual){color:var(--green)}
+table.cf-t tr.cf-outflow td:not(:first-child):not(.cf-actual){color:var(--red)}
+table.cf-t tr.cf-total td{font-weight:700;border-top:2px solid var(--border-2);border-bottom:none;padding-top:9px;background:var(--panel)}
+table.cf-t tr.cf-group-head td{background:var(--panel-2);font-size:9px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:5px 7px;border-bottom:1px solid var(--border)}
+/* Label cell with note field */
+td.cf-lbl span.cf-row-name{display:block;color:var(--ink)}
+input.cf-note{display:block;font-size:9px;border:none;border-bottom:1px dashed var(--border);
+  background:transparent;color:var(--muted);width:100%;margin-top:2px;outline:none;font-style:italic;padding:1px 0}
+input.cf-note:focus{color:var(--teal);border-bottom-color:var(--teal)}
+input.cf-note::placeholder{color:var(--border-2);font-style:italic}
+/* Data input cells */
+input.cell{background:transparent;border:1px dashed var(--border-2);outline:none;color:var(--ink);
+  font-size:11.5px;width:76px;text-align:right;padding:3px 4px;border-radius:4px;
+  font-family:inherit;font-variant-numeric:tabular-nums}
+input.cell:focus{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+input.cell.auto-ar{color:var(--teal)}
+input.cell.cf-actual{background:rgba(239,244,245,.5);border-color:transparent;color:var(--muted)}
+input.cell.cf-actual:focus{border-color:var(--border-2);background:#fff;color:var(--ink)}
+/* CF section label */
+details summary.cf-summary{font-size:11px;font-weight:600;color:var(--teal);cursor:pointer;
+  padding:8px 0;list-style:none;user-select:none;border-top:1px solid var(--border);margin-top:6px}
+details summary.cf-summary::before{content:"▸  "}
+details[open] summary.cf-summary::before{content:"▾  "}
+
+/* ── Actions ──────────────────────────────────────────────── */
+ul.actions{list-style:none;padding:0;margin:0}
+ul.actions li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;
+  display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+ul.actions li:last-child{border-bottom:none}
+ul.actions li .when{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--muted);flex-shrink:0;margin-top:2px}
+ul.actions li b{color:var(--navy)}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.footer{margin-top:36px;color:var(--muted);font-size:10px;text-align:center;
+  border-top:1px solid var(--border);padding-top:18px}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media(max-width:1200px){
+  .cf-weeks{grid-template-columns:repeat(3,1fr)}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:800px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .bank-grid{grid-template-columns:1fr}
+  .cf-weeks{grid-template-columns:repeat(2,1fr)}
+  .ar-bar,.ap-aging{flex-wrap:wrap}
+  .ar-seg,.ap-seg{min-width:45%;border-right:1px solid var(--border)}
+}
+@media(max-width:500px){
+  .kpis{grid-template-columns:1fr}
+  .cf-weeks{grid-template-columns:1fr}
+}
+@media print{body{background:#fff}.card,.kpi-card{box-shadow:none;border-color:#ccc}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ── HEADER ────────────────────────────────────────────── -->
+<header>
+  <div class="brand">
+    <!-- Erlenmeyer flask logo — teal glass, lime liquid, plant leaves -->
+    <svg width="40" height="48" viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="fc">
+          <path d="M15 15 L5 39 Q4 45 20 45 Q36 45 35 39 L25 15 Z"/>
+        </clipPath>
+      </defs>
+      <!-- Body (glass) -->
+      <path d="M15 15 L5 39 Q4 45 20 45 Q36 45 35 39 L25 15 Z"
+            fill="rgba(75,158,201,.09)" stroke="#3EA99F" stroke-width="1.8" stroke-linejoin="round"/>
+      <!-- Lime green liquid fill -->
+      <g clip-path="url(#fc)">
+        <rect x="0" y="29" width="40" height="18" fill="#6BBB38" opacity=".88"/>
+        <circle cx="13" cy="34" r="1.8" fill="rgba(255,255,255,.45)"/>
+        <circle cx="24" cy="37" r="1.3" fill="rgba(255,255,255,.45)"/>
+        <circle cx="18" cy="40" r="1" fill="rgba(255,255,255,.38)"/>
+      </g>
+      <!-- Re-draw outline -->
+      <path d="M15 15 L5 39 Q4 45 20 45 Q36 45 35 39 L25 15 Z"
+            fill="none" stroke="#3EA99F" stroke-width="1.8" stroke-linejoin="round"/>
+      <!-- Neck (solid teal) -->
+      <rect x="15" y="5" width="10" height="11" rx="2" fill="#3EA99F"/>
+      <!-- Rim -->
+      <rect x="14" y="3" width="12" height="4" rx="2" fill="#2E8880"/>
+      <!-- Glass reflection -->
+      <path d="M10.5 18 Q8.5 28 9 37" stroke="rgba(255,255,255,.32)" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Plant leaves from opening -->
+      <path d="M20 4 C18 1.5 15 2 15.5 4 C17 3 18.5 3 20 4Z" fill="#6BBB38"/>
+      <path d="M20 4 C22 1.5 25 2 24.5 4 C23 3 21.5 3 20 4Z" fill="#6BBB38"/>
+    </svg>
+    <div class="brand-text">
+      <h1><span style="color:#3EA99F">CAPE COD</span> <span style="color:#6BBB38">GROW</span> <span style="color:#2E8880">LAB</span></h1>
+      <div class="sub">Finance Dashboard · Week of April 6, 2026</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-dot">Live · QuickBooks Online</div>
+    <div class="week">Last refreshed: <b>Apr 6, 2026 · 12:50 PM</b></div>
+  </div>
+</header>
+
+<!-- ── BANK ───────────────────────────────────────────────── -->
+<div class="card">
+  <div class="section-label">
+    <span>Cash on Hand — Bay Coast Bank</span>
+    <span class="meta">
+      <span style="color:var(--muted)">Updated: <span id="bankEdited">Apr 6, 11:22 AM</span></span>
+    </span>
+  </div>
+  <div class="bank-grid">
+    <div class="bank-cell">
+      <label>Operating</label>
+      <input type="text" id="b_op" data-key="op" data-live="49992.87" data-qb="49992.87" inputmode="decimal" placeholder="0">
+      <div class="shadow-line">Bank: <b>$49,233</b> · QB: $39,518</div>
+    </div>
+    <div class="bank-cell bank-warn">
+      <label>Wholesale ⚠</label>
+      <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-qb="100.00" inputmode="decimal" placeholder="0">
+      <div class="shadow-line">Bank: <b>$100</b> · QB: <span style="color:var(--red);font-weight:600">$25,696</span></div>
+    </div>
+    <div class="bank-cell bank-total">
+      <label>Total Cash</label>
+      <input type="text" id="b_total" readonly placeholder="0">
+      <div class="shadow-line">All accounts combined</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── KPI STRIP ──────────────────────────────────────────── -->
+<div class="kpis">
+  <div class="kpi-card">
+    <h3>Receivables Outstanding</h3>
+    <div class="kpi-val">$230.9k</div>
+    <div class="kpi-sub"><b>48</b> invoices · <b>37</b> unique accounts</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Overdue AR</h3>
+    <div class="kpi-val clr-red">$76.0k</div>
+    <div class="kpi-sub"><b>16</b> invoices · <b>33%</b> of total AR</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Open Payables</h3>
+    <div class="kpi-val clr-gold">$234.3k</div>
+    <div class="kpi-sub"><b>39</b> bills · aging detail below</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Cash Call Incoming</h3>
+    <div class="kpi-val clr-teal">$60.0k</div>
+    <div class="kpi-sub">Committed · not yet in bank</div>
+  </div>
+  <div class="kpi-card">
+    <h3>March Sales (P&amp;L)</h3>
+    <div class="kpi-val">$236.5k</div>
+    <div class="kpi-sub"><b>45</b> invoices + direct deposits · full month</div>
+  </div>
+  <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
+    <h3>April MTD Sales</h3>
+    <div class="kpi-val clr-lime">$33.4k</div>
+    <div class="kpi-sub"><b>6 days</b> · net $29.3k · ~$167k pace</div>
+  </div>
+</div>
+
+<!-- ── ALERT ──────────────────────────────────────────────── -->
+<div class="alert">
+  <div class="alert-icon">!</div>
+  <div>
+    <h4>Rent (JAC Real Estate) dominates payables — $154,522 across March + April</h4>
+    <p>March rent ($77,261) past-due 36 days; April rent ($77,261) also open. Together = 66% of total AP. Eversource $16,097 past due. $60k cash call committed but not yet cleared — coordinate timing with AP obligations.</p>
+  </div>
+</div>
+
+<!-- ── RECEIVABLES ────────────────────────────────────────── -->
+<div class="card">
+  <div class="section-label lime">
+    <span>Receivables by Week</span>
+    <span class="meta">Live from QBO · 48 invoices · 37 customers</span>
+  </div>
+  <!-- Clean summary bar (replaces chips) -->
+  <div class="ar-bar">
+    <div class="ar-seg seg-red">
+      <span class="ar-seg-l">Overdue</span>
+      <span class="ar-seg-v">$76,010</span>
+      <span class="ar-seg-c">16 invoices</span>
+    </div>
+    <div class="ar-seg seg-gold">
+      <span class="ar-seg-l">Wk 1 · Apr 6–12</span>
+      <span class="ar-seg-v">$27,225</span>
+      <span class="ar-seg-c">6 invoices</span>
+    </div>
+    <div class="ar-seg seg-grn">
+      <span class="ar-seg-l">Wk 2 · Apr 13–19</span>
+      <span class="ar-seg-v">$20,639</span>
+      <span class="ar-seg-c">5 invoices</span>
+    </div>
+    <div class="ar-seg seg-grn">
+      <span class="ar-seg-l">Wk 3 · Apr 20–26</span>
+      <span class="ar-seg-v">$68,298</span>
+      <span class="ar-seg-c">12 invoices</span>
+    </div>
+    <div class="ar-seg seg-blue">
+      <span class="ar-seg-l">Wk 4 · Apr 27–May 3</span>
+      <span class="ar-seg-v">$29,915</span>
+      <span class="ar-seg-c">6 invoices</span>
+    </div>
+    <div class="ar-seg seg-slate">
+      <span class="ar-seg-l">Consignment</span>
+      <span class="ar-seg-v">$13,092</span>
+      <span class="ar-seg-c">5 inv · Ember Gdns</span>
+    </div>
+    <div class="ar-seg">
+      <span class="ar-seg-l">Total</span>
+      <span class="ar-seg-v">$236,361</span>
+      <span class="ar-seg-c">50 invoices</span>
+    </div>
+  </div>
+  <div style="overflow-x:auto">
+  <table class="ar">
+    <thead><tr>
+      <th>Customer</th>
+      <th>Overdue<span class="sub">past due</span></th>
+      <th>Wk 1<span class="sub">4/6–4/12</span></th>
+      <th>Wk 2<span class="sub">4/13–4/19</span></th>
+      <th>Wk 3<span class="sub">4/20–4/26</span></th>
+      <th>Wk 4<span class="sub">4/27–5/3</span></th>
+      <th>Consign.<span class="sub">Ember Gardens</span></th>
+      <th>Total</th>
+    </tr></thead>
+    <tbody id="arBody"></tbody>
+    <tfoot>
+      <tr class="totals">
+        <td>TOTAL</td>
+        <td class="col-overdue">$77,193</td>
+        <td class="col-wk1">$27,225</td>
+        <td class="col-wk2">$20,639</td>
+        <td class="col-wk3">$68,298</td>
+        <td class="col-wk4">$29,915</td>
+        <td class="col-later">$13,092</td>
+        <td>$236,361</td>
+      </tr>
+      <tr><td colspan="8" style="font-size:10px;color:var(--muted);padding-top:8px;border-top:none;font-weight:500">
+        Left bar = days overdue heat map · darker = older debt · 16 invoices overdue as of Apr 6
+      </td></tr>
+    </tfoot>
+  </table>
+  </div>
+</div>
+
+<!-- ── OPEN PAYABLES ──────────────────────────────────────── -->
+<div class="card">
+  <div class="section-label gold">
+    <span>Open Payables — Aging</span>
+    <span class="meta">$233.7k · 38 bills</span>
+  </div>
+  <!-- AP Aging Bar -->
+  <div class="ap-aging">
+    <div class="ap-seg ap-cur">
+      <span class="ap-seg-l">Current</span>
+      <span class="ap-seg-v">$52.5k</span>
+      <span class="ap-seg-c">26 bills · not yet due</span>
+    </div>
+    <div class="ap-seg ap-od30">
+      <span class="ap-seg-l">1–30 Days Past Due</span>
+      <span class="ap-seg-v">$104.0k</span>
+      <span class="ap-seg-c">JAC Apr · Eversource · G7</span>
+    </div>
+    <div class="ap-seg ap-od60">
+      <span class="ap-seg-l">31–60 Days Past Due</span>
+      <span class="ap-seg-v">$77.3k</span>
+      <span class="ap-seg-c">JAC March rent — 36d</span>
+    </div>
+    <div class="ap-seg ap-od90">
+      <span class="ap-seg-l">60+ Days Past Due</span>
+      <span class="ap-seg-v">—</span>
+      <span class="ap-seg-c">None</span>
+    </div>
+  </div>
+  <!-- AP Detail -->
+  <table class="ap">
+    <tbody>
+      <tr><td>Rent — JAC Real Estate <span class="tag red">PAST DUE</span></td><td class="clr-red">$154,522</td></tr>
+      <tr><td>Eversource <span class="tag red">OVERDUE</span></td><td>$16,097</td></tr>
+      <tr><td>G7 Lab</td><td>$10,660</td></tr>
+      <tr><td>Cape Computer Solutions</td><td>$10,463</td></tr>
+      <tr><td>Green Analytics MA</td><td>$6,755</td></tr>
+      <tr><td>Seaside Alarms</td><td>$5,699</td></tr>
+      <tr><td>HSA</td><td>$4,698</td></tr>
+      <tr><td>Mass Biolytics</td><td>$4,073</td></tr>
+      <tr><td>Earthwise</td><td>$3,846</td></tr>
+      <tr><td>GreenLight, LLC</td><td>$3,811</td></tr>
+      <tr><td>Airgas</td><td>$3,025</td></tr>
+      <tr><td style="color:var(--muted)">All other · 10 vendors</td><td style="color:var(--muted)">$10,089</td></tr>
+      <tr><td>Total Open AP</td><td>$233,738</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ── PRIORITIES ─────────────────────────────────────────── -->
+<div class="card">
+  <div class="section-label">This Week's Priorities</div>
+  <ul class="actions">
+    <li><span><b>$60k cash call committed — confirm ETA and route to Operating</b></span><span class="when">Today</span></li>
+    <li><span><b>Pay Eversource $16,097</b> — past due since Apr 5</span><span class="when">Today</span></li>
+    <li><span><b>Collect on $76.0k overdue AR</b> — Firebrand $9.5k, Resinate $8.6k, Silver Roslindale $7.7k, Cannabis Healing $7.0k, Kush Groove $5.0k (79d)</span><span class="when">Mon–Fri</span></li>
+    <li><span>Follow up on $27.2k due this week — Firehouse, Quincy, Seaside, Enlite ×2, Roadtrip</span><span class="when">Mon–Tue</span></li>
+    <li><span>Confirm rent plan with <b>JAC Real Estate</b> ($154k across 2 months — March 36 days past due)</span><span class="when">By Wed</span></li>
+  </ul>
+</div>
+
+<div class="footer">
+  Cape Cod Grow Lab · Refreshed April 6, 2026 · QuickBooks Online live · Bank balances: screenshot → update
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── AR DATA (with daysOD + due date for overdue rows) ──────────────────────
+const arBuckets = {
+  "overdue":[
+    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":79,"due":"Jan 17"},
+    {"name":"Resinate, Inc.","amt":8580,"id":1448,"daysOD":38,"due":"Feb 27"},
+    {"name":"Cannabis Healing","amt":6975,"id":1408,"daysOD":35,"due":"Mar 2"},
+    {"name":"CannaBarn","amt":2575,"id":1419,"daysOD":33,"due":"Mar 4"},
+    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":29,"due":"Mar 8"},
+    {"name":"Bountiful Rowley","amt":2950,"id":1420,"daysOD":29,"due":"Mar 8"},
+    {"name":"Silver Therapeutics Roslindale","amt":7718,"id":1438,"daysOD":8,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Palmer","amt":4950,"id":1439,"daysOD":8,"due":"Mar 29"},
+    {"name":"Firebrand","amt":9453,"id":1442,"daysOD":8,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Williamstown","amt":3725,"id":1440,"daysOD":8,"due":"Mar 29"},
+    {"name":"Capeway Cannabis, LLC","amt":3275,"id":1437,"daysOD":8,"due":"Mar 29"},
+    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":4,"due":"Apr 2"},
+    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":3,"due":"Apr 3"},
+    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":1,"due":"Apr 5"}
+  ],
+  "wk1":[
+    {"name":"Firehouse","amt":6496.25,"id":1460},
+    {"name":"Quincy Cannabis","amt":5145.3,"id":1457},
+    {"name":"Seaside Joint Ventures","amt":4827.5,"id":1458},
+    {"name":"Enlite Indian Orchard","amt":4315,"id":1467},
+    {"name":"Roadtrip","amt":3241.23,"id":1464},
+    {"name":"Enlite Northampton","amt":3200,"id":1466}
+  ],
+  "wk2":[
+    {"name":"Cannabis Healing","amt":6101,"id":1468},
+    {"name":"Reverie 73 Beverly","amt":4661,"id":1469},
+    {"name":"Great Barrington Disp.","amt":4245,"id":1472},
+    {"name":"Major Bloom","amt":3017.6,"id":1465},
+    {"name":"Greene Street Cannabis","amt":2613.91,"id":1473}
+  ],
+  "wk3":[
+    {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490},
+    {"name":"Kush Groove Cambridge","amt":9366.5,"id":1485},
+    {"name":"EMBR (Kur Retail)","amt":8212.5,"id":1480},
+    {"name":"Fyre Ants (Apical)","amt":8137.5,"id":1483},
+    {"name":"Hennep","amt":4250,"id":1489},
+    {"name":"CannaBarn","amt":3900,"id":1488},
+    {"name":"Potency","amt":3633.85,"id":1478},
+    {"name":"EMBR (Northampton)","amt":3537.5,"id":1482},
+    {"name":"Resinate, Inc.","amt":3200,"id":1479},
+    {"name":"Pineapple Express","amt":3087.5,"id":1474},
+    {"name":"RISE Maynard","amt":2358.75,"id":1476},
+    {"name":"RISE Dracut","amt":2358.75,"id":1475}
+  ],
+  "wk4":[
+    {"name":"Insa","amt":8245,"id":1492},
+    {"name":"Eastern Cannabis Co.","amt":8100.75,"id":1487},
+    {"name":"Seaside Joint Ventures","amt":6446.5,"id":1495},
+    {"name":"Hennep","amt":2850,"id":1494},
+    {"name":"Peak Cannabis Co","amt":2487.5,"id":1493},
+    {"name":"Blossom Flower","amt":1785,"id":1491}
+  ],
+  "later":[
+    {"name":"Ember Gardens (consign.)","amt":5307.66,"id":1463},
+    {"name":"Ember Gardens (consign.)","amt":4243.91,"id":1406},
+    {"name":"Ember Gardens (consign.)","amt":3237.5,"id":1425},
+    {"name":"Ember Gardens (consign.)","amt":302.5,"id":1471},
+    {"name":"Ember Gardens (consign.)","amt":0.25,"id":1470}
+  ]
+};
+
+function hmClass(d) {
+  if (!d) return '';
+  if (d >= 60) return 'hm-90';
+  if (d >= 31) return 'hm-60';
+  if (d >= 15) return 'hm-30';
+  return 'hm-14';
+}
+function odBadgeCls(d) {
+  if (!d) return '';
+  if (d >= 60) return 'od-90';
+  if (d >= 31) return 'od-60';
+  if (d >= 15) return 'od-30';
+  return 'od-14';
+}
+
+function buildArRows() {
+  const cols = ["overdue","wk1","wk2","wk3","wk4","later"];
+  const rows = {};
+  cols.forEach(col => {
+    arBuckets[col].forEach(inv => {
+      const key = inv.name;
+      if (!rows[key]) rows[key] = {name:inv.name,overdue:0,wk1:0,wk2:0,wk3:0,wk4:0,later:0,total:0,daysOD:0,due:''};
+      rows[key][col] += inv.amt;
+      rows[key].total += inv.amt;
+      if (inv.daysOD && !rows[key].daysOD) { rows[key].daysOD = inv.daysOD; rows[key].due = inv.due || ''; }
+    });
+  });
+  const bucketKeys = ["overdue","wk1","wk2","wk3","wk4","later"];
+  function primaryBucket(r) {
+    for (let i = 0; i < bucketKeys.length; i++) { if (r[bucketKeys[i]] > 0) return i; }
+    return bucketKeys.length;
+  }
+  return Object.values(rows).sort((a, b) => {
+    const pa = primaryBucket(a), pb = primaryBucket(b);
+    if (pa !== pb) return pa - pb;
+    // In overdue bucket: oldest first (highest daysOD at top)
+    if (bucketKeys[pa] === 'overdue') return b.daysOD - a.daysOD;
+    return b[bucketKeys[pa]] - a[bucketKeys[pa]];
+  });
+}
+
+const fmt = n => n ? '$'+Math.round(n).toLocaleString() : '';
+const fmtCell = (n, cls) => `<td class="${n ? 'has '+cls : 'empty'}">${fmt(n)}</td>`;
+
+const arBody = document.getElementById('arBody');
+buildArRows().forEach(r => {
+  const hm = hmClass(r.daysOD);
+  const badge = r.daysOD ? `<span class="days-od ${odBadgeCls(r.daysOD)}">${r.daysOD}d</span>` : '';
+  const due = r.due ? `<span class="due-note">due ${r.due}</span>` : '';
+  arBody.innerHTML += `<tr class="${hm}">
+    <td>${r.name}${badge}${due}</td>
+    ${fmtCell(r.overdue,'col-overdue')}${fmtCell(r.wk1,'col-wk1')}
+    ${fmtCell(r.wk2,'col-wk2')}${fmtCell(r.wk3,'col-wk3')}
+    ${fmtCell(r.wk4,'col-wk4')}${fmtCell(r.later,'col-later')}
+    <td class="has" style="font-weight:700">${fmt(r.total)}</td></tr>`;
+});
+
+// ── BANK PERSISTENCE ─────────────────────────────────────────────────────
+const bankInputs = document.querySelectorAll('.bank-cell input[data-key]');
+const STORAGE_KEY = 'ccgl_bank_v3';
+function parseMoney(s) { if (typeof s === 'number') return s; return parseFloat(String(s).replace(/[^0-9.\-]/g,'')) || 0; }
+function formatMoney(n) { return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function saveBank() {
+  const obj = {};
+  bankInputs.forEach(inp => obj[inp.dataset.key] = parseMoney(inp.value));
+  obj.editedAt = new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  document.getElementById('bankEdited').textContent = obj.editedAt;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+}
+function loadBank() {
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+  bankInputs.forEach(inp => {
+    const k = inp.dataset.key;
+    const live = parseFloat(inp.dataset.live || inp.dataset.qb);
+    inp.value = formatMoney(saved[k] !== undefined ? saved[k] : live);
+  });
+  if (saved.editedAt) document.getElementById('bankEdited').textContent = saved.editedAt;
+  recalcBank();
+}
+function recalcBank() {
+  let total = 0;
+  bankInputs.forEach(inp => total += parseMoney(inp.value));
+  document.getElementById('b_total').value = formatMoney(total);
+}
+bankInputs.forEach(inp => {
+  inp.addEventListener('focus', e => { e.target.value = parseMoney(e.target.value).toString(); e.target.select(); });
+  inp.addEventListener('blur', e => { e.target.value = formatMoney(parseMoney(e.target.value)); saveBank(); recalcBank(); });
+  inp.addEventListener('input', () => recalcBank());
+});
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+loadBank();
+</script>
+</body>
+</html>
