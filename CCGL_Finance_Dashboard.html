@@ -356,7 +356,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
   <div class="header-right">
     <div class="live-dot">Live · QuickBooks Online</div>
-    <div class="week">Last refreshed: <b>Apr 6, 2026 · 8:28 PM</b></div>
+    <div class="week">Last refreshed: <b>Apr 7, 2026 · 12:03 AM</b></div>
   </div>
 </header>
 
@@ -426,8 +426,8 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
   <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
     <h3>April MTD Sales</h3>
-    <div class="kpi-val clr-lime">$57.0k</div>
-    <div class="kpi-sub">Ship day <b>Apr 7</b> · estimates → invoices</div>
+    <div class="kpi-val clr-lime">$0</div>
+    <div class="kpi-sub">Apr 1–7 · no invoices cut yet · from QBO P&amp;L</div>
   </div>
 </div>
 
@@ -509,7 +509,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
         <td>$236,361</td>
       </tr>
       <tr><td colspan="8" style="font-size:10px;color:var(--muted);padding-top:8px;border-top:none;font-weight:500">
-        Left bar = days overdue heat map · darker = older debt · 16 invoices overdue as of Apr 6
+        Left bar = days overdue heat map · darker = older debt · 16 invoices overdue as of Apr 7
       </td></tr>
     </tfoot>
   </table>
@@ -616,20 +616,20 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 // ── AR DATA (with daysOD + due date for overdue rows) ──────────────────────
 const arBuckets = {
   "overdue":[
-    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":79,"due":"Jan 17"},
-    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":38,"due":"Feb 27"},
-    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":35,"due":"Mar 2"},
-    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":33,"due":"Mar 4"},
-    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":29,"due":"Mar 8"},
-    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":29,"due":"Mar 8"},
-    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":8,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":8,"due":"Mar 29"},
-    {"name":"Firebrand","amt":9453.0,"id":1442,"daysOD":8,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":8,"due":"Mar 29"},
-    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":8,"due":"Mar 29"},
-    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":4,"due":"Apr 2"},
-    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":3,"due":"Apr 3"},
-    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":1,"due":"Apr 5"}
+    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":80,"due":"Jan 17"},
+    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":39,"due":"Feb 27"},
+    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":36,"due":"Mar 2"},
+    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":34,"due":"Mar 4"},
+    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":30,"due":"Mar 8"},
+    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":30,"due":"Mar 8"},
+    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":9,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":9,"due":"Mar 29"},
+    {"name":"Firebrand","amt":9453.0,"id":1442,"daysOD":9,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":9,"due":"Mar 29"},
+    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":9,"due":"Mar 29"},
+    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":5,"due":"Apr 2"},
+    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":4,"due":"Apr 3"},
+    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":2,"due":"Apr 5"}
   ],
   "wk1":[
     {"name":"Firehouse","amt":6496.25,"id":1460},
@@ -670,10 +670,10 @@ const arBuckets = {
   ],
   "later":[
     {"name":"Ember Gardens Cape Cod LLC","amt":5307.66,"id":1463},
-    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":7,"due":"Mar 30"},
+    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":8,"due":"Mar 30"},
     {"name":"Ember Gardens Cape Cod LLC","amt":3237.5,"id":1425},
     {"name":"Ember Gardens Cape Cod LLC","amt":302.5,"id":1471},
-    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":20,"due":"Mar 17"}
+    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":21,"due":"Mar 17"}
   ]
 };
 
