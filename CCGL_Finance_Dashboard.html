@@ -356,7 +356,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
   <div class="header-right">
     <div class="live-dot">Live · QuickBooks Online</div>
-    <div class="week">Last refreshed: <b>Apr 6, 2026 · 8:28 PM</b></div>
+    <div class="week">Last refreshed: <b>Apr 6, 2026 · 6:48 PM</b></div>
   </div>
 </header>
 
@@ -396,8 +396,8 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
   <div class="kpi-card">
     <h3>Overdue AR</h3>
-    <div class="kpi-val clr-red">$76.0k</div>
-    <div class="kpi-sub"><b>16</b> invoices · <b>33%</b> of total AR</div>
+    <div class="kpi-val clr-red">$71.8k</div>
+    <div class="kpi-sub"><b>14</b> invoices · <b>31%</b> of total AR</div>
   </div>
   <div class="kpi-card">
     <h3>Open Payables</h3>
@@ -454,22 +454,22 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <span class="ar-seg-c">14 invoices</span>
     </div>
     <div class="ar-seg seg-gold">
-      <span class="ar-seg-l">Wk 1 · Apr 13–19 6–12</span>
+      <span class="ar-seg-l">Wk 1 · Apr 7–13</span>
       <span class="ar-seg-v">$27,225</span>
       <span class="ar-seg-c">6 invoices</span>
     </div>
     <div class="ar-seg seg-grn">
-      <span class="ar-seg-l">Wk 2 · Apr 20–26 13–19</span>
+      <span class="ar-seg-l">Wk 2 · Apr 14–20</span>
       <span class="ar-seg-v">$20,639</span>
       <span class="ar-seg-c">5 invoices</span>
     </div>
     <div class="ar-seg seg-grn">
-      <span class="ar-seg-l">Wk 3 · Apr 27–May 3 20–26</span>
+      <span class="ar-seg-l">Wk 3 · Apr 21–27</span>
       <span class="ar-seg-v">$68,298</span>
       <span class="ar-seg-c">12 invoices</span>
     </div>
     <div class="ar-seg seg-blue">
-      <span class="ar-seg-l">Wk 4 · May 4–10 27–May 3</span>
+      <span class="ar-seg-l">Wk 4 · Apr 28–May 4</span>
       <span class="ar-seg-v">$29,915</span>
       <span class="ar-seg-c">6 invoices</span>
     </div>
@@ -480,8 +480,8 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     </div>
     <div class="ar-seg">
       <span class="ar-seg-l">Total</span>
-      <span class="ar-seg-v">$236,361</span>
-      <span class="ar-seg-c">50 invoices</span>
+      <span class="ar-seg-v">$230,934</span>
+      <span class="ar-seg-c">48 invoices</span>
     </div>
   </div>
   <div class="ar-scroll-wrap">
@@ -489,10 +489,10 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <thead><tr>
       <th>Customer</th>
       <th>Overdue<span class="sub">past due</span></th>
-      <th>Wk 1<span class="sub">4/6–4/12</span></th>
-      <th>Wk 2<span class="sub">4/13–4/19</span></th>
-      <th>Wk 3<span class="sub">4/20–4/26</span></th>
-      <th>Wk 4<span class="sub">4/27–5/3</span></th>
+      <th>Wk 1<span class="sub">4/7–4/13</span></th>
+      <th>Wk 2<span class="sub">4/14–4/20</span></th>
+      <th>Wk 3<span class="sub">4/21–4/27</span></th>
+      <th>Wk 4<span class="sub">4/28–5/4</span></th>
       <th>Consign.<span class="sub">Ember Gardens</span></th>
       <th>Total</th>
     </tr></thead>
@@ -500,16 +500,16 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <tfoot>
       <tr class="totals">
         <td>TOTAL</td>
-        <td class="col-overdue">$77,193</td>
+        <td class="col-overdue">$71,766</td>
         <td class="col-wk1">$27,225</td>
         <td class="col-wk2">$20,639</td>
         <td class="col-wk3">$68,298</td>
         <td class="col-wk4">$29,915</td>
         <td class="col-later">$13,092</td>
-        <td>$236,361</td>
+        <td>$230,934</td>
       </tr>
       <tr><td colspan="8" style="font-size:10px;color:var(--muted);padding-top:8px;border-top:none;font-weight:500">
-        Left bar = days overdue heat map · darker = older debt · 16 invoices overdue as of Apr 6
+        Left bar = days overdue heat map · darker = older debt · 14 invoices overdue as of Apr 7
       </td></tr>
     </tfoot>
   </table>
@@ -607,7 +607,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 </div>
 
 <div class="footer">
-  Cape Cod Grow Lab · Refreshed April 6, 2026 · QuickBooks Online live · Bank balances: screenshot → update
+  Cape Cod Grow Lab · Refreshed April 7, 2026 · QuickBooks Online live · Bank balances: screenshot → update
 </div>
 
 </div><!-- /wrap -->
@@ -616,20 +616,20 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 // ── AR DATA (with daysOD + due date for overdue rows) ──────────────────────
 const arBuckets = {
   "overdue":[
-    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":79,"due":"Jan 17"},
-    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":38,"due":"Feb 27"},
-    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":35,"due":"Mar 2"},
-    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":33,"due":"Mar 4"},
-    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":29,"due":"Mar 8"},
-    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":29,"due":"Mar 8"},
-    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":8,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":8,"due":"Mar 29"},
-    {"name":"Firebrand","amt":9453.0,"id":1442,"daysOD":8,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":8,"due":"Mar 29"},
-    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":8,"due":"Mar 29"},
-    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":4,"due":"Apr 2"},
-    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":3,"due":"Apr 3"},
-    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":1,"due":"Apr 5"}
+    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":80,"due":"Jan 17"},
+    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":39,"due":"Feb 27"},
+    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":36,"due":"Mar 2"},
+    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":34,"due":"Mar 4"},
+    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":30,"due":"Mar 8"},
+    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":30,"due":"Mar 8"},
+    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":9,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":9,"due":"Mar 29"},
+    {"name":"Firebrand","amt":9453.0,"id":1442,"daysOD":9,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":9,"due":"Mar 29"},
+    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":9,"due":"Mar 29"},
+    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":5,"due":"Apr 2"},
+    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":4,"due":"Apr 3"},
+    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":2,"due":"Apr 5"}
   ],
   "wk1":[
     {"name":"Firehouse","amt":6496.25,"id":1460},
@@ -670,10 +670,10 @@ const arBuckets = {
   ],
   "later":[
     {"name":"Ember Gardens Cape Cod LLC","amt":5307.66,"id":1463},
-    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":7,"due":"Mar 30"},
+    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406},
     {"name":"Ember Gardens Cape Cod LLC","amt":3237.5,"id":1425},
     {"name":"Ember Gardens Cape Cod LLC","amt":302.5,"id":1471},
-    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":20,"due":"Mar 17"}
+    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470}
   ]
 };
 
