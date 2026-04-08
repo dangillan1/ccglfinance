@@ -268,30 +268,56 @@ ul.actions li b{color:var(--navy)}
   .kpis{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:800px){
-  .wrap{padding:20px 14px 60px}
-  .kpis{grid-template-columns:repeat(2,1fr)}
-  .bank-grid{grid-template-columns:1fr}
+  .wrap{padding:18px 12px 60px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:10px}
+  .bank-grid{grid-template-columns:1fr;gap:10px}
   .cf-weeks{grid-template-columns:repeat(2,1fr)}
   .ar-bar,.ap-aging{flex-wrap:wrap}
-  .ar-seg,.ap-seg{min-width:45%;border-right:1px solid var(--border)}
-  /* Table horizontal scroll on mobile */
-  .ar-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .ap-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table.ar{min-width:600px;font-size:11px}
-  table.ar th,table.ar td{padding:5px 6px}
-  table.ap{min-width:420px;font-size:12px}
-  table.ap td{padding:5px 6px}
-  /* AP aging bar stacks cleanly */
-  .ap-seg{min-width:48%}
-  .ar-seg{min-width:48%}
-  /* Tighter card padding */
-  .card{padding:16px 14px}
+  .ar-seg,.ap-seg{min-width:48%;border-right:1px solid var(--border)}
+  /* Header: stack cleanly, keep live pill right-aligned */
+  header{gap:12px;margin-bottom:18px;padding-bottom:16px}
+  .brand-text h1{font-size:17px}
+  .brand-text .sub{font-size:11px}
+  .header-right{text-align:left;width:100%}
+  .header-right .week{font-size:11px}
+  /* Wrap tables so they can scroll horizontally if needed */
+  .card{padding:14px 12px;margin-bottom:14px;border-radius:10px}
+  .section-label{font-size:10px;margin-bottom:12px}
+  table.ar,table.ap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  table.ar{font-size:10px}
+  table.ar th,table.ar td{padding:4px 5px}
+  table.ap{font-size:11px;white-space:normal}
+  table.ap td{padding:4px 5px}
+  /* Sales pipeline: single column, smaller featured value */
+  .sales-pipeline{padding:14px 14px}
+  .pipeline-header{margin-bottom:10px;padding-bottom:8px}
+  .pipeline-title{font-size:11px}
+  .pipeline-grid{grid-template-columns:1fr;gap:8px}
+  .pipeline-op{display:none}
+  .pipeline-card{padding:11px 13px}
+  .pipeline-val{font-size:22px}
+  .pipeline-featured .pipeline-val{font-size:26px}
+  /* KPI cards */
+  .kpi-card{padding:13px 14px}
+  .kpi-val{font-size:22px}
+  .kpi-sub{font-size:10px}
+  /* Bank inputs readable on phone */
+  .bank-cell input{font-size:18px}
 }
 @media(max-width:500px){
-  .kpis{grid-template-columns:repeat(2,1fr)}
-  .kpi-val{font-size:22px}
+  .wrap{padding:14px 10px 50px}
+  .kpis{grid-template-columns:1fr;gap:8px}
+  .kpi-val{font-size:24px}
   .cf-weeks{grid-template-columns:1fr}
-  .bank-cell input{font-size:17px}
+  .bank-cell{padding:10px 12px}
+  .bank-cell input{font-size:19px}
+  .bank-total input{font-size:20px}
+  .ar-seg,.ap-seg{min-width:100%;border-right:none;border-bottom:1px solid var(--border)}
+  .ar-seg:last-child,.ap-seg:last-child{border-bottom:none}
+  .brand{gap:10px}
+  .brand svg{width:36px;height:36px}
+  .brand-text h1{font-size:16px}
+  .pipeline-featured .pipeline-val{font-size:24px}
 }
 @media print{body{background:#fff}.card,.kpi-card{box-shadow:none;border-color:#ccc}}
 
@@ -376,7 +402,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
   <div class="header-right">
     <div class="live-dot">Live · QuickBooks Online</div>
-    <div class="week">Last refreshed: <b>Apr 8, 2026 · 12:26 AM</b></div>
+    <div class="week">Last refreshed: <b>Apr 8, 2026 · 1:19 AM</b></div>
   </div>
 </header>
 
