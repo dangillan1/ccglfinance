@@ -76,7 +76,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .bank-warn label{color:var(--red)}
 
 /* ── KPIs ─────────────────────────────────────────────────── */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
 .kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
 .kpi-card h3{margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .kpi-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:2px}
@@ -84,6 +84,23 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .kpi-sub b{color:var(--ink);font-weight:600}
 .clr-green{color:var(--green)} .clr-red{color:var(--red)} .clr-gold{color:var(--gold)}
 .clr-blue{color:var(--blue)} .clr-teal{color:var(--teal)} .clr-lime{color:var(--lime)}
+
+/* ── Sales Pipeline Highlight ───────────────────────────── */
+.sales-pipeline{background:linear-gradient(135deg,#fff,#f6fbf3);border:2px solid rgba(107,187,56,.3);border-radius:14px;padding:18px 22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.pipeline-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(107,187,56,.2);gap:14px;flex-wrap:wrap}
+.pipeline-title{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.march-ref{font-size:11px;color:var(--muted);font-weight:500}
+.march-ref b{color:var(--ink);font-weight:700;font-size:13px}
+.pipeline-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1.25fr;gap:12px;align-items:stretch}
+.pipeline-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.pipeline-card h3{margin:0 0 4px;font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.pipeline-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.pipeline-sub{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4}
+.pipeline-featured{background:linear-gradient(135deg,#6BBB38,#2E8880);border:none;padding:16px 18px;box-shadow:0 4px 12px rgba(46,136,128,.22)}
+.pipeline-featured h3{color:rgba(255,255,255,.85)}
+.pipeline-featured .pipeline-val{font-size:32px;color:#fff}
+.pipeline-featured .pipeline-sub{color:rgba(255,255,255,.9)}
+.pipeline-op{font-size:24px;font-weight:700;color:rgba(107,187,56,.55);align-self:center;text-align:center;padding:0 2px}
 
 /* ── Alert ────────────────────────────────────────────────── */
 .alert{background:var(--red-light);border:1px solid rgba(200,53,53,.25);border-radius:12px;
@@ -240,7 +257,12 @@ ul.actions li b{color:var(--navy)}
 /* ── Responsive ───────────────────────────────────────────── */
 @media(max-width:1200px){
   .cf-weeks{grid-template-columns:repeat(3,1fr)}
-  .kpis{grid-template-columns:repeat(4,1fr)}
+  .kpis{grid-template-columns:repeat(5,1fr)}
+}
+@media(max-width:1000px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .pipeline-grid{grid-template-columns:1fr;gap:10px}
+  .pipeline-op{display:none}
 }
 @media(max-width:900px){
   .kpis{grid-template-columns:repeat(2,1fr)}
@@ -387,47 +409,59 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
 </div>
 
+<!-- ── SALES PIPELINE HIGHLIGHT ──────────────────────────── -->
+<div class="sales-pipeline">
+  <div class="pipeline-header">
+    <span class="pipeline-title">April Sales Pipeline</span>
+    <span class="march-ref">March reference · <b>$228.7k</b> Total Income</span>
+  </div>
+  <div class="pipeline-grid">
+    <div class="pipeline-card">
+      <h3>April MTD Actual</h3>
+      <div class="pipeline-val clr-lime">$8.2k</div>
+      <div class="pipeline-sub">Apr 1–7 · $8,232 · QBO P&amp;L</div>
+    </div>
+    <div class="pipeline-op">+</div>
+    <div class="pipeline-card">
+      <h3>Pending Shipments</h3>
+      <div class="pipeline-val clr-teal">$76.1k</div>
+      <div class="pipeline-sub"><b>19</b> pending estimates · QBO</div>
+    </div>
+    <div class="pipeline-op">=</div>
+    <div class="pipeline-card pipeline-featured">
+      <h3>April Projected Total</h3>
+      <div class="pipeline-val">$84.3k</div>
+      <div class="pipeline-sub">Actual + estimated · 37% of March</div>
+    </div>
+  </div>
+</div>
+
 <!-- ── KPI STRIP ──────────────────────────────────────────── -->
 <div class="kpis">
   <div class="kpi-card">
     <h3>Receivables Outstanding</h3>
     <div class="kpi-val">$230.9k</div>
-    <div class="kpi-sub"><b>48</b> invoices · <b>37</b> unique accounts</div>
+    <div class="kpi-sub"><b>48</b> invoices · <b>37</b> accts</div>
   </div>
   <div class="kpi-card">
     <h3>Overdue AR</h3>
     <div class="kpi-val clr-red">$76.0k</div>
-    <div class="kpi-sub"><b>16</b> invoices · <b>33%</b> of total AR</div>
+    <div class="kpi-sub"><b>16</b> invoices · <b>33%</b> of AR</div>
   </div>
   <div class="kpi-card">
     <h3>Open Payables</h3>
     <div class="kpi-val clr-gold">$230.4k</div>
-    <div class="kpi-sub"><b>38</b> bills · aging detail below</div>
-  </div>
-  <div class="kpi-card">
-    <h3>Pending Shipments</h3>
-    <div class="kpi-val clr-teal">$76.1k</div>
-    <div class="kpi-sub"><b>19</b> pending estimates · from QBO</div>
+    <div class="kpi-sub"><b>38</b> bills · aging below</div>
   </div>
   <div class="kpi-card">
     <h3>Collected This Week</h3>
     <div class="kpi-val clr-green">$9.1k</div>
-    <div class="kpi-sub">Apr 6 · <b>1</b> payment · from QBO</div>
+    <div class="kpi-sub">Apr 6 · <b>1</b> payment · QBO</div>
   </div>
   <div class="kpi-card">
     <h3>Collected Last Week</h3>
     <div class="kpi-val clr-blue">$42.0k</div>
-    <div class="kpi-sub">Mar 30–Apr 5 · <b>7</b> payments · from QBO</div>
-  </div>
-  <div class="kpi-card">
-    <h3>March Sales (P&amp;L)</h3>
-    <div class="kpi-val">$228.7k</div>
-    <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
-  </div>
-  <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
-    <h3>April MTD Sales</h3>
-    <div class="kpi-val clr-lime">$8.2k</div>
-    <div class="kpi-sub">Apr 1–7 · $8,232 Total Income · from QBO P&amp;L</div>
+    <div class="kpi-sub">Mar 30–Apr 5 · <b>7</b> pmts</div>
   </div>
 </div>
 
