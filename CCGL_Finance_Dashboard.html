@@ -306,9 +306,7 @@ ul.actions li b{color:var(--navy)}
 #pw-overlay .pw-logo{font-size:13px;font-weight:700;letter-spacing:.12em;
   color:#2dd4bf;text-transform:uppercase;margin-bottom:8px}
 
-/* ── AR sticky thead ──────────────────────────────────────────── */
-.ar-scroll-wrap{overflow-x:auto;overflow-y:auto;max-height:440px}
-table.ar thead th{position:sticky;top:0;background:#fff;z-index:2;box-shadow:0 1px 0 var(--border)}
+/* AR table — static (no sticky thead, no max-height) */
 
 /* ── AP bucket rows ───────────────────────────────────────────── */
 table.ap{width:100%;border-collapse:collapse;font-size:13px}
@@ -429,9 +427,9 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     </div>
     <div class="pipeline-op">=</div>
     <div class="pipeline-card pipeline-featured">
-      <h3>April Projected Total</h3>
+      <h3>Current Shipped + Pending</h3>
       <div class="pipeline-val">$84.3k</div>
-      <div class="pipeline-sub">Actual + estimated · 37% of March</div>
+      <div class="pipeline-sub">$8,232 actual + $76,113 estimated</div>
     </div>
   </div>
 </div>
@@ -470,7 +468,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="alert-icon">!</div>
   <div>
     <h4>⚠️ $118,965 clearing TOMORROW — Rent $77,262 + Payroll $41,703</h4>
-    <p>Rent (JAC Real Estate) $77,262 + Payroll $41,703 both hit <b>tomorrow Wed Apr 8</b>. March rent ($77,261) also past-due 38 days. Eversource $16,097 past due. $60k cash call received Apr 6 + Eastern $9k pending — operating balance $119,065.</p>
+    <p>Rent (JAC Real Estate) $77,262 + Payroll $41,703 both hit <b>tomorrow Wed Apr 8</b>. March rent ($77,261) also past-due 38 days. Eversource $16,097 past due. Combined cash <b>$133,748</b> ($105,309 Op + $28,439 WH sweeping tomorrow) covers rent + payroll with <b>~$14.7k</b> buffer before Mar rent + Eversource.</p>
   </div>
 </div>
 
@@ -518,7 +516,6 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <span class="ar-seg-c">50 invoices</span>
     </div>
   </div>
-  <div class="ar-scroll-wrap">
   <table class="ar">
     <thead><tr>
       <th>Customer</th>
@@ -547,7 +544,6 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       </td></tr>
     </tfoot>
   </table>
-  </div>
 </div>
 
 <!-- ── OPEN PAYABLES ──────────────────────────────────────── -->
