@@ -85,6 +85,25 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .clr-green{color:var(--green)} .clr-red{color:var(--red)} .clr-gold{color:var(--gold)}
 .clr-blue{color:var(--blue)} .clr-teal{color:var(--teal)} .clr-lime{color:var(--lime)}
 
+/* ── Rolling Revenue Chart ───────────────────────────────── */
+.rev-chart-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 22px 14px;margin-bottom:18px;box-shadow:var(--shadow)}
+.rev-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+.rev-title{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);border-left:3px solid var(--teal);padding-left:10px}
+.rev-meta{font-size:10px;color:var(--muted);font-weight:500}
+.rev-chart{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;height:110px;padding-bottom:20px;position:relative;border-bottom:1px solid var(--border)}
+.rev-bar-wrap{display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;position:relative}
+.rev-bar{width:100%;max-width:52px;height:var(--h);min-height:4px;border-radius:5px 5px 0 0;position:relative;cursor:default;transition:opacity .15s}
+.rev-fill{width:100%;height:100%;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--teal),var(--teal-dark))}
+.rev-bar-wrap.hi .rev-fill{background:linear-gradient(180deg,var(--lime),#4a9e28)}
+.rev-bar-wrap.mtd .rev-fill{background:linear-gradient(180deg,var(--sky),#3a7fa4);opacity:.65}
+.rev-bar::after{content:attr(data-val);position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--ink);opacity:0;transition:opacity .15s;white-space:nowrap}
+.rev-bar-wrap:hover .rev-bar::after{opacity:1}
+.rev-bar-wrap.hi .rev-bar::after,.rev-bar-wrap.mtd .rev-bar::after{opacity:1}
+.rev-lbl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:5px;position:absolute;bottom:-18px}
+.rev-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:10px;color:var(--muted);gap:12px;flex-wrap:wrap}
+.rev-footer b{color:var(--ink);font-weight:700}
+.rev-avg{color:var(--teal);font-weight:600}
+
 /* ── Sales Pipeline Highlight ───────────────────────────── */
 .sales-pipeline{background:linear-gradient(135deg,#fff,#f6fbf3);border:2px solid rgba(107,187,56,.3);border-radius:14px;padding:18px 22px;margin-bottom:18px;box-shadow:var(--shadow)}
 .pipeline-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(107,187,56,.2);gap:14px;flex-wrap:wrap}
@@ -457,6 +476,69 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <div class="pipeline-val">$86.6k</div>
       <div class="pipeline-sub">$39,031 actual + $47,605 estimated</div>
     </div>
+  </div>
+</div>
+
+<!-- ── ROLLING 12-MONTH REVENUE ────────────────────────────── -->
+<div class="rev-chart-card">
+  <div class="rev-header">
+    <span class="rev-title">Rolling 12-Month Revenue</span>
+    <span class="rev-meta">QBO P&L · Total Income · Accrual basis</span>
+  </div>
+  <div class="rev-chart">
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:51%" data-val="$117k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">May</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:48%" data-val="$109k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Jun</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:67%" data-val="$153k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Jul</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:63%" data-val="$144k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Aug</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:82%" data-val="$188k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Sep</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:81%" data-val="$185k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Oct</span>
+    </div>
+    <div class="rev-bar-wrap hi">
+      <div class="rev-bar" style="--h:99%" data-val="$226k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Nov</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:68%" data-val="$155k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Dec</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:85%" data-val="$194k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Jan</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:71%" data-val="$163k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Feb</span>
+    </div>
+    <div class="rev-bar-wrap hi">
+      <div class="rev-bar" style="--h:100%" data-val="$229k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Mar</span>
+    </div>
+    <div class="rev-bar-wrap mtd">
+      <div class="rev-bar" style="--h:17%" data-val="$39k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Apr*</span>
+    </div>
+  </div>
+  <div class="rev-footer">
+    <span>12-mo total (May '25–Mar '26): <b>$1.96M</b></span>
+    <span class="rev-avg">Avg: <b>$163k</b>/mo</span>
+    <span>*Apr is month-to-date through Apr 10</span>
   </div>
 </div>
 
