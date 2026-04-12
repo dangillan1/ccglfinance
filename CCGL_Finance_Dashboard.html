@@ -601,10 +601,10 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <thead><tr>
       <th>Customer</th>
       <th>Overdue<span class="sub">past due</span></th>
-      <th>Wk 1<span class="sub">4/11–4/12</span></th>
-      <th>Wk 2<span class="sub">4/13–4/19</span></th>
-      <th>Wk 3<span class="sub">4/20–4/26</span></th>
-      <th>Wk 4<span class="sub">4/27–5/3</span></th>
+      <th>Wk 1<span class="sub">4/12–4/18</span></th>
+      <th>Wk 2<span class="sub">4/19–4/25</span></th>
+      <th>Wk 3<span class="sub">4/26–5/2</span></th>
+      <th>Wk 4<span class="sub">5/3–5/9</span></th>
       <th>Consign.<span class="sub">+ later</span></th>
       <th>Total</th>
     </tr></thead>
@@ -613,15 +613,15 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <tr class="totals">
         <td>TOTAL</td>
         <td class="col-overdue">$73,748</td>
-        <td class="col-wk1">$10,756</td>
-        <td class="col-wk2">$20,639</td>
-        <td class="col-wk3">$68,298</td>
-        <td class="col-wk4">$29,415</td>
-        <td class="col-later">$36,841</td>
+        <td class="col-wk1">$24,536</td>
+        <td class="col-wk2">$50,752</td>
+        <td class="col-wk3">$53,820</td>
+        <td class="col-wk4">$18,649</td>
+        <td class="col-later">$18,192</td>
         <td>$239,696</td>
       </tr>
       <tr><td colspan="8" style="font-size:10px;color:var(--muted);padding-top:8px;border-top:none;font-weight:500">
-        Left bar = days overdue heat map · darker = older debt · 15 invoices overdue as of Apr 11
+        Left bar = days overdue heat map · darker = older debt · 15 invoices overdue as of Apr 12
       </td></tr>
     </tfoot>
   </table>
@@ -642,13 +642,13 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     </div>
     <div class="ap-seg ap-od30">
       <span class="ap-seg-l">1–30 Days Past Due</span>
-      <span class="ap-seg-v">$116.8k</span>
+      <span class="ap-seg-v">$116.5k</span>
       <span class="ap-seg-c">JAC Apr · Eversource · MMM · G7 · Puff</span>
     </div>
     <div class="ap-seg ap-od60">
       <span class="ap-seg-l">31–60 Days Past Due</span>
-      <span class="ap-seg-v">$85.0k</span>
-      <span class="ap-seg-c">JAC Mar rent 41d · HSA · MMM · G7</span>
+      <span class="ap-seg-v">$85.3k</span>
+      <span class="ap-seg-c">JAC Mar rent 42d · HSA · MMM · G7</span>
     </div>
     <div class="ap-seg ap-od90">
       <span class="ap-seg-l">60+ Days Past Due</span>
@@ -666,27 +666,27 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     </tr></thead>
     <tbody>
       <!-- 1–30 Days Past Due -->
-      <tr class="ap-bucket od30"><td colspan="3">1–30 Days Past Due</td><td class="ap-amt">$116,787</td></tr>
-      <tr><td>JAC Real Estate <span class="tag gold">Apr Rent</span></td><td class="ap-due">Apr 1</td><td class="ap-age" style="color:var(--gold)">10d</td><td class="ap-amt" style="color:var(--gold)">$77,261</td></tr>
-      <tr><td>Eversource <span class="tag red">OVERDUE</span></td><td class="ap-due">Apr 5</td><td class="ap-age" style="color:var(--gold)">6d</td><td class="ap-amt">$16,097</td></tr>
-      <tr><td>MMM Transport <span style="font-size:10px;color:var(--muted)">(3 bills)</span></td><td class="ap-due">Mar 12–26</td><td class="ap-age" style="color:var(--gold)">16–30d</td><td class="ap-amt">$6,681</td></tr>
-      <tr><td>G7 Lab <span class="tag">INV-101532</span></td><td class="ap-due">Mar 22</td><td class="ap-age" style="color:var(--gold)">20d</td><td class="ap-amt">$3,715</td></tr>
-      <tr><td>G7 Lab <span class="tag">INV-101558</span></td><td class="ap-due">Apr 8</td><td class="ap-age" style="color:var(--gold)">3d</td><td class="ap-amt">$3,650</td></tr>
-      <tr><td>G7 Lab <span class="tag">INV-101509</span></td><td class="ap-due">Mar 13</td><td class="ap-age" style="color:var(--gold)">29d</td><td class="ap-amt">$3,610</td></tr>
-      <tr><td>Puff Products</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">8d</td><td class="ap-amt">$2,127</td></tr>
-      <tr><td>Airgas</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">8d</td><td class="ap-amt">$1,453</td></tr>
-      <tr><td>TimRay Backhoe <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar 14–Apr 1</td><td class="ap-age" style="color:var(--gold)">10–28d</td><td class="ap-amt">$1,125</td></tr>
-      <tr><td>Airgas</td><td class="ap-due">Mar 30</td><td class="ap-age" style="color:var(--gold)">12d</td><td class="ap-amt">$799</td></tr>
-      <tr><td>Seaside Alarms <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar 15–Apr 10</td><td class="ap-age" style="color:var(--gold)">1–27d</td><td class="ap-amt">$270</td></tr>
+      <tr class="ap-bucket od30"><td colspan="3">1–30 Days Past Due</td><td class="ap-amt">$116,469</td></tr>
+      <tr><td>JAC Real Estate <span class="tag gold">Apr Rent</span></td><td class="ap-due">Apr 1</td><td class="ap-age" style="color:var(--gold)">11d</td><td class="ap-amt" style="color:var(--gold)">$77,261</td></tr>
+      <tr><td>Eversource <span class="tag red">OVERDUE</span></td><td class="ap-due">Apr 5</td><td class="ap-age" style="color:var(--gold)">7d</td><td class="ap-amt">$16,097</td></tr>
+      <tr><td>MMM Transport <span style="font-size:10px;color:var(--muted)">(3 bills)</span></td><td class="ap-due">Mar 12–26</td><td class="ap-age" style="color:var(--gold)">17–31d</td><td class="ap-amt">$6,681</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101532</span></td><td class="ap-due">Mar 22</td><td class="ap-age" style="color:var(--gold)">21d</td><td class="ap-amt">$3,715</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101558</span></td><td class="ap-due">Apr 8</td><td class="ap-age" style="color:var(--gold)">4d</td><td class="ap-amt">$3,650</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101509</span></td><td class="ap-due">Mar 13</td><td class="ap-age" style="color:var(--gold)">30d</td><td class="ap-amt">$3,610</td></tr>
+      <tr><td>Puff Products</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">9d</td><td class="ap-amt">$2,127</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">9d</td><td class="ap-amt">$1,453</td></tr>
+      <tr><td>TimRay Backhoe <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar 14–Apr 1</td><td class="ap-age" style="color:var(--gold)">11–29d</td><td class="ap-amt">$1,125</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Mar 30</td><td class="ap-age" style="color:var(--gold)">13d</td><td class="ap-amt">$799</td></tr>
+      <tr><td>Seaside Alarms <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar 15–Apr 10</td><td class="ap-age" style="color:var(--gold)">2–28d</td><td class="ap-amt">$270</td></tr>
 
       <!-- 31–60 Days Past Due -->
-      <tr class="ap-bucket od60"><td colspan="3">31–60 Days Past Due</td><td class="ap-amt">$85,004</td></tr>
-      <tr><td>JAC Real Estate <span class="tag red">Mar Rent</span></td><td class="ap-due">Mar 1</td><td class="ap-age clr-red">41d</td><td class="ap-amt clr-red">$77,261</td></tr>
-      <tr><td>HSA</td><td class="ap-due">Feb 25</td><td class="ap-age clr-red">45d</td><td class="ap-amt">$4,698</td></tr>
-      <tr><td>MMM Transport</td><td class="ap-due">Feb 11</td><td class="ap-age clr-red">59d</td><td class="ap-amt">$1,014</td></tr>
-      <tr><td>G7 Lab <span class="tag">INV-101477</span></td><td class="ap-due">Feb 27</td><td class="ap-age clr-red">43d</td><td class="ap-amt">$950</td></tr>
-      <tr><td>Airgas</td><td class="ap-due">Mar 2</td><td class="ap-age clr-red">40d</td><td class="ap-amt">$761</td></tr>
-      <tr><td>Creative Services</td><td class="ap-due">Mar 3</td><td class="ap-age clr-red">39d</td><td class="ap-amt">$319</td></tr>
+      <tr class="ap-bucket od60"><td colspan="3">31–60 Days Past Due</td><td class="ap-amt">$85,322</td></tr>
+      <tr><td>JAC Real Estate <span class="tag red">Mar Rent</span></td><td class="ap-due">Mar 1</td><td class="ap-age clr-red">42d</td><td class="ap-amt clr-red">$77,261</td></tr>
+      <tr><td>HSA</td><td class="ap-due">Feb 25</td><td class="ap-age clr-red">46d</td><td class="ap-amt">$4,698</td></tr>
+      <tr><td>MMM Transport</td><td class="ap-due">Feb 11</td><td class="ap-age clr-red">60d</td><td class="ap-amt">$1,014</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101477</span></td><td class="ap-due">Feb 27</td><td class="ap-age clr-red">44d</td><td class="ap-amt">$950</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Mar 2</td><td class="ap-age clr-red">41d</td><td class="ap-amt">$761</td></tr>
+      <tr><td>Creative Services</td><td class="ap-due">Mar 3</td><td class="ap-age clr-red">40d</td><td class="ap-amt">$319</td></tr>
 
       <!-- Current -->
       <tr class="ap-bucket cur"><td colspan="3">Current — Not Yet Due</td><td class="ap-amt">$19,615</td></tr>
@@ -701,12 +701,12 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 
       <!-- 60+ Days Past Due -->
       <tr class="ap-bucket od90"><td colspan="3">60+ Days Past Due</td><td class="ap-amt">$49,958</td></tr>
-      <tr><td>G7 Lab <span style="font-size:10px;color:var(--muted)">(4 bills)</span></td><td class="ap-due">Dec 21–Feb 4</td><td class="ap-age" style="color:#880000">66–111d</td><td class="ap-amt">$10,660</td></tr>
-      <tr><td>Cape Computer Solutions <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar '24–Jan '25</td><td class="ap-age" style="color:#880000">465–741d</td><td class="ap-amt">$10,463</td></tr>
-      <tr><td>Green Analytics MA</td><td class="ap-due">Oct 30 '25</td><td class="ap-age" style="color:#880000">163d</td><td class="ap-amt">$6,755</td></tr>
-      <tr><td>Seaside Alarms <span style="font-size:10px;color:var(--muted)">(prior)</span></td><td class="ap-due">Sep 29 '25</td><td class="ap-age" style="color:#880000">194d</td><td class="ap-amt">$5,429</td></tr>
-      <tr><td>Mass Biolytics</td><td class="ap-due">Dec 14 '24</td><td class="ap-age" style="color:#880000">483d</td><td class="ap-amt">$4,073</td></tr>
-      <tr><td>GreenLight LLC</td><td class="ap-due">Nov 20 '24</td><td class="ap-age" style="color:#880000">507d</td><td class="ap-amt">$3,811</td></tr>
+      <tr><td>G7 Lab <span style="font-size:10px;color:var(--muted)">(4 bills)</span></td><td class="ap-due">Dec 21–Feb 4</td><td class="ap-age" style="color:#880000">67–112d</td><td class="ap-amt">$10,660</td></tr>
+      <tr><td>Cape Computer Solutions <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar '24–Jan '25</td><td class="ap-age" style="color:#880000">466–742d</td><td class="ap-amt">$10,463</td></tr>
+      <tr><td>Green Analytics MA</td><td class="ap-due">Oct 30 '25</td><td class="ap-age" style="color:#880000">164d</td><td class="ap-amt">$6,755</td></tr>
+      <tr><td>Seaside Alarms <span style="font-size:10px;color:var(--muted)">(prior)</span></td><td class="ap-due">Sep 29 '25</td><td class="ap-age" style="color:#880000">195d</td><td class="ap-amt">$5,429</td></tr>
+      <tr><td>Mass Biolytics</td><td class="ap-due">Dec 14 '24</td><td class="ap-age" style="color:#880000">484d</td><td class="ap-amt">$4,073</td></tr>
+      <tr><td>GreenLight LLC</td><td class="ap-due">Nov 20 '24</td><td class="ap-age" style="color:#880000">508d</td><td class="ap-amt">$3,811</td></tr>
       <tr><td style="color:var(--muted)">Other · A&amp;A, TimRay, Northstar, Sparks, RAM, etc.</td><td class="ap-due" style="color:var(--muted)">various</td><td class="ap-age" style="color:var(--muted)">—</td><td class="ap-amt" style="color:var(--muted)">$8,767</td></tr>
 
       <!-- Grand Total -->
@@ -720,16 +720,16 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 <div class="card">
   <div class="section-label">This Week's Priorities</div>
   <ul class="actions">
-    <li><span><b>Pay Eversource $16,097</b> — past due since Apr 5 (6d)</span><span class="when">Today</span></li>
-    <li><span><b>Collect on $73.7k overdue AR</b> — Resinate $8.6k (43d), Silver Roslindale $7.7k (13d), Cannabis Healing $7.0k (40d), Firehouse $6.5k (1d), Bountiful F'ham $6.0k (34d), Kush Groove $5.0k (84d), Rev. Gloucester $4.9k (2d)</span><span class="when">Mon–Fri</span></li>
-    <li><span>Follow up on $10.8k due today–Sun — Enlite IO $4.3k, Roadtrip $3.2k, Enlite N'hampton $3.2k</span><span class="when">Sat–Sun</span></li>
-    <li><span>Resolve March rent ($77,261) past-due <b>41 days</b> with <b>JAC Real Estate</b> — April rent also 10d overdue</span><span class="when">This week</span></li>
-    <li><span>12 pending estimates ($47.6k) in pipeline — Botera (3 locations), Thrive (3), House Premium, Cannabis Connection (2), New Dia, Surfs Up, Pioneer</span><span class="when">Ship &amp; Invoice</span></li>
+    <li><span><b>Pay Eversource $16,097</b> — past due since Apr 5 (7d)</span><span class="when">Today</span></li>
+    <li><span><b>Collect on $73.7k overdue AR</b> — Resinate $8.6k (44d), Silver Roslindale $7.7k (14d), Cannabis Healing $7.0k (41d), Firehouse $6.5k (2d), Bountiful F'ham $6.0k (35d), Kush Groove $5.0k (85d), Rev. Gloucester $4.9k (3d)</span><span class="when">Mon–Fri</span></li>
+    <li><span>Follow up on $24.5k due this week — Cannabis Healing $6.1k, Rev. Beverly $4.7k, Enlite IO $4.3k, Roadtrip $3.2k, Enlite N'hampton $3.2k, Major Bloom $3.0k</span><span class="when">Sun–Sat</span></li>
+    <li><span>Resolve March rent ($77,261) past-due <b>42 days</b> with <b>JAC Real Estate</b> — April rent also 11d overdue</span><span class="when">This week</span></li>
+    <li><span>13 pending estimates ($50.0k) in pipeline — Botera (3 locations), Thrive (3), House Premium, Cannabis Connection (2), New Dia, Surfs Up, Capeway, Fresh Connection</span><span class="when">Ship &amp; Invoice</span></li>
   </ul>
 </div>
 
 <div class="footer">
-  Cape Cod Grow Lab · Refreshed April 11, 2026 · 12:04 AM · QuickBooks Online live · Bank balances: screenshot → update
+  Cape Cod Grow Lab · Refreshed April 12, 2026 · 12:04 AM · QuickBooks Online live · Bank balances: screenshot → update
 </div>
 
 </div><!-- /wrap -->
