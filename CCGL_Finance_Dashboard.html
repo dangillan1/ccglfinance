@@ -180,6 +180,7 @@ tr.hm-14{background:rgba(184,115,22,.02) !important} tr.hm-14 td:first-child{bor
 .ap-od30{background:var(--gold-light)} .ap-od30 .ap-seg-v{color:var(--gold)}
 .ap-od60{background:var(--red-light)} .ap-od60 .ap-seg-v{color:var(--red)}
 .ap-od90{background:rgba(140,0,0,.05)} .ap-od90 .ap-seg-v{color:#880000}
+.ap-total{background:var(--gold-light)}
 
 /* ── AP table (compact) ───────────────────────────────────── */
 table.ap{width:100%;border-collapse:collapse;font-size:13px}
@@ -398,13 +399,15 @@ ul.actions li b{color:var(--navy)}
   .alert h4{font-size:12px;line-height:1.4}
   .alert p{font-size:11px;line-height:1.5}
 
-  /* AR summary bar — 3-col grid to save vertical space */
+  /* AR summary bar — 3-col grid, Total full width at bottom */
   .ar-bar{display:grid;grid-template-columns:repeat(3,1fr);border-radius:8px}
   .ar-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
   .ar-seg:nth-child(3n){border-right:none}
-  .ar-seg:nth-last-child(-n+1){border-bottom:none}
+  .ar-seg:last-child{grid-column:1 / -1;border-right:none;border-bottom:none;
+    text-align:center;background:var(--teal-light);padding:8px}
   .ar-seg-l{font-size:8px}
   .ar-seg-v{font-size:14px}
+  .ar-seg:last-child .ar-seg-v{font-size:18px}
   .ar-seg-c{font-size:8px}
 
   /* AR table — horizontal scroll */
@@ -415,13 +418,15 @@ ul.actions li b{color:var(--navy)}
   .days-od{font-size:8px;padding:1px 4px}
   .due-note{font-size:8px}
 
-  /* AP aging bar — 2x2 grid to save vertical space */
+  /* AP aging bar — 2x2 grid, Total full width at bottom */
   .ap-aging{display:grid;grid-template-columns:1fr 1fr;border-radius:8px}
   .ap-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
   .ap-seg:nth-child(2n){border-right:none}
-  .ap-seg:nth-last-child(-n+2){border-bottom:none}
+  .ap-seg.ap-total{grid-column:1 / -1;border-right:none;border-bottom:none;
+    text-align:center;padding:8px}
   .ap-seg-l{font-size:8px}
   .ap-seg-v{font-size:14px}
+  .ap-seg.ap-total .ap-seg-v{font-size:18px}
   .ap-seg-c{font-size:8px}
 
   /* AP table — horizontal scroll */
@@ -757,6 +762,11 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <span class="ap-seg-l">60+ Days Past Due</span>
       <span class="ap-seg-v clr-red">$50.0k</span>
       <span class="ap-seg-c">G7 · Cape Comp · Mass Bio · 26 bills</span>
+    </div>
+    <div class="ap-seg ap-total">
+      <span class="ap-seg-l">Total Open AP</span>
+      <span class="ap-seg-v" style="color:var(--gold)">$271,364</span>
+      <span class="ap-seg-c">55 bills</span>
     </div>
   </div>
   <!-- AP Detail — grouped by aging bucket -->
