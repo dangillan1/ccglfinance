@@ -346,13 +346,15 @@ ul.actions li b{color:var(--navy)}
   .section-label{font-size:9px;margin-bottom:10px;flex-direction:column;align-items:flex-start;gap:4px}
   .section-label .meta{font-size:9px}
 
-  /* Bank — single column, large values */
-  .bank-grid{grid-template-columns:1fr;gap:8px}
-  .bank-cell{padding:10px 12px;border-radius:8px}
+  /* Bank — Total Cash big on top, Op | WH side by side below */
+  .bank-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .bank-cell{padding:8px 10px;border-radius:8px}
   .bank-cell label{font-size:9px;margin-bottom:2px}
-  .bank-cell input{font-size:22px}
-  .bank-cell .shadow-line{font-size:9px}
-  .bank-total input{font-size:24px}
+  .bank-cell input{font-size:17px}
+  .bank-cell .shadow-line{font-size:8px}
+  .bank-total{grid-column:1 / -1;order:-1}
+  .bank-total input{font-size:26px}
+  .bank-total label{font-size:10px}
 
   /* KPIs — 2-col grid so they stay compact but readable */
   .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
@@ -374,20 +376,20 @@ ul.actions li b{color:var(--navy)}
   .rev-lbl{font-size:8px;bottom:-20px}
   .rev-footer{flex-direction:column;gap:4px;font-size:9px;margin-top:8px}
 
-  /* Pipeline — stacked, smaller */
+  /* Pipeline — Featured big on top, MTD | Pending side by side below */
   .sales-pipeline{padding:12px 10px;border-radius:10px;margin-bottom:12px}
   .pipeline-header{flex-direction:column;gap:4px;margin-bottom:8px;padding-bottom:6px}
   .pipeline-title{font-size:10px}
   .march-ref{font-size:10px}
   .march-ref b{font-size:12px}
-  .pipeline-grid{grid-template-columns:1fr;gap:6px}
+  .pipeline-grid{grid-template-columns:1fr 1fr;gap:6px}
   .pipeline-op{display:none}
-  .pipeline-card{padding:10px 12px}
+  .pipeline-card{padding:8px 10px}
   .pipeline-card h3{font-size:8px}
-  .pipeline-val{font-size:20px}
+  .pipeline-val{font-size:18px}
   .pipeline-sub{font-size:9px}
-  .pipeline-featured{padding:12px 14px}
-  .pipeline-featured .pipeline-val{font-size:24px}
+  .pipeline-featured{grid-column:1 / -1;order:-1;padding:12px 14px}
+  .pipeline-featured .pipeline-val{font-size:26px}
   .pipeline-featured .pipeline-sub{font-size:10px}
 
   /* Alert — compact */
