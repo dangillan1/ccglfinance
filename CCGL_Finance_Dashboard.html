@@ -293,23 +293,23 @@ ul.actions li b{color:var(--navy)}
   .kpis{grid-template-columns:repeat(2,1fr);gap:10px}
   .bank-grid{grid-template-columns:1fr;gap:10px}
   .cf-weeks{grid-template-columns:repeat(2,1fr)}
-  .ar-bar,.ap-aging{flex-wrap:wrap}
-  .ar-seg,.ap-seg{min-width:48%;border-right:1px solid var(--border)}
-  /* Header: stack cleanly, keep live pill right-aligned */
+  .ar-bar,.ap-aging{flex-direction:column}
+  .ar-seg,.ap-seg{border-right:none;border-bottom:1px solid var(--border)}
+  .ar-seg:last-child,.ap-seg:last-child{border-bottom:none}
   header{gap:12px;margin-bottom:18px;padding-bottom:16px}
   .brand-text h1{font-size:17px}
   .brand-text .sub{font-size:11px}
   .header-right{text-align:left;width:100%}
   .header-right .week{font-size:11px}
-  /* Wrap tables so they can scroll horizontally if needed */
   .card{padding:14px 12px;margin-bottom:14px;border-radius:10px}
   .section-label{font-size:10px;margin-bottom:12px}
+  /* Horizontal scroll wrappers for tables */
   table.ar,table.ap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
   table.ar{font-size:10px}
   table.ar th,table.ar td{padding:4px 5px}
   table.ap{font-size:11px;white-space:normal}
   table.ap td{padding:4px 5px}
-  /* Sales pipeline: single column, smaller featured value */
+  /* Pipeline single column */
   .sales-pipeline{padding:14px 14px}
   .pipeline-header{margin-bottom:10px;padding-bottom:8px}
   .pipeline-title{font-size:11px}
@@ -318,27 +318,126 @@ ul.actions li b{color:var(--navy)}
   .pipeline-card{padding:11px 13px}
   .pipeline-val{font-size:22px}
   .pipeline-featured .pipeline-val{font-size:26px}
-  /* KPI cards */
   .kpi-card{padding:13px 14px}
   .kpi-val{font-size:22px}
   .kpi-sub{font-size:10px}
-  /* Bank inputs readable on phone */
   .bank-cell input{font-size:18px}
+  /* Revenue chart: allow horizontal scroll on smaller screens */
+  .rev-chart{gap:4px}
+  .rev-lbl{font-size:8px}
 }
+
+/* ── MOBILE ──────────────────────────────────────────────── */
 @media(max-width:500px){
-  .wrap{padding:14px 10px 50px}
-  .kpis{grid-template-columns:1fr;gap:8px}
-  .kpi-val{font-size:24px}
-  .cf-weeks{grid-template-columns:1fr}
-  .bank-cell{padding:10px 12px}
-  .bank-cell input{font-size:19px}
-  .bank-total input{font-size:20px}
-  .ar-seg,.ap-seg{min-width:100%;border-right:none;border-bottom:1px solid var(--border)}
-  .ar-seg:last-child,.ap-seg:last-child{border-bottom:none}
+  .wrap{padding:12px 8px 40px}
+
+  /* Header — compact stack */
+  header{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px;padding-bottom:12px}
   .brand{gap:10px}
-  .brand img{width:36px;height:36px}
-  .brand-text h1{font-size:16px}
+  .brand img{width:32px !important;height:32px !important}
+  .brand-text h1{font-size:15px}
+  .brand-text .sub{font-size:10px;line-height:1.4}
+  .header-right{text-align:left;width:100%}
+  .header-right .week{font-size:10px}
+  .live-dot{font-size:10px}
+
+  /* Cards */
+  .card{padding:12px 10px;margin-bottom:12px;border-radius:8px}
+  .section-label{font-size:9px;margin-bottom:10px;flex-direction:column;align-items:flex-start;gap:4px}
+  .section-label .meta{font-size:9px}
+
+  /* Bank — single column, large values */
+  .bank-grid{grid-template-columns:1fr;gap:8px}
+  .bank-cell{padding:10px 12px;border-radius:8px}
+  .bank-cell label{font-size:9px;margin-bottom:2px}
+  .bank-cell input{font-size:22px}
+  .bank-cell .shadow-line{font-size:9px}
+  .bank-total input{font-size:24px}
+
+  /* KPIs — 2-col grid so they stay compact but readable */
+  .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+  .kpi-card{padding:10px 12px}
+  .kpi-card h3{font-size:9px;margin-bottom:2px}
+  .kpi-val{font-size:22px}
+  .kpi-sub{font-size:9px;margin-top:4px}
+
+  /* Revenue chart — horizontal scroll container */
+  .rev-chart-card{padding:12px 10px 10px}
+  .rev-header{margin-bottom:10px;gap:4px;flex-direction:column}
+  .rev-title{font-size:10px}
+  .rev-meta{font-size:9px}
+  .rev-chart{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    min-width:0;padding-bottom:24px;height:100px;padding-top:18px}
+  .rev-bar-wrap{min-width:52px;flex:0 0 52px}
+  .rev-bar{max-width:40px}
+  .rev-bar::after{font-size:8px;top:-15px}
+  .rev-lbl{font-size:8px;bottom:-20px}
+  .rev-footer{flex-direction:column;gap:4px;font-size:9px;margin-top:8px}
+
+  /* Pipeline — stacked, smaller */
+  .sales-pipeline{padding:12px 10px;border-radius:10px;margin-bottom:12px}
+  .pipeline-header{flex-direction:column;gap:4px;margin-bottom:8px;padding-bottom:6px}
+  .pipeline-title{font-size:10px}
+  .march-ref{font-size:10px}
+  .march-ref b{font-size:12px}
+  .pipeline-grid{grid-template-columns:1fr;gap:6px}
+  .pipeline-op{display:none}
+  .pipeline-card{padding:10px 12px}
+  .pipeline-card h3{font-size:8px}
+  .pipeline-val{font-size:20px}
+  .pipeline-sub{font-size:9px}
+  .pipeline-featured{padding:12px 14px}
   .pipeline-featured .pipeline-val{font-size:24px}
+  .pipeline-featured .pipeline-sub{font-size:10px}
+
+  /* Alert — compact */
+  .alert{padding:10px 12px;gap:10px;border-radius:8px;margin-bottom:12px}
+  .alert-icon{width:24px;height:24px;font-size:11px;border-radius:6px}
+  .alert h4{font-size:12px;line-height:1.4}
+  .alert p{font-size:11px;line-height:1.5}
+
+  /* AR summary bar — vertical stack, each full width */
+  .ar-bar{flex-direction:column;border-radius:8px}
+  .ar-seg{padding:8px 12px;border-right:none;border-bottom:1px solid var(--border)}
+  .ar-seg:last-child{border-bottom:none}
+  .ar-seg-l{font-size:9px}
+  .ar-seg-v{font-size:16px}
+  .ar-seg-c{font-size:9px}
+
+  /* AR table — horizontal scroll */
+  table.ar{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;font-size:10px}
+  table.ar thead,table.ar tbody,table.ar tfoot{display:table;width:max-content;min-width:680px}
+  table.ar th{font-size:9px;padding:4px 5px}
+  table.ar td{padding:3px 5px}
+  .days-od{font-size:8px;padding:1px 4px}
+  .due-note{font-size:8px}
+
+  /* AP aging bar — vertical stack */
+  .ap-aging{flex-direction:column;border-radius:8px}
+  .ap-seg{padding:8px 12px;border-right:none;border-bottom:1px solid var(--border)}
+  .ap-seg:last-child{border-bottom:none}
+  .ap-seg-l{font-size:9px}
+  .ap-seg-v{font-size:16px}
+  .ap-seg-c{font-size:9px}
+
+  /* AP table — horizontal scroll */
+  table.ap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table.ap thead,table.ap tbody{display:table;width:100%;min-width:420px}
+  table.ap td{font-size:10px;padding:4px 6px}
+  table.ap tr.ap-bucket td{font-size:8px;padding:3px 6px}
+  .tag{font-size:8px;padding:1px 5px;margin-left:4px}
+
+  /* Priorities */
+  ul.actions li{font-size:12px;flex-direction:column;gap:4px;padding:8px 0}
+  ul.actions li .when{font-size:9px;margin-top:0}
+
+  /* Footer */
+  .footer{font-size:9px;margin-top:24px;padding-top:12px}
+
+  /* Password overlay — mobile friendly */
+  #pw-overlay .pw-logo{font-size:12px}
+  #pw-overlay input{font-size:18px;width:200px;padding:12px 16px}
+  #pw-overlay .pw-err{font-size:11px}
 }
 @media print{body{background:#fff}.card,.kpi-card{box-shadow:none;border-color:#ccc}}
 
