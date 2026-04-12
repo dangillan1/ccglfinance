@@ -398,13 +398,14 @@ ul.actions li b{color:var(--navy)}
   .alert h4{font-size:12px;line-height:1.4}
   .alert p{font-size:11px;line-height:1.5}
 
-  /* AR summary bar — vertical stack, each full width */
-  .ar-bar{flex-direction:column;border-radius:8px}
-  .ar-seg{padding:8px 12px;border-right:none;border-bottom:1px solid var(--border)}
-  .ar-seg:last-child{border-bottom:none}
-  .ar-seg-l{font-size:9px}
-  .ar-seg-v{font-size:16px}
-  .ar-seg-c{font-size:9px}
+  /* AR summary bar — 3-col grid to save vertical space */
+  .ar-bar{display:grid;grid-template-columns:repeat(3,1fr);border-radius:8px}
+  .ar-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .ar-seg:nth-child(3n){border-right:none}
+  .ar-seg:nth-last-child(-n+1){border-bottom:none}
+  .ar-seg-l{font-size:8px}
+  .ar-seg-v{font-size:14px}
+  .ar-seg-c{font-size:8px}
 
   /* AR table — horizontal scroll */
   table.ar{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;font-size:10px}
@@ -414,13 +415,14 @@ ul.actions li b{color:var(--navy)}
   .days-od{font-size:8px;padding:1px 4px}
   .due-note{font-size:8px}
 
-  /* AP aging bar — vertical stack */
-  .ap-aging{flex-direction:column;border-radius:8px}
-  .ap-seg{padding:8px 12px;border-right:none;border-bottom:1px solid var(--border)}
-  .ap-seg:last-child{border-bottom:none}
-  .ap-seg-l{font-size:9px}
-  .ap-seg-v{font-size:16px}
-  .ap-seg-c{font-size:9px}
+  /* AP aging bar — 2x2 grid to save vertical space */
+  .ap-aging{display:grid;grid-template-columns:1fr 1fr;border-radius:8px}
+  .ap-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .ap-seg:nth-child(2n){border-right:none}
+  .ap-seg:nth-last-child(-n+2){border-bottom:none}
+  .ap-seg-l{font-size:8px}
+  .ap-seg-v{font-size:14px}
+  .ap-seg-c{font-size:8px}
 
   /* AP table — horizontal scroll */
   table.ap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
