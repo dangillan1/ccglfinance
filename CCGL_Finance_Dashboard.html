@@ -363,18 +363,18 @@ ul.actions li b{color:var(--navy)}
   .kpi-val{font-size:22px}
   .kpi-sub{font-size:9px;margin-top:4px}
 
-  /* Revenue chart — horizontal scroll container */
-  .rev-chart-card{padding:12px 10px 10px}
-  .rev-header{margin-bottom:10px;gap:4px;flex-direction:column}
+  /* Revenue chart — fit all 12 bars within page width */
+  .rev-chart-card{padding:10px 8px 8px}
+  .rev-header{margin-bottom:8px;gap:4px;flex-direction:column}
   .rev-title{font-size:10px}
   .rev-meta{font-size:9px}
-  .rev-chart{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-    min-width:0;padding-bottom:24px;height:100px;padding-top:18px}
-  .rev-bar-wrap{min-width:52px;flex:0 0 52px}
-  .rev-bar{max-width:40px}
-  .rev-bar::after{font-size:8px;top:-15px}
-  .rev-lbl{font-size:8px;bottom:-20px}
-  .rev-footer{flex-direction:column;gap:4px;font-size:9px;margin-top:8px}
+  .rev-chart{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;
+    height:80px;padding-top:16px;padding-bottom:18px;overflow:hidden}
+  .rev-bar-wrap{min-width:0}
+  .rev-bar{max-width:none}
+  .rev-bar::after{font-size:7px;top:-14px}
+  .rev-lbl{font-size:7px;letter-spacing:0;bottom:-16px}
+  .rev-footer{flex-direction:column;gap:3px;font-size:9px;margin-top:6px}
 
   /* Pipeline — Featured big on top, MTD | Pending side by side below */
   .sales-pipeline{padding:12px 10px;border-radius:10px;margin-bottom:12px}
