@@ -364,6 +364,7 @@ ul.actions li b{color:var(--navy)}
   .kpi-val{font-size:22px}
   .kpi-sub{font-size:9px;margin-top:4px}
 
+  /* LOCKED LAYOUT: Collections 12-col grid — do not regenerate */
   /* Revenue chart — fit all 12 bars within page width */
   .rev-chart-card{padding:10px 8px 8px}
   .rev-header{margin-bottom:8px;gap:4px;flex-direction:column}
@@ -399,6 +400,7 @@ ul.actions li b{color:var(--navy)}
   .alert h4{font-size:12px;line-height:1.4}
   .alert p{font-size:11px;line-height:1.5}
 
+  /* LOCKED LAYOUT: AR summary 3-col grid (3+3+1) — do not regenerate */
   /* AR summary bar — 3-col grid, Total full width at bottom */
   .ar-bar{display:grid;grid-template-columns:repeat(3,1fr);border-radius:8px}
   .ar-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -418,6 +420,7 @@ ul.actions li b{color:var(--navy)}
   .days-od{font-size:8px;padding:1px 4px}
   .due-note{font-size:8px}
 
+  /* LOCKED LAYOUT: AP aging 2x2 grid + Total card — do not regenerate */
   /* AP aging bar — 2x2 grid, Total full width at bottom */
   .ap-aging{display:grid;grid-template-columns:1fr 1fr;border-radius:8px}
   .ap-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -560,7 +563,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
 </div>
 
-<!-- ── ROLLING 12-MONTH REVENUE ────────────────────────────── -->
+<!-- LOCKED LAYOUT: Revenue chart uses 12-col grid (repeat(12,1fr)), no scrolling. Update VALUES only, not structure. -->
 <div class="rev-chart-card">
   <div class="rev-header">
     <span class="rev-title">Rolling 12-Month Revenue</span>
@@ -667,7 +670,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <span>Receivables by Week</span>
     <span class="meta">Live from QBO · 52 invoices · 41 customers</span>
   </div>
-  <!-- Clean summary bar (replaces chips) -->
+  <!-- LOCKED LAYOUT: AR summary bar is 7 segments in a 3-col mobile grid (3+3+1). Update VALUES only, not structure. -->
   <div class="ar-bar">
     <div class="ar-seg seg-red">
       <span class="ar-seg-l">Overdue</span>
@@ -741,7 +744,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <span>Open Payables — Aging</span>
     <span class="meta">$271.4k · 55 bills</span>
   </div>
-  <!-- AP Aging Bar -->
+  <!-- LOCKED LAYOUT: AP aging bar is 4 buckets + Total card in a 2x2 mobile grid. Update VALUES only, not structure. -->
   <div class="ap-aging">
     <div class="ap-seg ap-cur">
       <span class="ap-seg-l">Current</span>
