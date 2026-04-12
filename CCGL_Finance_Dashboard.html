@@ -738,68 +738,68 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 // ── AR DATA (with daysOD + due date for overdue rows) ──────────────────────
 const arBuckets = {
   "overdue":[
-    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":84,"due":"Jan 17"},
-    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":43,"due":"Feb 27"},
-    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":40,"due":"Mar 2"},
-    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":38,"due":"Mar 4"},
-    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":34,"due":"Mar 8"},
-    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":34,"due":"Mar 8"},
-    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":13,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":13,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":13,"due":"Mar 29"},
-    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":13,"due":"Mar 29"},
-    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":9,"due":"Apr 2"},
-    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":8,"due":"Apr 3"},
-    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":6,"due":"Apr 5"},
-    {"name":"Reverie 73 Gloucester","amt":4939.25,"id":1506,"daysOD":2,"due":"Apr 9"},
-    {"name":"Firehouse","amt":6496.25,"id":1460,"daysOD":1,"due":"Apr 10"}
+    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":85,"due":"Jan 17"},
+    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":44,"due":"Feb 27"},
+    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":41,"due":"Mar 2"},
+    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":39,"due":"Mar 4"},
+    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":35,"due":"Mar 8"},
+    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":35,"due":"Mar 8"},
+    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":14,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":14,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":14,"due":"Mar 29"},
+    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":14,"due":"Mar 29"},
+    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":10,"due":"Apr 2"},
+    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":9,"due":"Apr 3"},
+    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":7,"due":"Apr 5"},
+    {"name":"Reverie 73 Gloucester","amt":4939.25,"id":1506,"daysOD":3,"due":"Apr 9"},
+    {"name":"Firehouse","amt":6496.25,"id":1460,"daysOD":2,"due":"Apr 10"}
   ],
   "wk1":[
-    {"name":"Enlite Indian Orchard","amt":4315.0,"id":1467},
-    {"name":"Roadtrip","amt":3241.23,"id":1464},
-    {"name":"Enlite Northampton","amt":3200.0,"id":1466}
-  ],
-  "wk2":[
     {"name":"Cannabis Healing","amt":6101.0,"id":1468},
     {"name":"Reverie 73 Beverly","amt":4661.0,"id":1469},
-    {"name":"Great Barrington Dispensary","amt":4245.0,"id":1472},
-    {"name":"Major Bloom","amt":3017.6,"id":1465},
-    {"name":"Greene Street Cannabis","amt":2613.91,"id":1473}
+    {"name":"Enlite Indian Orchard","amt":4315.0,"id":1467},
+    {"name":"Roadtrip","amt":3241.23,"id":1464},
+    {"name":"Enlite Northampton","amt":3200.0,"id":1466},
+    {"name":"Major Bloom","amt":3017.6,"id":1465}
   ],
-  "wk3":[
-    {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490},
+  "wk2":[
     {"name":"Kush Groove Cambridge","amt":9366.5,"id":1485},
     {"name":"EMBR (Kur Retail)","amt":8212.5,"id":1480},
     {"name":"Fyre Ants (Apical)","amt":8137.5,"id":1483},
-    {"name":"Hennep","amt":4250.0,"id":1489},
-    {"name":"CannaBarn","amt":3900.0,"id":1488},
+    {"name":"Great Barrington Dispensary","amt":4245.0,"id":1472},
     {"name":"Potency","amt":3633.85,"id":1478},
     {"name":"EMBR (Northampton)","amt":3537.5,"id":1482},
     {"name":"Resinate, Inc.","amt":3200.0,"id":1479},
     {"name":"Pineapple Express, LLC","amt":3087.5,"id":1474},
+    {"name":"Greene Street Cannabis","amt":2613.91,"id":1473},
     {"name":"RISE Maynard","amt":2358.75,"id":1476},
     {"name":"RISE Dracut","amt":2358.75,"id":1475}
   ],
-  "wk4":[
+  "wk3":[
+    {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490},
     {"name":"Insa","amt":8245.0,"id":1492},
     {"name":"Eastern Cannabis Co.","amt":8100.75,"id":1487},
     {"name":"Seaside Joint Ventures Inc.","amt":5946.5,"id":1495},
+    {"name":"Hennep","amt":4250.0,"id":1489},
+    {"name":"CannaBarn","amt":3900.0,"id":1488},
     {"name":"Hennep","amt":2850.0,"id":1494},
     {"name":"Peak Cannabis Co","amt":2487.5,"id":1493},
     {"name":"Blossom Flower","amt":1785.0,"id":1491}
   ],
+  "wk4":[
+    {"name":"Reverie 73 Lowell","amt":5116.25,"id":1505},
+    {"name":"Reverie 73 Beverly","amt":5010.75,"id":1507},
+    {"name":"Medicine Man","amt":3325.0,"id":1504},
+    {"name":"The Agriculturalist","amt":3050.5,"id":1502},
+    {"name":"Fresh Connection","amt":2146.4,"id":1503}
+  ],
   "later":[
     {"name":"Ember Gardens Cape Cod LLC","amt":5307.66,"id":1463},
-    {"name":"Reverie 73 Lowell","amt":5116.25,"id":1505},
     {"name":"Trinity Naturals","amt":5100.25,"id":1508},
-    {"name":"Reverie 73 Beverly","amt":5010.75,"id":1507},
-    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":12,"due":"Mar 30"},
-    {"name":"Medicine Man","amt":3325.0,"id":1504},
+    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":13,"due":"Mar 30"},
     {"name":"Ember Gardens Cape Cod LLC","amt":3237.5,"id":1425},
-    {"name":"The Agriculturalist","amt":3050.5,"id":1502},
-    {"name":"Fresh Connection","amt":2146.4,"id":1503},
     {"name":"Ember Gardens Cape Cod LLC","amt":302.5,"id":1471},
-    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":25,"due":"Mar 17"}
+    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":26,"due":"Mar 17"}
   ]
 };
 
