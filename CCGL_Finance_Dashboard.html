@@ -551,14 +551,14 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <div class="pipeline-op">+</div>
     <div class="pipeline-card">
       <h3>Pending Shipments</h3>
-      <div class="pipeline-val clr-teal">$44.5k</div>
-      <div class="pipeline-sub"><b>11</b> pending estimates · QBO</div>
+      <div class="pipeline-val clr-teal">$50.0k</div>
+      <div class="pipeline-sub"><b>13</b> pending estimates · QBO</div>
     </div>
     <div class="pipeline-op">=</div>
     <div class="pipeline-card pipeline-featured">
       <h3>Current Shipped + Pending</h3>
-      <div class="pipeline-val">$83.5k</div>
-      <div class="pipeline-sub">$39,031 actual + $44,465 estimated</div>
+      <div class="pipeline-val">$89.0k</div>
+      <div class="pipeline-sub">$39,031 actual + $49,961 estimated</div>
     </div>
   </div>
 </div>
@@ -660,7 +660,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="alert-icon">!</div>
   <div>
     <h4>⚠️ 3 invoices newly overdue ($10.8k) · Mar rent $77,261 still unpaid (43d) · Eversource $16,097 (8d)</h4>
-    <p>Operating <b>$20,642</b> + Wholesale $11,381 = <b>$32,023</b> combined cash. Last week: <b>$39,341</b> collected across 7 payments. March rent ($77,261 · <b>43d</b>), HSA $4,698 (47d), and Eversource $16,097 (8d) remain outstanding. <b>$84,504</b> AR overdue across 18 invoices — Enlite IO $4.3k, Enlite N $3.2k, Roadtrip $3.2k now 1d past due. Due this week: Cannabis Healing $6.1k, Rev. Beverly $4.7k, Great Barrington $4.2k, Major Bloom $3.0k, Greene Street $2.6k ($20,639 from 5 invoices). Apr MTD income <b>$39,031</b> + 11 pending estimates ($44.5k) = <b>$83.5k</b> pipeline.</p>
+    <p>Operating <b>$20,642</b> + Wholesale $11,381 = <b>$32,023</b> combined cash. Last week: <b>$39,341</b> collected across 7 payments. March rent ($77,261 · <b>43d</b>), HSA $4,698 (47d), and Eversource $16,097 (8d) remain outstanding. <b>$84,504</b> AR overdue across 18 invoices — Enlite IO $4.3k, Enlite N $3.2k, Roadtrip $3.2k now 1d past due. Due this week: Cannabis Healing $6.1k, Rev. Beverly $4.7k, Great Barrington $4.2k, Major Bloom $3.0k, Greene Street $2.6k ($20,639 from 5 invoices). Apr MTD income <b>$39,031</b> + 13 pending estimates ($50.0k) = <b>$89.0k</b> pipeline.</p>
   </div>
 </div>
 
@@ -704,7 +704,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     </div>
     <div class="ar-seg">
       <span class="ar-seg-l">Total</span>
-      <span class="ar-seg-v">$239,697</span>
+      <span class="ar-seg-v">$239,696</span>
       <span class="ar-seg-c">52 invoices</span>
     </div>
   </div>
@@ -729,7 +729,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
         <td class="col-wk3">$29,415</td>
         <td class="col-wk4">$23,749</td>
         <td class="col-later">$13,092</td>
-        <td>$239,697</td>
+        <td>$239,696</td>
       </tr>
       <tr><td colspan="8" style="font-size:10px;color:var(--muted);padding-top:8px;border-top:none;font-weight:500">
         Left bar = days overdue heat map · darker = older debt · 18 invoices overdue as of Apr 13
@@ -841,7 +841,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <li><span><b>Collect on $84.5k overdue AR</b> — Resinate $8.6k (45d), Silver Roslindale $7.7k (15d), Cannabis Healing $7.0k (42d), Firehouse $6.5k (3d), Bountiful F'ham $6.0k (36d), Kush Groove $5.0k (86d), Rev. Gloucester $4.9k (4d), Enlite IO $4.3k (1d)</span><span class="when">Mon–Fri</span></li>
     <li><span>Follow up on $20.6k due this week — Cannabis Healing $6.1k, Rev. Beverly $4.7k, Great Barrington $4.2k, Major Bloom $3.0k, Greene Street $2.6k</span><span class="when">Mon–Sat</span></li>
     <li><span>Resolve March rent ($77,261) past-due <b>43 days</b> with <b>JAC Real Estate</b> — April rent also 12d overdue</span><span class="when">This week</span></li>
-    <li><span>11 pending estimates ($44.5k) in pipeline — Botera (3 locations), Thrive (3), House Premium, Cannabis Connection (2), New Dia, Surfs Up</span><span class="when">Ship &amp; Invoice</span></li>
+    <li><span>13 pending estimates ($50.0k) in pipeline — Botera (3 locations), Thrive (3), House Premium, Cannabis Connection (2), New Dia, Surfs Up, Capeway, Fresh Connection</span><span class="when">Ship &amp; Invoice</span></li>
   </ul>
 </div>
 
@@ -855,55 +855,56 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 // ── AR DATA (with daysOD + due date for overdue rows) ──────────────────────
 const arBuckets = {
   "overdue":[
-    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":85,"due":"Jan 17"},
-    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":44,"due":"Feb 27"},
-    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":41,"due":"Mar 2"},
-    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":39,"due":"Mar 4"},
-    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":35,"due":"Mar 8"},
-    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":35,"due":"Mar 8"},
-    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":14,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":14,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":14,"due":"Mar 29"},
-    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":14,"due":"Mar 29"},
-    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":10,"due":"Apr 2"},
-    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":9,"due":"Apr 3"},
-    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":7,"due":"Apr 5"},
-    {"name":"Reverie 73 Gloucester","amt":4939.25,"id":1506,"daysOD":3,"due":"Apr 9"},
-    {"name":"Firehouse","amt":6496.25,"id":1460,"daysOD":2,"due":"Apr 10"}
+    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":86,"due":"Jan 17"},
+    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":45,"due":"Feb 27"},
+    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":42,"due":"Mar 2"},
+    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":40,"due":"Mar 4"},
+    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":36,"due":"Mar 8"},
+    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":36,"due":"Mar 8"},
+    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":15,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":15,"due":"Mar 29"},
+    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":15,"due":"Mar 29"},
+    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":15,"due":"Mar 29"},
+    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":11,"due":"Apr 2"},
+    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":10,"due":"Apr 3"},
+    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":8,"due":"Apr 5"},
+    {"name":"Reverie 73 Gloucester","amt":4939.25,"id":1506,"daysOD":4,"due":"Apr 9"},
+    {"name":"Firehouse","amt":6496.25,"id":1460,"daysOD":3,"due":"Apr 10"},
+    {"name":"Enlite Indian Orchard","amt":4315.0,"id":1467,"daysOD":1,"due":"Apr 12"},
+    {"name":"Roadtrip","amt":3241.23,"id":1464,"daysOD":1,"due":"Apr 12"},
+    {"name":"Enlite Northampton","amt":3200.0,"id":1466,"daysOD":1,"due":"Apr 12"}
   ],
   "wk1":[
     {"name":"Cannabis Healing","amt":6101.0,"id":1468},
     {"name":"Reverie 73 Beverly","amt":4661.0,"id":1469},
-    {"name":"Enlite Indian Orchard","amt":4315.0,"id":1467},
-    {"name":"Roadtrip","amt":3241.23,"id":1464},
-    {"name":"Enlite Northampton","amt":3200.0,"id":1466},
-    {"name":"Major Bloom","amt":3017.6,"id":1465}
+    {"name":"Great Barrington Dispensary","amt":4245.0,"id":1472},
+    {"name":"Major Bloom","amt":3017.6,"id":1465},
+    {"name":"Greene Street Cannabis","amt":2613.91,"id":1473}
   ],
   "wk2":[
+    {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490},
     {"name":"Kush Groove Cambridge","amt":9366.5,"id":1485},
     {"name":"EMBR (Kur Retail)","amt":8212.5,"id":1480},
     {"name":"Fyre Ants (Apical)","amt":8137.5,"id":1483},
-    {"name":"Great Barrington Dispensary","amt":4245.0,"id":1472},
+    {"name":"Hennep","amt":4250.0,"id":1489},
+    {"name":"CannaBarn","amt":3900.0,"id":1488},
     {"name":"Potency","amt":3633.85,"id":1478},
     {"name":"EMBR (Northampton)","amt":3537.5,"id":1482},
     {"name":"Resinate, Inc.","amt":3200.0,"id":1479},
     {"name":"Pineapple Express, LLC","amt":3087.5,"id":1474},
-    {"name":"Greene Street Cannabis","amt":2613.91,"id":1473},
     {"name":"RISE Maynard","amt":2358.75,"id":1476},
     {"name":"RISE Dracut","amt":2358.75,"id":1475}
   ],
   "wk3":[
-    {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490},
     {"name":"Insa","amt":8245.0,"id":1492},
     {"name":"Eastern Cannabis Co.","amt":8100.75,"id":1487},
     {"name":"Seaside Joint Ventures Inc.","amt":5946.5,"id":1495},
-    {"name":"Hennep","amt":4250.0,"id":1489},
-    {"name":"CannaBarn","amt":3900.0,"id":1488},
     {"name":"Hennep","amt":2850.0,"id":1494},
     {"name":"Peak Cannabis Co","amt":2487.5,"id":1493},
     {"name":"Blossom Flower","amt":1785.0,"id":1491}
   ],
   "wk4":[
+    {"name":"Trinity Naturals","amt":5100.25,"id":1508},
     {"name":"Reverie 73 Lowell","amt":5116.25,"id":1505},
     {"name":"Reverie 73 Beverly","amt":5010.75,"id":1507},
     {"name":"Medicine Man","amt":3325.0,"id":1504},
@@ -912,11 +913,10 @@ const arBuckets = {
   ],
   "later":[
     {"name":"Ember Gardens Cape Cod LLC","amt":5307.66,"id":1463},
-    {"name":"Trinity Naturals","amt":5100.25,"id":1508},
-    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":13,"due":"Mar 30"},
-    {"name":"Ember Gardens Cape Cod LLC","amt":3237.5,"id":1425},
+    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":14,"due":"Mar 30"},
+    {"name":"Ember Gardens Cape Cod LLC","amt":3237.5,"id":1425,"daysOD":2,"due":"Apr 11"},
     {"name":"Ember Gardens Cape Cod LLC","amt":302.5,"id":1471},
-    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":26,"due":"Mar 17"}
+    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":27,"due":"Mar 17"}
   ]
 };
 
