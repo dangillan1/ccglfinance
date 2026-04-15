@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CCGL Finance Dashboard</title>
@@ -322,6 +323,50 @@ table.ap tr.ap-bucket.od90 td{background:rgba(140,0,0,.06);color:#880000}
 table.ap tr.ap-sub td{font-weight:700;border-top:1px solid var(--border-2);background:var(--panel);font-size:12px}
 table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-size:13px}
 
+
+/* ── MONEY v2 — enhanced green styling ───────────────────────────── */
+.bank-total{
+  background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%) !important;
+  border:1.5px solid var(--green) !important;
+  box-shadow:0 1px 3px rgba(47,158,68,.12),0 0 0 3px rgba(47,158,68,.06);
+  position:relative;
+}
+.bank-total label{color:var(--green) !important;font-size:11px;letter-spacing:.1em}
+.bank-total input{color:#0b7a3b !important;font-size:32px !important;font-weight:800;letter-spacing:-.025em}
+.bank-total::before{content:"💰";position:absolute;top:10px;right:14px;font-size:16px;opacity:.55}
+
+.pipeline-total{
+  background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%) !important;
+  border:1.5px solid var(--green) !important;
+  box-shadow:0 1px 3px rgba(47,158,68,.12),0 0 0 3px rgba(47,158,68,.06);
+  position:relative;
+}
+.pipeline-total label{color:var(--green) !important;font-size:11px;letter-spacing:.1em}
+.pipeline-total .pipeline-val{color:#0b7a3b !important;font-size:32px !important;font-weight:800;letter-spacing:-.025em}
+.pipeline-total::before{content:"📈";position:absolute;top:10px;right:14px;font-size:16px;opacity:.55}
+
+.pipeline-wrap{
+  background:linear-gradient(180deg,#fff 0%,#f8fdf9 100%);
+  border:1px solid #d9f0e1;
+}
+
+/* ── AR static header bar ─────────────────────────────────────── */
+.ar-header-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(90deg,#fff 0%,#f0f7ff 100%);
+  border:1px solid var(--border);border-left:4px solid var(--blue);
+  border-radius:10px;padding:12px 18px;margin-bottom:14px;box-shadow:var(--shadow);
+}
+.ar-hb-left{display:flex;flex-direction:column;gap:2px}
+.ar-hb-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.ar-hb-sub{font-size:11px;color:var(--muted)}
+.ar-hb-sub b{color:var(--ink);font-weight:600}
+.ar-hb-right .ar-hb-val{font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--blue)}
+@media (max-width:560px){
+  .ar-header-bar{flex-direction:column;align-items:flex-start;gap:4px}
+  .ar-hb-right .ar-hb-val{font-size:22px}
+}
+
 </style>
 </head>
 <body>
@@ -406,50 +451,6 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 </div>
 
 <!-- ── KPI STRIP ──────────────────────────────────────────── -->
-<div class="kpis">
-  <div class="kpi-card">
-    <h3>Receivables Outstanding</h3>
-    <div class="kpi-val">$229.7k</div>
-    <div class="kpi-sub"><b>53</b> invoices · <b>43</b> unique accounts</div>
-  </div>
-  <div class="kpi-card">
-    <h3>Overdue AR</h3>
-    <div class="kpi-val clr-red">$84.5k</div>
-    <div class="kpi-sub"><b>18</b> invoices · <b>35%</b> of total AR</div>
-  </div>
-  <div class="kpi-card">
-    <h3>Open Payables</h3>
-    <div class="kpi-val clr-gold">$198.4k</div>
-    <div class="kpi-sub"><b>54</b> bills · aging detail below</div>
-  </div>
-  <div class="kpi-card">
-    <h3>Pending Shipments</h3>
-    <div class="kpi-val clr-teal">$57.8k</div>
-    <div class="kpi-sub"><b>8</b> recent estimates · QBO live</div>
-  </div>
-  <div class="kpi-card">
-    <h3>Collected This Week</h3>
-    <div class="kpi-val clr-green">$43.8k</div>
-    <div class="kpi-sub">Apr 13–19 · <b>8</b> payments · from QBO</div>
-  </div>
-  <div class="kpi-card">
-    <h3>Collected Last Week</h3>
-    <div class="kpi-val clr-blue">$42.6k</div>
-    <div class="kpi-sub">Apr 6–12 · <b>8</b> payments · from QBO</div>
-  </div>
-  <div class="kpi-card">
-    <h3>March Sales (P&amp;L)</h3>
-    <div class="kpi-val">$228.3k</div>
-    <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
-  </div>
-  <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
-    <h3>April MTD Sales</h3>
-    <div class="kpi-val clr-lime">$75.9k</div>
-    <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
-  </div>
-</div>
-
-<!-- ── ALERT ──────────────────────────────────────────────── -->
 <div class="pipeline-wrap">
   <div class="pipeline-head">
     <span class="pipeline-title">April Sales Pipeline</span>
@@ -472,6 +473,50 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <div class="shadow-line">April Shipped + Pending Estimates</div>
     </div>
   </div>
+<div class="ar-header-bar">
+  <div class="ar-hb-left">
+    <span class="ar-hb-label">Receivables Outstanding</span>
+    <span class="ar-hb-sub"><b>53</b> invoices · <b>43</b> unique accounts · QBO live</span>
+  </div>
+  <div class="ar-hb-right">
+    <span class="ar-hb-val">$229.7k</span>
+  </div>
+</div>
+<div class="kpis">
+  <div class="kpi-sub"><b>53</b> invoices · <b>43</b> unique accounts</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Overdue AR</h3>
+    <div class="kpi-val clr-red">$84.5k</div>
+    <div class="kpi-sub"><b>18</b> invoices · <b>35%</b> of total AR</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Open Payables</h3>
+    <div class="kpi-val clr-gold">$198.4k</div>
+    <div class="kpi-sub"><b>54</b> bills · aging detail below</div>
+  </div>
+  <div class="kpi-sub"><b>8</b> recent estimates · QBO live</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Collected This Week</h3>
+    <div class="kpi-val clr-green">$43.8k</div>
+    <div class="kpi-sub">Apr 13–19 · <b>8</b> payments · from QBO</div>
+  </div>
+  <div class="kpi-card">
+    <h3>Collected Last Week</h3>
+    <div class="kpi-val clr-blue">$42.6k</div>
+    <div class="kpi-sub">Apr 6–12 · <b>8</b> payments · from QBO</div>
+  </div>
+  <div class="kpi-card">
+    <h3>March Sales (P&amp;L)</h3>
+    <div class="kpi-val">$228.3k</div>
+    <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
+  </div>
+  <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
+  </div>
+</div>
+
+<!-- ── ALERT ──────────────────────────────────────────────── -->
 </div>
 
 <div class="alert">
