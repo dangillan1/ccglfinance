@@ -62,7 +62,9 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .section-label .meta{font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted);border:none;padding:0}
 
 /* ── Bank ─────────────────────────────────────────────────── */
-.bank-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
+.bank-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:4px}
+.bank-grid .bank-total{grid-column:1/-1}
+.bank-total input{font-size:28px !important;letter-spacing:-.02em}
 .bank-cell{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .bank-cell label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
 .bank-cell input{background:transparent;border:none;outline:none;color:var(--ink);font-size:20px;font-weight:700;width:100%;font-family:inherit;padding:0;letter-spacing:-.01em}
@@ -74,6 +76,22 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .bank-total input{color:var(--teal) !important;font-size:22px}
 .bank-warn{border-color:rgba(200,53,53,.35) !important}
 .bank-warn label{color:var(--red)}
+/* ── April Sales Pipeline ─────────────────────────────────── */
+.pipeline-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:18px;box-shadow:var(--shadow)}
+.pipeline-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.pipeline-head .pipeline-title{font-size:13px;font-weight:700;color:var(--navy)}
+.pipeline-head .pipeline-meta{font-size:10px;color:var(--muted)}
+.pipeline-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.pipeline-cell{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.pipeline-cell label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+.pipeline-cell .pipeline-val{font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.pipeline-cell .shadow-line{font-size:10px;color:var(--muted);margin-top:3px}
+.pipeline-cell .shadow-line b{color:var(--ink);font-weight:600}
+.pipeline-total{grid-column:1/-1;background:var(--teal-light);border-color:var(--teal) !important}
+.pipeline-total label{color:var(--teal)}
+.pipeline-total .pipeline-val{color:var(--teal);font-size:28px;letter-spacing:-.02em}
+@media (max-width:680px){.pipeline-grid{grid-template-columns:1fr}}
+
 
 /* ── KPIs ─────────────────────────────────────────────────── */
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
@@ -371,12 +389,12 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="bank-grid">
     <div class="bank-cell">
       <label>Operating</label>
-      <input type="text" id="b_op" data-key="op" data-live="40364.78" data-live-ts="1776270257" data-qb="40364.78" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_op" data-key="op" data-live="40364.78" data-live-ts="1776276927" data-qb="40364.78" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Bank: <b>$40,365</b> · +$25,000 deposit pending</div>
     </div>
     <div class="bank-cell bank-warn">
       <label>Wholesale ⚠</label>
-      <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-live-ts="1776270257" data-qb="100.00" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-live-ts="1776276927" data-qb="100.00" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Bank: <b>$100</b> · QB: <span style="color:var(--red);font-weight:600">$25,696</span></div>
     </div>
     <div class="bank-cell bank-total">
@@ -432,6 +450,30 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 </div>
 
 <!-- ── ALERT ──────────────────────────────────────────────── -->
+<div class="pipeline-wrap">
+  <div class="pipeline-head">
+    <span class="pipeline-title">April Sales Pipeline</span>
+    <span class="pipeline-meta">Apr 2026 · Shipped + Pending · QBO live (full month incl. future-dated)</span>
+  </div>
+  <div class="pipeline-grid">
+    <div class="pipeline-cell" data-pipe="shipped" data-val="75887.74">
+      <label>April Shipped</label>
+      <div class="pipeline-val clr-lime">$75.9k</div>
+      <div class="shadow-line"><b>20</b> invoices · QBO P&amp;L accrual</div>
+    </div>
+    <div class="pipeline-cell" data-pipe="pending" data-val="22755.23">
+      <label>April Pending</label>
+      <div class="pipeline-val clr-teal">$22.8k</div>
+      <div class="shadow-line"><b>4</b> open estimates · April-dated</div>
+    </div>
+    <div class="pipeline-cell pipeline-total">
+      <label>April Pipeline</label>
+      <div class="pipeline-val" id="p_total">$98.6k</div>
+      <div class="shadow-line">April Shipped + April Pending</div>
+    </div>
+  </div>
+</div>
+
 <div class="alert">
   <div class="alert-icon">!</div>
   <div>
@@ -847,6 +889,19 @@ function recalcBank() {
   bankInputs.forEach(inp => total += parseMoney(inp.value));
   document.getElementById('b_total').value = formatMoney(total);
 }
+// ── April Pipeline auto-sum (reads data-val on .pipeline-cell) ─────────
+function recalcPipeline() {
+  const cells = document.querySelectorAll('.pipeline-cell[data-val]');
+  let total = 0;
+  cells.forEach(c => { total += parseFloat(c.dataset.val) || 0; });
+  const el = document.getElementById('p_total');
+  if (!el) return;
+  el.textContent = total >= 1000
+    ? '$' + (total/1000).toFixed(1) + 'k'
+    : '$' + total.toFixed(0);
+}
+recalcPipeline();
+
 bankInputs.forEach(inp => {
   inp.addEventListener('focus', e => { e.target.value = parseMoney(e.target.value).toString(); e.target.select(); });
   inp.addEventListener('blur', e => { e.target.value = formatMoney(parseMoney(e.target.value)); saveBank(); recalcBank(); });
