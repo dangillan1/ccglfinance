@@ -365,18 +365,18 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="section-label">
     <span>Cash on Hand — Bay Coast Bank</span>
     <span class="meta">
-      <span style="color:var(--muted)">Updated: <span id="bankEdited">Apr 15, 12:18 PM</span></span>
+      <span style="color:var(--muted)">Updated: <span id="bankEdited">Apr 15, 12:24 PM</span></span>
     </span>
   </div>
   <div class="bank-grid">
     <div class="bank-cell">
       <label>Operating</label>
-      <input type="text" id="b_op" data-key="op" data-live="40364.78" data-live-ts="1776269917" data-qb="119065.37" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_op" data-key="op" data-live="40364.78" data-live-ts="1776270257" data-qb="40364.78" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Bank: <b>$40,365</b> · +$25,000 deposit pending</div>
     </div>
     <div class="bank-cell bank-warn">
       <label>Wholesale ⚠</label>
-      <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-live-ts="1776269917" data-qb="100.00" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-live-ts="1776270257" data-qb="100.00" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Bank: <b>$100</b> · QB: <span style="color:var(--red);font-weight:600">$25,696</span></div>
     </div>
     <div class="bank-cell bank-total">
@@ -406,27 +406,27 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
   <div class="kpi-card">
     <h3>Pending Shipments</h3>
-    <div class="kpi-val clr-teal">$28.0k</div>
-    <div class="kpi-sub"><b>7</b> recent estimates · QBO live</div>
+    <div class="kpi-val clr-teal">$57.8k</div>
+    <div class="kpi-sub"><b>8</b> recent estimates · QBO live</div>
   </div>
   <div class="kpi-card">
     <h3>Collected This Week</h3>
-    <div class="kpi-val clr-green">$0.0k</div>
-    <div class="kpi-sub">Apr 13–14 · <b>0</b> payments · from QBO</div>
+    <div class="kpi-val clr-green">$43.8k</div>
+    <div class="kpi-sub">Apr 13–19 · <b>8</b> payments · from QBO</div>
   </div>
   <div class="kpi-card">
     <h3>Collected Last Week</h3>
-    <div class="kpi-val clr-blue">$39.3k</div>
-    <div class="kpi-sub">Apr 6–12 · <b>7</b> payments · from QBO</div>
+    <div class="kpi-val clr-blue">$42.6k</div>
+    <div class="kpi-sub">Apr 6–12 · <b>8</b> payments · from QBO</div>
   </div>
   <div class="kpi-card">
     <h3>March Sales (P&amp;L)</h3>
-    <div class="kpi-val">$228.7k</div>
+    <div class="kpi-val">$228.3k</div>
     <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
   </div>
   <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
     <h3>April MTD Sales</h3>
-    <div class="kpi-val clr-lime">$39.0k</div>
+    <div class="kpi-val clr-lime">$75.9k</div>
     <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
   </div>
 </div>
@@ -454,22 +454,22 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <span class="ar-seg-c">12 invoices</span>
     </div>
     <div class="ar-seg seg-gold">
-      <span class="ar-seg-l">Wk 1 · Apr 22–28 14–19</span>
+      <span class="ar-seg-l">Wk 1 · Apr 22–28 22–28 14–19</span>
       <span class="ar-seg-v">$20,639</span>
       <span class="ar-seg-c">5 invoices</span>
     </div>
     <div class="ar-seg seg-grn">
-      <span class="ar-seg-l">Wk 2 · Apr 29–May 5 20–26</span>
+      <span class="ar-seg-l">Wk 2 · Apr 29–May 5 29–May 5 20–26</span>
       <span class="ar-seg-v">$68,298</span>
       <span class="ar-seg-c">12 invoices</span>
     </div>
     <div class="ar-seg seg-grn">
-      <span class="ar-seg-l">Wk 3 · May 6–12 27–May 3</span>
+      <span class="ar-seg-l">Wk 3 · May 6–12 6–12 27–May 3</span>
       <span class="ar-seg-v">$29,415</span>
       <span class="ar-seg-c">6 invoices</span>
     </div>
     <div class="ar-seg seg-blue">
-      <span class="ar-seg-l">Wk 4 · May 13–19 4–10</span>
+      <span class="ar-seg-l">Wk 4 · May 13–19 13–19 4–10</span>
       <span class="ar-seg-v">$23,749</span>
       <span class="ar-seg-c">6 invoices</span>
     </div>
@@ -756,15 +756,54 @@ buildArRows().forEach(r => {
     <td class="has" style="font-weight:700">${fmt(r.total)}</td></tr>`;
 });
 
-// ── BANK PERSISTENCE ─────────────────────────────────────────────────────
-// v4: server values always win when data-live-ts is newer than the local cell
-// timestamp. Prevents stale localStorage from clobbering fresh pushes.
+// ── BANK PERSISTENCE (v4: per-field timestamp arbitration) ──────────────
+// data-live-ts = unix seconds stamped when HTML was patched from a screenshot.
+// saved[k+'_ts'] = unix seconds stamped when Dan typed in-browser.
+// Whichever is newer wins. One-time clean slate via v4 key bump.
 const bankInputs = document.querySelectorAll('.bank-cell input[data-key]');
 const STORAGE_KEY = 'ccgl_bank_v4';
 function parseMoney(s) { if (typeof s === 'number') return s; return parseFloat(String(s).replace(/[^0-9.\-]/g,'')) || 0; }
 function formatMoney(n) { return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
-function fmtEditedDisplay(d) {
+function nowSec() { return Math.floor(Date.now()/1000); }
+function fmtEditedAt(unixSec) {
+  const d = new Date(unixSec*1000);
   return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+}
+function saveBank() {
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+  const ts = nowSec();
+  bankInputs.forEach(inp => {
+    const k = inp.dataset.key;
+    saved[k] = parseMoney(inp.value);
+    saved[k+'_ts'] = ts;
+  });
+  saved.editedAt = fmtEditedAt(ts);
+  saved.editedAtTs = ts;
+  document.getElementById('bankEdited').textContent = saved.editedAt;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+}
+function loadBank() {
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+  let newestTs = 0;
+  bankInputs.forEach(inp => {
+    const k = inp.dataset.key;
+    const live = parseFloat(inp.dataset.live || inp.dataset.qb);
+    const liveTs = parseInt(inp.dataset.liveTs || '0', 10);
+    const savedVal = saved[k];
+    const savedTs = parseInt(saved[k+'_ts'] || '0', 10);
+    const useSaved = savedVal !== undefined && savedTs > liveTs;
+    inp.value = formatMoney(useSaved ? savedVal : live);
+    const effectiveTs = useSaved ? savedTs : liveTs;
+    if (effectiveTs > newestTs) newestTs = effectiveTs;
+  });
+  if (newestTs > 0) {
+    document.getElementById('bankEdited').textContent = fmtEditedAt(newestTs);
+  } else if (saved.editedAt) {
+    document.getElementById('bankEdited').textContent = saved.editedAt;
+  }
+  recalcBank();
 }
 function saveBank() {
   const now = new Date();
