@@ -520,12 +520,12 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="bank-grid">
     <div class="bank-cell">
       <label>Operating</label>
-      <input type="text" id="b_op" data-key="op" data-live="40364.78" data-qb="40364.78" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_op" data-key="op" data-live="40364.78" data-live-ts="1776263996" data-qb="40364.78" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Avail: <b>$40,365</b> · current $40,365</div>
     </div>
     <div class="bank-cell">
       <label>Wholesale</label>
-      <input type="text" id="b_wh" data-key="wh" data-live="25448.00" data-qb="100.00" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_wh" data-key="wh" data-live="25448.00" data-live-ts="1776263996" data-qb="100.00" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Bank: <b>$100</b> · +$25,348 pending (posts tomorrow)</div>
     </div>
     <div class="bank-cell bank-total">
@@ -545,8 +545,8 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="pipeline-grid">
     <div class="pipeline-card">
       <h3>April MTD Booked</h3>
-      <div class="pipeline-val clr-lime">$38.9k</div>
-      <div class="pipeline-sub">Apr 1–15 · $38,856 · QBO P&amp;L</div>
+      <div class="pipeline-val clr-lime">$75.9k</div>
+      <div class="pipeline-sub">Apr 1–15 · $75,888 · QBO P&amp;L</div>
     </div>
     <div class="pipeline-op">+</div>
     <div class="pipeline-card">
@@ -557,8 +557,8 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
     <div class="pipeline-op">=</div>
     <div class="pipeline-card pipeline-featured">
       <h3>Current Booked + Pending</h3>
-      <div class="pipeline-val">$64.9k</div>
-      <div class="pipeline-sub">$38,856 booked + $26,005 estimated</div>
+      <div class="pipeline-val">$101.9k</div>
+      <div class="pipeline-sub">$75,888 booked + $26,005 estimated</div>
     </div>
   </div>
 </div>
@@ -615,7 +615,7 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <span class="rev-lbl">Mar</span>
     </div>
     <div class="rev-bar-wrap mtd">
-      <div class="rev-bar" style="--h:17%" data-val="$39k"><div class="rev-fill"></div></div>
+      <div class="rev-bar" style="--h:33%" data-val="$76k"><div class="rev-fill"></div></div>
       <span class="rev-lbl">Apr*</span>
     </div>
   </div>
@@ -977,27 +977,53 @@ buildArRows().forEach(r => {
     <td class="has" style="font-weight:700">${fmt(r.total)}</td></tr>`;
 });
 
-// ── BANK PERSISTENCE ─────────────────────────────────────────────────────
+// ── BANK PERSISTENCE (v4: per-field timestamp arbitration) ──────────────
+// data-live-ts = unix seconds stamped when HTML was patched from a screenshot.
+// saved[k+'_ts'] = unix seconds stamped when Dan typed in-browser.
+// Whichever is newer wins. One-time clean slate via v4 key bump.
 const bankInputs = document.querySelectorAll('.bank-cell input[data-key]');
-const STORAGE_KEY = 'ccgl_bank_v3';
+const STORAGE_KEY = 'ccgl_bank_v4';
 function parseMoney(s) { if (typeof s === 'number') return s; return parseFloat(String(s).replace(/[^0-9.\-]/g,'')) || 0; }
 function formatMoney(n) { return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function nowSec() { return Math.floor(Date.now()/1000); }
+function fmtEditedAt(unixSec) {
+  const d = new Date(unixSec*1000);
+  return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+}
 function saveBank() {
-  const obj = {};
-  bankInputs.forEach(inp => obj[inp.dataset.key] = parseMoney(inp.value));
-  obj.editedAt = new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-  document.getElementById('bankEdited').textContent = obj.editedAt;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+  const ts = nowSec();
+  bankInputs.forEach(inp => {
+    const k = inp.dataset.key;
+    saved[k] = parseMoney(inp.value);
+    saved[k+'_ts'] = ts;
+  });
+  saved.editedAt = fmtEditedAt(ts);
+  saved.editedAtTs = ts;
+  document.getElementById('bankEdited').textContent = saved.editedAt;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
 }
 function loadBank() {
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+  let newestTs = 0;
   bankInputs.forEach(inp => {
     const k = inp.dataset.key;
     const live = parseFloat(inp.dataset.live || inp.dataset.qb);
-    inp.value = formatMoney(saved[k] !== undefined ? saved[k] : live);
+    const liveTs = parseInt(inp.dataset.liveTs || '0', 10);
+    const savedVal = saved[k];
+    const savedTs = parseInt(saved[k+'_ts'] || '0', 10);
+    const useSaved = savedVal !== undefined && savedTs > liveTs;
+    inp.value = formatMoney(useSaved ? savedVal : live);
+    const effectiveTs = useSaved ? savedTs : liveTs;
+    if (effectiveTs > newestTs) newestTs = effectiveTs;
   });
-  if (saved.editedAt) document.getElementById('bankEdited').textContent = saved.editedAt;
+  if (newestTs > 0) {
+    document.getElementById('bankEdited').textContent = fmtEditedAt(newestTs);
+  } else if (saved.editedAt) {
+    document.getElementById('bankEdited').textContent = saved.editedAt;
+  }
   recalcBank();
 }
 function recalcBank() {
