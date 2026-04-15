@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html><head><title>CSV Loader</title></head><body>
+<h2>CSV Loader</h2>
+<input type="file" id="f" accept=".csv">
+<pre id="o"></pre>
+<script>
+window.__csv = null;
+document.getElementById('f').addEventListener('change', e => {
+  const r = new FileReader();
+  r.onload = () => {
+    window.__csv = r.result;
+    document.getElementById('o').textContent = 'Loaded ' + r.result.length + ' chars';
+  };
+  r.readAsText(e.target.files[0]);
+});
+</script>
+</body></html>

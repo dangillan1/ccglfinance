@@ -1,0 +1,344 @@
+<!--
+  CCGL Finance Dashboard — Cash Flow section archive
+  Removed: 2026-04-06
+  To restore: paste CF_HTML back before <!-- PRIORITIES --> and paste CF_JS back before the INIT block
+-->
+
+<!-- ═══════════ CF_HTML ═══════════ -->
+
+<!-- ── CASH FLOW ──────────────────────────────────────────── -->
+<div class="card">
+  <div class="section-label sky">
+    <span>4–6 Week Cash Flow Forecast</span>
+    <span class="meta">Starting from current total cash · all cells editable</span>
+  </div>
+
+  <!-- Collection Rate Controls -->
+  <div class="cf-controls">
+    <span class="ctrl-title">AR Collection Rates</span>
+    <div class="cf-ctrl-group">
+      <label>Overdue % / wk</label>
+      <input type="number" id="rate_od" value="30" min="0" max="100" step="5">
+      <span>%</span>
+    </div>
+    <div class="cf-ctrl-group">
+      <label>On-time % current</label>
+      <input type="number" id="rate_ct" value="65" min="0" max="100" step="5">
+      <span>%</span>
+    </div>
+    <div class="cf-ctrl-group">
+      <label>Cash Floor Alert</label>
+      <input type="number" id="cash_floor" value="20000" min="0" step="5000">
+    </div>
+    <button class="btn-autofill" onclick="autoFillAR()">↻ Auto-fill AR</button>
+    <span class="cf-ctrl-note">Industry collects slow — adjust rates to model realistic scenarios</span>
+  </div>
+
+  <!-- Visual 6-Week Tiles -->
+  <div class="cf-weeks" id="cfWeeks"></div>
+
+  <!-- Expanded Edit Assumptions (default open) -->
+  <details open>
+    <summary class="cf-summary">Edit Assumptions — 2 weeks actual + 6 weeks forecast</summary>
+    <div style="overflow-x:auto;margin-top:12px">
+    <table class="cf-t" id="cfTable">
+      <thead>
+        <tr>
+          <th style="text-align:left">Line Item &amp; Notes</th>
+          <th class="cf-actual">Mar 23–29<br><span style="font-weight:400;font-style:italic">Actual</span></th>
+          <th class="cf-actual">Mar 30–Apr 5<br><span style="font-weight:400;font-style:italic">Actual</span></th>
+          <th>Apr 6–12<br><span style="color:var(--teal);font-weight:600">Wk 1</span></th>
+          <th>Apr 13–19<br><span style="color:var(--teal);font-weight:600">Wk 2</span></th>
+          <th>Apr 20–26<br><span style="color:var(--teal);font-weight:600">Wk 3</span></th>
+          <th>Apr 27–May 3<br><span style="color:var(--teal);font-weight:600">Wk 4</span></th>
+          <th>May 4–10<br><span style="color:var(--sky);font-weight:600">Wk 5</span></th>
+          <th>May 11–17<br><span style="color:var(--sky);font-weight:600">Wk 6</span></th>
+          <th>6-Wk Fcst</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- INFLOWS -->
+        <tr class="cf-group-head"><td colspan="10">▲ Inflows</td></tr>
+
+        <tr class="cf-inflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">+ AR Collections</span>
+            <input class="cf-note" value="Wk-2: 3 sweeps from Wholesale (where AR lands) · Wk-1: 3 more sweeps">
+          </td>
+          <td><input class="cell cf-actual" data-row="ar" data-period="actual" data-w="0" value="44965"></td>
+          <td><input class="cell cf-actual" data-row="ar" data-period="actual" data-w="1" value="42474"></td>
+          <td><input class="cell auto-ar" data-row="ar" data-period="forecast" data-w="0" value="40854"></td>
+          <td><input class="cell auto-ar" data-row="ar" data-period="forecast" data-w="1" value="36574"></td>
+          <td><input class="cell auto-ar" data-row="ar" data-period="forecast" data-w="2" value="67552"></td>
+          <td><input class="cell auto-ar" data-row="ar" data-period="forecast" data-w="3" value="42603"></td>
+          <td><input class="cell auto-ar" data-row="ar" data-period="forecast" data-w="4" value="23158"></td>
+          <td><input class="cell auto-ar" data-row="ar" data-period="forecast" data-w="5" value="23158"></td>
+          <td id="cf_ar_fcst" class="clr-green"></td>
+        </tr>
+
+        <tr class="cf-inflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">+ Cash Call / Investment</span>
+            <input class="cf-note" placeholder="investor, amount, timing…">
+          </td>
+          <td><input class="cell cf-actual" data-row="cc" data-period="actual" data-w="0" value="0"></td>
+          <td><input class="cell cf-actual" data-row="cc" data-period="actual" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="cc" data-period="forecast" data-w="0" value="0"></td>
+          <td><input class="cell" data-row="cc" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="cc" data-period="forecast" data-w="2" value="0"></td>
+          <td><input class="cell" data-row="cc" data-period="forecast" data-w="3" value="0"></td>
+          <td><input class="cell" data-row="cc" data-period="forecast" data-w="4" value="0"></td>
+          <td><input class="cell" data-row="cc" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_cc_fcst" class="clr-green"></td>
+        </tr>
+
+        <!-- OUTFLOWS -->
+        <tr class="cf-group-head"><td colspan="10">▼ Outflows</td></tr>
+
+        <tr class="cf-outflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">− Rent — JAC Real Estate</span>
+            <input class="cf-note" value="Mar $77k overdue · Apr $77k due Apr 1">
+          </td>
+          <td><input class="cell cf-actual" data-row="rent" data-period="actual" data-w="0" value="0"></td>
+          <td><input class="cell cf-actual" data-row="rent" data-period="actual" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="rent" data-period="forecast" data-w="0" value="77261"></td>
+          <td><input class="cell" data-row="rent" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="rent" data-period="forecast" data-w="2" value="0"></td>
+          <td><input class="cell" data-row="rent" data-period="forecast" data-w="3" value="77261"></td>
+          <td><input class="cell" data-row="rent" data-period="forecast" data-w="4" value="0"></td>
+          <td><input class="cell" data-row="rent" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_rent_fcst" class="clr-red"></td>
+        </tr>
+
+        <tr class="cf-outflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">− Payroll</span>
+            <input class="cf-note" value="Biweekly — next due ~Apr 11 &amp; Apr 25">
+          </td>
+          <td><input class="cell cf-actual" data-row="payroll" data-period="actual" data-w="0" value="0"></td>
+          <td><input class="cell cf-actual" data-row="payroll" data-period="actual" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="payroll" data-period="forecast" data-w="0" value="35000"></td>
+          <td><input class="cell" data-row="payroll" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="payroll" data-period="forecast" data-w="2" value="35000"></td>
+          <td><input class="cell" data-row="payroll" data-period="forecast" data-w="3" value="0"></td>
+          <td><input class="cell" data-row="payroll" data-period="forecast" data-w="4" value="35000"></td>
+          <td><input class="cell" data-row="payroll" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_payroll_fcst" class="clr-red"></td>
+        </tr>
+
+        <tr class="cf-outflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">− Eversource (Utilities)</span>
+            <input class="cf-note" value="$16,097 due Apr 5 — pay immediately">
+          </td>
+          <td><input class="cell cf-actual" data-row="eversource" data-period="actual" data-w="0" value="0"></td>
+          <td><input class="cell cf-actual" data-row="eversource" data-period="actual" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="eversource" data-period="forecast" data-w="0" value="16097"></td>
+          <td><input class="cell" data-row="eversource" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="eversource" data-period="forecast" data-w="2" value="0"></td>
+          <td><input class="cell" data-row="eversource" data-period="forecast" data-w="3" value="0"></td>
+          <td><input class="cell" data-row="eversource" data-period="forecast" data-w="4" value="5400"></td>
+          <td><input class="cell" data-row="eversource" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_eversource_fcst" class="clr-red"></td>
+        </tr>
+
+        <tr class="cf-outflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">− Lab Testing / Compliance</span>
+            <input class="cf-note" value="Wk-1: G7 Lab $4,255 paid Apr 1 · forecast: G7/Green Analytics/Mass Biolytics">
+          </td>
+          <td><input class="cell cf-actual" data-row="labs" data-period="actual" data-w="0" value="0"></td>
+          <td><input class="cell cf-actual" data-row="labs" data-period="actual" data-w="1" value="4255"></td>
+          <td><input class="cell" data-row="labs" data-period="forecast" data-w="0" value="5000"></td>
+          <td><input class="cell" data-row="labs" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="labs" data-period="forecast" data-w="2" value="5000"></td>
+          <td><input class="cell" data-row="labs" data-period="forecast" data-w="3" value="0"></td>
+          <td><input class="cell" data-row="labs" data-period="forecast" data-w="4" value="5000"></td>
+          <td><input class="cell" data-row="labs" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_labs_fcst" class="clr-red"></td>
+        </tr>
+
+        <tr class="cf-outflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">− Payables — Priority</span>
+            <input class="cf-note" value="Wk-2: Earthwise $3,846 (Mar 23) · Wk-1: MMM Transport $4,975 (Apr 1)">
+          </td>
+          <td><input class="cell cf-actual" data-row="pp" data-period="actual" data-w="0" value="3846"></td>
+          <td><input class="cell cf-actual" data-row="pp" data-period="actual" data-w="1" value="4975"></td>
+          <td><input class="cell" data-row="pp" data-period="forecast" data-w="0" value="0"></td>
+          <td><input class="cell" data-row="pp" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="pp" data-period="forecast" data-w="2" value="0"></td>
+          <td><input class="cell" data-row="pp" data-period="forecast" data-w="3" value="0"></td>
+          <td><input class="cell" data-row="pp" data-period="forecast" data-w="4" value="0"></td>
+          <td><input class="cell" data-row="pp" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_pp_fcst" class="clr-red"></td>
+        </tr>
+
+        <tr class="cf-outflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">− Other (Bulk COGS)</span>
+            <input class="cf-note" value="Wk-2: EBottles + Cannabis on Cape Cod · Wk-1: HighLife + CoCC">
+          </td>
+          <td><input class="cell cf-actual" data-row="oth1" data-period="actual" data-w="0" value="49978"></td>
+          <td><input class="cell cf-actual" data-row="oth1" data-period="actual" data-w="1" value="4218"></td>
+          <td><input class="cell" data-row="oth1" data-period="forecast" data-w="0" value="0"></td>
+          <td><input class="cell" data-row="oth1" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="oth1" data-period="forecast" data-w="2" value="0"></td>
+          <td><input class="cell" data-row="oth1" data-period="forecast" data-w="3" value="0"></td>
+          <td><input class="cell" data-row="oth1" data-period="forecast" data-w="4" value="0"></td>
+          <td><input class="cell" data-row="oth1" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_oth1_fcst" class="clr-red"></td>
+        </tr>
+
+        <tr class="cf-outflow">
+          <td class="cf-lbl">
+            <span class="cf-row-name">− Other (Misc Ops)</span>
+            <input class="cf-note" value="17+ vendors: Amazon, Comcast, METRC, Boveda, Koppert, Shell, etc.">
+          </td>
+          <td><input class="cell cf-actual" data-row="oth2" data-period="actual" data-w="0" value="6229"></td>
+          <td><input class="cell cf-actual" data-row="oth2" data-period="actual" data-w="1" value="8403"></td>
+          <td><input class="cell" data-row="oth2" data-period="forecast" data-w="0" value="0"></td>
+          <td><input class="cell" data-row="oth2" data-period="forecast" data-w="1" value="0"></td>
+          <td><input class="cell" data-row="oth2" data-period="forecast" data-w="2" value="0"></td>
+          <td><input class="cell" data-row="oth2" data-period="forecast" data-w="3" value="0"></td>
+          <td><input class="cell" data-row="oth2" data-period="forecast" data-w="4" value="0"></td>
+          <td><input class="cell" data-row="oth2" data-period="forecast" data-w="5" value="0"></td>
+          <td id="cf_oth2_fcst" class="clr-red"></td>
+        </tr>
+
+        <!-- TOTALS -->
+        <tr class="cf-total">
+          <td style="text-align:left;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.07em">= Net Change (actuals) / Ending Balance (fcst)</td>
+          <td id="cf_net_a0" class="cf-actual"></td>
+          <td id="cf_net_a1" class="cf-actual"></td>
+          <td id="cf_end_f0"></td>
+          <td id="cf_end_f1"></td>
+          <td id="cf_end_f2"></td>
+          <td id="cf_end_f3"></td>
+          <td id="cf_end_f4"></td>
+          <td id="cf_end_f5"></td>
+          <td id="cf_end_total" style="font-size:11px"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+      Actual columns show net change (in–out) · Forecast chain starts from current bank balance · Shaded cells = historical
+    </div>
+    </div>
+  </details>
+</div>
+
+<!-- ═══════════ CF_JS ═══════════ -->
+<script>
+// ── CSV IMPORT ────────────────────────────────────────────────────────────
+function importBayCoastCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+  if (!lines.length) return alert('Empty CSV');
+  const parseRow = l => { const out=[]; let cur='',q=false; for(let i=0;i<l.length;i++){const c=l[i];if(c==='"'){if(q&&l[i+1]==='"'){cur+='"';i++;}else q=!q;}else if(c===','&&!q){out.push(cur);cur='';}else cur+=c;} out.push(cur); return out; };
+  const header = parseRow(lines[0]).map(h => h.trim().toLowerCase());
+  const idx = (...names) => { for(const n of names){const i=header.indexOf(n);if(i>=0)return i;} return -1; };
+  const iAcct = idx('account number','account','account #');
+  const iBal = idx('balance','running balance','available balance');
+  const latestBal = {};
+  for (let r = 1; r < lines.length; r++) {
+    const row = parseRow(lines[r]);
+    const acct = (row[iAcct] || '').replace(/\D/g,'');
+    const bal = parseFloat((row[iBal] || '').replace(/[^0-9.\-]/g,''));
+    if (acct && !latestBal[acct] && !isNaN(bal)) latestBal[acct] = bal;
+  }
+  const acctMap = {'841066930':'b_op','841066980':'b_wh'};
+  let updated = 0;
+  Object.entries(latestBal).forEach(([acct, bal]) => {
+    const id = acctMap[acct];
+    if (id) { document.getElementById(id).value = formatMoney(bal); updated++; }
+  });
+  saveBank(); recalcBank();
+  document.getElementById('bankEdited').textContent = new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) + ' (CSV)';
+  alert(`Updated ${updated} account balance(s) from CSV.`);
+}
+document.getElementById('csvBtn').addEventListener('click', () => document.getElementById('csvFile').click());
+document.getElementById('csvFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader(); r.onload = () => importBayCoastCSV(r.result); r.readAsText(f);
+});
+
+// ── AR AUTO-FILL from collection rates ───────────────────────────────────
+const AR_BY_WEEK = [27225, 20639, 68298, 29915, 0, 0]; // wk1-wk6 AR buckets
+const OVERDUE_AR = 71766; // ex-Yamba write-offs
+
+function autoFillAR() {
+  const odRate = parseFloat(document.getElementById('rate_od').value) / 100 || 0.30;
+  const ctRate = parseFloat(document.getElementById('rate_ct').value) / 100 || 0.65;
+  for (let w = 0; w < 6; w++) {
+    const fromOD = Math.round(OVERDUE_AR * odRate);
+    const fromCurrent = Math.round(AR_BY_WEEK[w] * ctRate);
+    const inp = document.querySelector(`#cfTable input[data-row="ar"][data-period="forecast"][data-w="${w}"]`);
+    if (inp) { inp.value = String(fromOD + fromCurrent); inp.classList.add('auto-ar'); }
+  }
+  recalcCashflow();
+}
+
+// ── CASH FLOW CALC ────────────────────────────────────────────────────────
+const WK_LABELS = ['Week 1','Week 2','Week 3','Week 4','Week 5','Week 6'];
+const WK_DATES  = ['Apr 6–12','Apr 13–19','Apr 20–26','Apr 27–May 3','May 4–10','May 11–17'];
+
+const CF_INFLOW_ROWS = ['ar','cc'];
+const CF_OUTFLOW_ROWS = ['rent','payroll','eversource','labs','pp','oth1','oth2'];
+const CF_ALL_ROWS = [...CF_INFLOW_ROWS, ...CF_OUTFLOW_ROWS];
+
+function getCfVal(row, period, week) {
+  const inp = document.querySelector(`#cfTable input[data-row="${row}"][data-period="${period}"][data-w="${week}"]`);
+  return inp ? parseMoney(inp.value) : 0;
+}
+
+function recalcCashflow() {
+  const startBank = parseMoney(document.getElementById('b_total').value);
+  const cashFloor = parseMoney(document.getElementById('cash_floor').value) || 20000;
+  CF_ALL_ROWS.forEach(r => {
+    let tot = 0;
+    for (let w = 0; w < 6; w++) tot += getCfVal(r,'forecast',w);
+    const el = document.getElementById(`cf_${r}_fcst`);
+    if (el) el.textContent = fmt(tot);
+  });
+  for (let ai = 0; ai < 2; ai++) {
+    let netIn = 0, netOut = 0;
+    CF_INFLOW_ROWS.forEach(r => netIn += getCfVal(r,'actual',ai));
+    CF_OUTFLOW_ROWS.forEach(r => netOut += getCfVal(r,'actual',ai));
+    const net = netIn - netOut;
+    const el = document.getElementById(`cf_net_a${ai}`);
+    if (el) { el.textContent = net === 0 ? '—' : (net >= 0 ? '+' : '') + fmt(net); el.className = 'cf-actual ' + (net >= 0 ? 'clr-green' : 'clr-red'); }
+  }
+  const wkIn = [], wkOut = [], wkEnd = [], wkStart = [];
+  let bal = startBank;
+  for (let w = 0; w < 6; w++) {
+    const inflow  = CF_INFLOW_ROWS.reduce((s,r) => s + getCfVal(r,'forecast',w), 0);
+    const outflow = CF_OUTFLOW_ROWS.reduce((s,r) => s + getCfVal(r,'forecast',w), 0);
+    wkStart.push(bal); wkIn.push(inflow); wkOut.push(outflow);
+    bal = bal + inflow - outflow; wkEnd.push(bal);
+    const td = document.getElementById(`cf_end_f${w}`);
+    if (td) { td.textContent = fmt(bal); td.className = bal < 0 ? 'clr-red' : bal < cashFloor ? 'clr-gold' : 'clr-teal'; }
+  }
+  const totalEl = document.getElementById('cf_end_total');
+  if (totalEl) { totalEl.textContent = fmt(bal); totalEl.className = bal < 0 ? 'clr-red' : 'clr-teal'; }
+  const maxVal = Math.max(...wkIn, ...wkOut, 1);
+  const weeksEl = document.getElementById('cfWeeks');
+  weeksEl.innerHTML = '';
+  const cashFloorVal = parseMoney(document.getElementById('cash_floor').value) || 20000;
+  for (let w = 0; w < 6; w++) {
+    const end = wkEnd[w];
+    const cls = end < 0 ? 'danger' : end < cashFloorVal ? 'caution' : 'ok';
+    const inW  = Math.round((wkIn[w] / maxVal) * 100);
+    const outW = Math.round((wkOut[w] / maxVal) * 100);
+    const net = wkIn[w] - wkOut[w];
+    const netStr = (net >= 0 ? '+' : '') + fmt(net);
+    weeksEl.innerHTML += `<div class="cf-week ${cls}"><div class="cf-wk-header">${WK_LABELS[w]}</div><div class="cf-wk-dates">${WK_DATES[w]}</div><div class="cf-bar-row"><div class="cf-bar-label"><span style="color:var(--teal)">▲ In</span><span style="color:var(--teal)">${fmt(wkIn[w])}</span></div><div class="cf-bar-track"><div class="cf-bar-fill in" style="width:${inW}%"></div></div></div><div class="cf-bar-row"><div class="cf-bar-label"><span style="color:var(--red)">▼ Out</span><span style="color:var(--red)">${fmt(wkOut[w])}</span></div><div class="cf-bar-track"><div class="cf-bar-fill out" style="width:${outW}%"></div></div></div><div class="cf-ending"><div class="cf-ending-label">Ending Balance</div><div class="cf-ending-val ${cls}">${fmt(end)}</div><div class="cf-start-note">Net <b style="color:${net>=0?'var(--teal)':'var(--red)'}">${netStr}</b></div></div></div>`;
+  }
+}
+
+// Wire CF inputs
+document.querySelectorAll('#cfTable input.cell').forEach(inp => inp.addEventListener('input', recalcCashflow));
+document.getElementById('rate_od').addEventListener('input', autoFillAR);
+document.getElementById('rate_ct').addEventListener('input', autoFillAR);
+document.getElementById('cash_floor').addEventListener('input', recalcCashflow);
+</script>
