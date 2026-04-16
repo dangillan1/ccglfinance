@@ -978,12 +978,12 @@ buildArRows().forEach(r => {
     <td class="has" style="font-weight:700">${fmt(r.total)}</td></tr>`;
 });
 
-// ── BANK PERSISTENCE (v4: per-field timestamp arbitration) ──────────────
+// ── BANK PERSISTENCE (v5: force clean slate after ts fix) ───────────────
 // data-live-ts = unix seconds stamped when HTML was patched from a screenshot.
 // saved[k+'_ts'] = unix seconds stamped when Dan typed in-browser.
-// Whichever is newer wins. One-time clean slate via v4 key bump.
+// Whichever is newer wins. Bumped to v5 2026-04-16 to flush stale localStorage.
 const bankInputs = document.querySelectorAll('.bank-cell input[data-key]');
-const STORAGE_KEY = 'ccgl_bank_v4';
+const STORAGE_KEY = 'ccgl_bank_v5';
 function parseMoney(s) { if (typeof s === 'number') return s; return parseFloat(String(s).replace(/[^0-9.\-]/g,'')) || 0; }
 function formatMoney(n) { return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
 function nowSec() { return Math.floor(Date.now()/1000); }
