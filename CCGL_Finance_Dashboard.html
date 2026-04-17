@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="logo.png">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>CCGL Finance Dashboard</title>
 <style>
 :root{
@@ -76,7 +78,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .bank-warn label{color:var(--red)}
 
 /* ── KPIs ─────────────────────────────────────────────────── */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+/* LOCKED: 4 KPI chips after Overdue AR removal 2026-04-17 */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
 .kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
 .kpi-card h3{margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .kpi-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:2px}
@@ -84,6 +87,42 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .kpi-sub b{color:var(--ink);font-weight:600}
 .clr-green{color:var(--green)} .clr-red{color:var(--red)} .clr-gold{color:var(--gold)}
 .clr-blue{color:var(--blue)} .clr-teal{color:var(--teal)} .clr-lime{color:var(--lime)}
+
+/* ── Rolling Revenue Chart ───────────────────────────────── */
+.rev-chart-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 22px 14px;margin-bottom:18px;box-shadow:var(--shadow)}
+.rev-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+.rev-title{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);border-left:3px solid var(--teal);padding-left:10px}
+.rev-meta{font-size:10px;color:var(--muted);font-weight:500}
+.rev-chart{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;height:110px;padding-top:22px;padding-bottom:20px;position:relative;border-bottom:1px solid var(--border)}
+.rev-bar-wrap{display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;position:relative}
+.rev-bar{width:100%;max-width:52px;height:var(--h);min-height:4px;border-radius:5px 5px 0 0;position:relative;cursor:default;transition:opacity .15s}
+.rev-fill{width:100%;height:100%;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--teal),var(--teal-dark))}
+.rev-bar-wrap.hi .rev-fill{background:linear-gradient(180deg,var(--lime),#4a9e28)}
+.rev-bar-wrap.mtd .rev-fill{background:linear-gradient(180deg,var(--sky),#3a7fa4);opacity:.65}
+.rev-bar::after{content:attr(data-val);position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--ink);opacity:0;transition:opacity .15s;white-space:nowrap}
+.rev-bar-wrap:hover .rev-bar::after{opacity:1}
+.rev-bar-wrap.hi .rev-bar::after,.rev-bar-wrap.mtd .rev-bar::after{opacity:1}
+.rev-lbl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:5px;position:absolute;bottom:-18px}
+.rev-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:10px;color:var(--muted);gap:12px;flex-wrap:wrap}
+.rev-footer b{color:var(--ink);font-weight:700}
+.rev-avg{color:var(--teal);font-weight:600}
+
+/* ── Sales Pipeline Highlight ───────────────────────────── */
+.sales-pipeline{background:linear-gradient(135deg,#fff,#f6fbf3);border:2px solid rgba(107,187,56,.3);border-radius:14px;padding:18px 22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.pipeline-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(107,187,56,.2);gap:14px;flex-wrap:wrap}
+.pipeline-title{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.march-ref{font-size:11px;color:var(--muted);font-weight:500}
+.march-ref b{color:var(--ink);font-weight:700;font-size:13px}
+.pipeline-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1.25fr;gap:12px;align-items:stretch}
+.pipeline-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.pipeline-card h3{margin:0 0 4px;font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.pipeline-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.pipeline-sub{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4}
+.pipeline-featured{background:linear-gradient(135deg,#6BBB38,#2E8880);border:none;padding:16px 18px;box-shadow:0 4px 12px rgba(46,136,128,.22)}
+.pipeline-featured h3{color:rgba(255,255,255,.85)}
+.pipeline-featured .pipeline-val{font-size:32px;color:#fff}
+.pipeline-featured .pipeline-sub{color:rgba(255,255,255,.9)}
+.pipeline-op{font-size:24px;font-weight:700;color:rgba(107,187,56,.55);align-self:center;text-align:center;padding:0 2px}
 
 /* ── Alert ────────────────────────────────────────────────── */
 .alert{background:var(--red-light);border:1px solid rgba(200,53,53,.25);border-radius:12px;
@@ -108,15 +147,15 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .ar-seg:last-child .ar-seg-v{color:var(--teal)}
 
 /* ── AR table ─────────────────────────────────────────────── */
-table.ar{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
-table.ar th,table.ar td{padding:7px 8px;text-align:right;font-variant-numeric:tabular-nums}
+table.ar{width:100%;border-collapse:collapse;font-size:11px;margin-top:4px}
+table.ar th,table.ar td{padding:4px 6px;text-align:right;font-variant-numeric:tabular-nums}
 table.ar th:first-child,table.ar td:first-child{text-align:left;font-weight:500}
 table.ar thead th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.07em;
   font-weight:700;border-bottom:2px solid var(--border);padding-bottom:10px}
 table.ar thead th .sub{display:block;font-size:9px;font-weight:500;text-transform:none;letter-spacing:0;margin-top:1px;color:var(--muted)}
 table.ar tbody tr:hover{filter:brightness(.97)}
 table.ar tbody td{border-bottom:1px solid var(--border)}
-table.ar tr.totals td{font-weight:700;border-top:2px solid var(--border-2);border-bottom:none;padding-top:12px;background:var(--panel)}
+table.ar tr.totals td{font-weight:700;border-top:2px solid var(--border-2);border-bottom:none;padding-top:8px;background:var(--panel)}
 table.ar tr.totals td:first-child{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
 table.ar td.has{color:var(--ink)} table.ar td.empty{color:var(--border-2)}
 table.ar .col-overdue{color:var(--red)} table.ar .col-wk1{color:var(--gold)}
@@ -142,6 +181,7 @@ tr.hm-14{background:rgba(184,115,22,.02) !important} tr.hm-14 td:first-child{bor
 .ap-od30{background:var(--gold-light)} .ap-od30 .ap-seg-v{color:var(--gold)}
 .ap-od60{background:var(--red-light)} .ap-od60 .ap-seg-v{color:var(--red)}
 .ap-od90{background:rgba(140,0,0,.05)} .ap-od90 .ap-seg-v{color:#880000}
+.ap-total{background:var(--gold-light)}
 
 /* ── AP table (compact) ───────────────────────────────────── */
 table.ap{width:100%;border-collapse:collapse;font-size:13px}
@@ -242,13 +282,18 @@ ul.actions li b{color:var(--navy)}
   .cf-weeks{grid-template-columns:repeat(3,1fr)}
   .kpis{grid-template-columns:repeat(4,1fr)}
 }
+@media(max-width:1000px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .pipeline-grid{grid-template-columns:1fr;gap:10px}
+  .pipeline-op{display:none}
+}
 @media(max-width:900px){
   .kpis{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:800px){
-  .wrap{padding:20px 14px 60px}
-  .kpis{grid-template-columns:repeat(2,1fr)}
-  .bank-grid{grid-template-columns:1fr}
+  .wrap{padding:18px 12px 60px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:10px}
+  .bank-grid{grid-template-columns:1fr;gap:10px}
   .cf-weeks{grid-template-columns:repeat(2,1fr)}
   .ar-bar,.ap-aging{flex-wrap:wrap}
   .ar-seg,.ap-seg{min-width:45%;border-right:1px solid var(--border)}
@@ -274,8 +319,135 @@ ul.actions li b{color:var(--navy)}
 @media(max-width:500px){
   .kpis{grid-template-columns:repeat(2,1fr)}
   .kpi-val{font-size:22px}
-  .cf-weeks{grid-template-columns:1fr}
+  .kpi-sub{font-size:10px}
+  .bank-cell input{font-size:18px}
+  /* Revenue chart: allow horizontal scroll on smaller screens */
+  .rev-chart{gap:4px}
+  .rev-lbl{font-size:8px}
+}
+
+/* ── MOBILE ──────────────────────────────────────────────── */
+@media(max-width:500px){
+  .wrap{padding:12px 8px 40px}
+
+  /* Header — compact stack */
+  header{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px;padding-bottom:12px}
+  .brand{gap:10px}
+  .brand img{width:32px !important;height:32px !important}
+  .brand-text h1{font-size:15px}
+  .brand-text .sub{font-size:10px;line-height:1.4}
+  .header-right{text-align:left;width:100%}
+  .header-right .week{font-size:10px}
+  .live-dot{font-size:10px}
+
+  /* Cards */
+  .card{padding:12px 10px;margin-bottom:12px;border-radius:8px}
+  .section-label{font-size:9px;margin-bottom:10px;flex-direction:column;align-items:flex-start;gap:4px}
+  .section-label .meta{font-size:9px}
+
+  /* Bank — Total Cash big on top, Op | WH side by side below */
+  .bank-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .bank-cell{padding:8px 10px;border-radius:8px}
+  .bank-cell label{font-size:9px;margin-bottom:2px}
   .bank-cell input{font-size:17px}
+  .bank-cell .shadow-line{font-size:8px}
+  .bank-total{grid-column:1 / -1;order:-1}
+  .bank-total input{font-size:26px}
+  .bank-total label{font-size:10px}
+
+  /* KPIs — 2-col grid so they stay compact but readable */
+  .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+  .kpi-card{padding:10px 12px}
+  .kpi-card h3{font-size:9px;margin-bottom:2px}
+  .kpi-val{font-size:22px}
+  .kpi-sub{font-size:9px;margin-top:4px}
+
+  /* LOCKED LAYOUT: Collections 12-col grid — do not regenerate */
+  /* Revenue chart — fit all 12 bars within page width */
+  .rev-chart-card{padding:10px 8px 8px}
+  .rev-header{margin-bottom:8px;gap:4px;flex-direction:column}
+  .rev-title{font-size:10px}
+  .rev-meta{font-size:9px}
+  .rev-chart{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;
+    height:80px;padding-top:16px;padding-bottom:18px;overflow:hidden}
+  .rev-bar-wrap{min-width:0}
+  .rev-bar{max-width:none}
+  .rev-bar::after{font-size:7px;top:-14px}
+  .rev-lbl{font-size:7px;letter-spacing:0;bottom:-16px}
+  .rev-footer{flex-direction:column;gap:3px;font-size:9px;margin-top:6px}
+
+  /* Pipeline — Featured big on top, MTD | Pending side by side below */
+  .sales-pipeline{padding:12px 10px;border-radius:10px;margin-bottom:12px}
+  .pipeline-header{flex-direction:column;gap:4px;margin-bottom:8px;padding-bottom:6px}
+  .pipeline-title{font-size:10px}
+  .march-ref{font-size:10px}
+  .march-ref b{font-size:12px}
+  .pipeline-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .pipeline-op{display:none}
+  .pipeline-card{padding:8px 10px}
+  .pipeline-card h3{font-size:8px}
+  .pipeline-val{font-size:18px}
+  .pipeline-sub{font-size:9px}
+  .pipeline-featured{grid-column:1 / -1;order:-1;padding:12px 14px}
+  .pipeline-featured .pipeline-val{font-size:26px}
+  .pipeline-featured .pipeline-sub{font-size:10px}
+
+  /* Alert — compact */
+  .alert{padding:10px 12px;gap:10px;border-radius:8px;margin-bottom:12px}
+  .alert-icon{width:24px;height:24px;font-size:11px;border-radius:6px}
+  .alert h4{font-size:12px;line-height:1.4}
+  .alert p{font-size:11px;line-height:1.5}
+
+  /* LOCKED LAYOUT: AR summary 3-col grid (3+3+1) — do not regenerate */
+  /* AR summary bar — 3-col grid, Total full width at bottom */
+  .ar-bar{display:grid;grid-template-columns:repeat(3,1fr);border-radius:8px}
+  .ar-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .ar-seg:nth-child(3n){border-right:none}
+  .ar-seg:last-child{grid-column:1 / -1;border-right:none;border-bottom:none;
+    text-align:center;background:var(--teal-light);padding:8px}
+  .ar-seg-l{font-size:8px}
+  .ar-seg-v{font-size:14px}
+  .ar-seg:last-child .ar-seg-v{font-size:18px}
+  .ar-seg-c{font-size:8px}
+
+  /* AR table — horizontal scroll */
+  table.ar{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;font-size:10px}
+  table.ar thead,table.ar tbody,table.ar tfoot{display:table;width:max-content;min-width:680px}
+  table.ar th{font-size:9px;padding:4px 5px}
+  table.ar td{padding:3px 5px}
+  .days-od{font-size:8px;padding:1px 4px}
+  .due-note{font-size:8px}
+
+  /* LOCKED LAYOUT: AP aging 2x2 grid + Total card — do not regenerate */
+  /* AP aging bar — 2x2 grid, Total full width at bottom */
+  .ap-aging{display:grid;grid-template-columns:1fr 1fr;border-radius:8px}
+  .ap-seg{padding:7px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .ap-seg:nth-child(2n){border-right:none}
+  .ap-seg.ap-total{grid-column:1 / -1;border-right:none;border-bottom:none;
+    text-align:center;padding:8px}
+  .ap-seg-l{font-size:8px}
+  .ap-seg-v{font-size:14px}
+  .ap-seg.ap-total .ap-seg-v{font-size:18px}
+  .ap-seg-c{font-size:8px}
+
+  /* AP table — horizontal scroll */
+  table.ap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table.ap thead,table.ap tbody{display:table;width:100%;min-width:420px}
+  table.ap td{font-size:10px;padding:4px 6px}
+  table.ap tr.ap-bucket td{font-size:8px;padding:3px 6px}
+  .tag{font-size:8px;padding:1px 5px;margin-left:4px}
+
+  /* Priorities */
+  ul.actions li{font-size:12px;flex-direction:column;gap:4px;padding:8px 0}
+  ul.actions li .when{font-size:9px;margin-top:0}
+
+  /* Footer */
+  .footer{font-size:9px;margin-top:24px;padding-top:12px}
+
+  /* Password overlay — mobile friendly */
+  #pw-overlay .pw-logo{font-size:12px}
+  #pw-overlay input{font-size:18px;width:200px;padding:12px 16px}
+  #pw-overlay .pw-err{font-size:11px}
 }
 @media print{body{background:#fff}.card,.kpi-card{box-shadow:none;border-color:#ccc}}
 
@@ -290,25 +462,23 @@ ul.actions li b{color:var(--navy)}
 #pw-overlay .pw-logo{font-size:13px;font-weight:700;letter-spacing:.12em;
   color:#2dd4bf;text-transform:uppercase;margin-bottom:8px}
 
-/* ── AR sticky thead ──────────────────────────────────────────── */
-.ar-scroll-wrap{overflow-x:auto;overflow-y:auto;max-height:440px}
-table.ar thead th{position:sticky;top:0;background:#fff;z-index:2;box-shadow:0 1px 0 var(--border)}
+/* AR table — static (no sticky thead, no max-height) */
 
 /* ── AP bucket rows ───────────────────────────────────────────── */
-table.ap{width:100%;border-collapse:collapse;font-size:13px}
-table.ap td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}
+table.ap{width:100%;border-collapse:collapse;font-size:11px}
+table.ap td{padding:3px 6px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}
 table.ap td.ap-amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
-table.ap td.ap-due{font-size:11px;color:var(--muted);white-space:nowrap;padding-left:14px}
-table.ap td.ap-age{font-size:11px;white-space:nowrap;text-align:right}
-table.ap tr.ap-bucket td{padding:5px 8px;font-size:10px;font-weight:700;letter-spacing:.07em;
-  text-transform:uppercase;border-bottom:none;border-top:8px solid var(--panel-2)}
+table.ap td.ap-due{font-size:10px;color:var(--muted);white-space:nowrap;padding-left:10px}
+table.ap td.ap-age{font-size:10px;white-space:nowrap;text-align:right}
+table.ap tr.ap-bucket td{padding:3px 6px;font-size:9px;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;border-bottom:none;border-top:5px solid var(--panel-2)}
 table.ap tr.ap-bucket:first-child td{border-top:none}
 table.ap tr.ap-bucket.cur td{background:var(--green-light);color:var(--green)}
 table.ap tr.ap-bucket.od30 td{background:var(--gold-light);color:var(--gold)}
 table.ap tr.ap-bucket.od60 td{background:var(--red-light);color:var(--red)}
 table.ap tr.ap-bucket.od90 td{background:rgba(140,0,0,.06);color:#880000}
-table.ap tr.ap-sub td{font-weight:700;border-top:1px solid var(--border-2);background:var(--panel);font-size:12px}
-table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-size:13px}
+table.ap tr.ap-sub td{font-weight:700;border-top:1px solid var(--border-2);background:var(--panel);font-size:11px}
+table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-size:12px}
 
 </style>
 </head>
@@ -325,39 +495,10 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 <!-- ── HEADER ────────────────────────────────────────────── -->
 <header>
   <div class="brand">
-    <!-- Erlenmeyer flask logo — teal glass, lime liquid, plant leaves -->
-    <svg width="40" height="48" viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <clipPath id="fc">
-          <path d="M15 15 L5 39 Q4 45 20 45 Q36 45 35 39 L25 15 Z"/>
-        </clipPath>
-      </defs>
-      <!-- Body (glass) -->
-      <path d="M15 15 L5 39 Q4 45 20 45 Q36 45 35 39 L25 15 Z"
-            fill="rgba(75,158,201,.09)" stroke="#3EA99F" stroke-width="1.8" stroke-linejoin="round"/>
-      <!-- Lime green liquid fill -->
-      <g clip-path="url(#fc)">
-        <rect x="0" y="29" width="40" height="18" fill="#6BBB38" opacity=".88"/>
-        <circle cx="13" cy="34" r="1.8" fill="rgba(255,255,255,.45)"/>
-        <circle cx="24" cy="37" r="1.3" fill="rgba(255,255,255,.45)"/>
-        <circle cx="18" cy="40" r="1" fill="rgba(255,255,255,.38)"/>
-      </g>
-      <!-- Re-draw outline -->
-      <path d="M15 15 L5 39 Q4 45 20 45 Q36 45 35 39 L25 15 Z"
-            fill="none" stroke="#3EA99F" stroke-width="1.8" stroke-linejoin="round"/>
-      <!-- Neck (solid teal) -->
-      <rect x="15" y="5" width="10" height="11" rx="2" fill="#3EA99F"/>
-      <!-- Rim -->
-      <rect x="14" y="3" width="12" height="4" rx="2" fill="#2E8880"/>
-      <!-- Glass reflection -->
-      <path d="M10.5 18 Q8.5 28 9 37" stroke="rgba(255,255,255,.32)" stroke-width="1.8" stroke-linecap="round"/>
-      <!-- Plant leaves from opening -->
-      <path d="M20 4 C18 1.5 15 2 15.5 4 C17 3 18.5 3 20 4Z" fill="#6BBB38"/>
-      <path d="M20 4 C22 1.5 25 2 24.5 4 C23 3 21.5 3 20 4Z" fill="#6BBB38"/>
-    </svg>
+    <img src="logo.png" alt="CCGL Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover">
     <div class="brand-text">
       <h1><span style="color:#3EA99F">CAPE COD</span> <span style="color:#6BBB38">GROW</span> <span style="color:#2E8880">LAB</span></h1>
-      <div class="sub">Finance Dashboard · Week of April 6, 2026</div>
+      <div class="sub"><!-- LOCKED: no "Week of" phrase, do not re-add -->Finance Dashboard · Updated Apr 17</div>
     </div>
   </div>
   <div class="header-right">
@@ -380,10 +521,10 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <input type="text" id="b_op" data-key="op" data-live="55249.59" data-qb="55249.59" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Bank: <b>$55,250</b> · Avail $54,925</div>
     </div>
-    <div class="bank-cell bank-warn">
-      <label>Wholesale ⚠</label>
+    <div class="bank-cell">
+      <label>Wholesale</label>
       <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-qb="100.00" inputmode="decimal" placeholder="0">
-      <div class="shadow-line">Bank: <b>$100</b> · QB: <span style="color:var(--red);font-weight:600">$25,696</span></div>
+      <div class="shadow-line">Avail: <b>$100</b> · depository pass-through</div>
     </div>
     <div class="bank-cell bank-total">
       <label>Total Cash</label>
@@ -393,47 +534,118 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   </div>
 </div>
 
+<!-- ── SALES PIPELINE HIGHLIGHT ──────────────────────────── -->
+<div class="sales-pipeline">
+  <div class="pipeline-header">
+    <span class="pipeline-title">April Sales Pipeline</span>
+    <span class="march-ref">March reference · <b>$228.7k</b> Total Income</span>
+  </div>
+  <div class="pipeline-grid">
+    <div class="pipeline-card">
+      <h3>April MTD Actual</h3>
+      <div class="pipeline-val clr-lime">$78.9k</div>
+      <div class="pipeline-sub">Apr 1–17 · $78,940 · QBO P&amp;L</div>
+    </div>
+    <div class="pipeline-op">+</div>
+    <div class="pipeline-card">
+      <h3>Pending Shipments</h3>
+      <div class="pipeline-val clr-teal">$24.4k</div>
+      <div class="pipeline-sub"><b>5</b> pending estimates · QBO</div>
+    </div>
+    <div class="pipeline-op">=</div>
+    <div class="pipeline-card pipeline-featured">
+      <h3>Current Shipped + Pending</h3>
+      <div class="pipeline-val">$103.4k</div>
+      <div class="pipeline-sub">$78,940 actual + $24,420 estimated</div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCKED LAYOUT: Revenue chart uses 12-col grid (repeat(12,1fr)), no scrolling. Update VALUES only, not structure. -->
+<div class="rev-chart-card">
+  <div class="rev-header">
+    <span class="rev-title">Rolling 12-Month Revenue</span>
+    <span class="rev-meta">QBO P&L · Total Income · Accrual basis</span>
+  </div>
+  <div class="rev-chart">
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:51%" data-val="$117k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">May</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:48%" data-val="$109k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Jun</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:67%" data-val="$153k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Jul</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:63%" data-val="$144k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Aug</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:82%" data-val="$188k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Sep</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:81%" data-val="$185k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Oct</span>
+    </div>
+    <div class="rev-bar-wrap hi">
+      <div class="rev-bar" style="--h:99%" data-val="$226k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Nov</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:68%" data-val="$155k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Dec</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:85%" data-val="$194k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Jan</span>
+    </div>
+    <div class="rev-bar-wrap">
+      <div class="rev-bar" style="--h:71%" data-val="$163k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Feb</span>
+    </div>
+    <div class="rev-bar-wrap hi">
+      <div class="rev-bar" style="--h:100%" data-val="$229k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Mar</span>
+    </div>
+    <div class="rev-bar-wrap mtd">
+      <div class="rev-bar" style="--h:35%" data-val="$79k"><div class="rev-fill"></div></div>
+      <span class="rev-lbl">Apr*</span>
+    </div>
+  </div>
+  <div class="rev-footer">
+    <span>12-mo total (May '25–Mar '26): <b>$1.86M</b></span>
+    <span class="rev-avg">Avg: <b>$169k</b>/mo</span>
+    <span>*Apr is month-to-date through Apr 17</span>
+  </div>
+</div>
+
 <!-- ── KPI STRIP ──────────────────────────────────────────── -->
 <div class="kpis">
   <div class="kpi-card">
     <h3>Receivables Outstanding</h3>
-    <div class="kpi-val">$222.4k</div>
-    <div class="kpi-sub"><b>49</b> invoices · <b>39</b> unique accounts</div>
+    <div class="kpi-val">$232.8k</div>
+    <div class="kpi-sub"><b>54</b> invoices · <b>45</b> accts</div>
   </div>
-  <div class="kpi-card">
-    <h3>Overdue AR</h3>
-    <div class="kpi-val clr-red">$62.3k</div>
-    <div class="kpi-sub"><b>13</b> invoices · <b>28%</b> of total AR</div>
-  </div>
+  <!-- LOCKED: Overdue AR KPI removed intentionally — do not re-add -->
   <div class="kpi-card">
     <h3>Open Payables</h3>
-    <div class="kpi-val clr-gold">$230.4k</div>
-    <div class="kpi-sub"><b>38</b> bills · aging detail below</div>
-  </div>
-  <div class="kpi-card">
-    <h3>Pending Shipments</h3>
-    <div class="kpi-val clr-teal">$65.3k</div>
-    <div class="kpi-sub"><b>15</b> pending estimates · QBO live</div>
+    <div class="kpi-val clr-gold">$198.4k</div>
+    <div class="kpi-sub"><b>54</b> bills · aging below</div>
   </div>
   <div class="kpi-card">
     <h3>Collected This Week</h3>
-    <div class="kpi-val clr-green">$33.7k</div>
-    <div class="kpi-sub">Apr 6–9 · <b>5</b> payments · from QBO</div>
+    <div class="kpi-val clr-green">$43.8k</div>
+    <div class="kpi-sub">Apr 13–19 · <b>8</b> pmts · QBO</div>
   </div>
   <div class="kpi-card">
     <h3>Collected Last Week</h3>
-    <div class="kpi-val clr-blue">$42.0k</div>
-    <div class="kpi-sub">Mar 30–Apr 5 · <b>7</b> payments · from QBO</div>
-  </div>
-  <div class="kpi-card">
-    <h3>March Sales (P&amp;L)</h3>
-    <div class="kpi-val">$228.7k</div>
-    <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
-  </div>
-  <div class="kpi-card" style="border-color:rgba(107,187,56,.4);background:linear-gradient(135deg,#fff,var(--lime-light))">
-    <h3>April MTD Sales</h3>
-    <div class="kpi-val clr-lime">$16.1k</div>
-    <div class="kpi-sub">Total Income · live from QBO P&amp;L report</div>
+    <div class="kpi-val clr-blue">$42.6k</div>
+    <div class="kpi-sub">Apr 6–12 · <b>8</b> pmts</div>
   </div>
 </div>
 
@@ -441,8 +653,8 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 <div class="alert">
   <div class="alert-icon">!</div>
   <div>
-    <h4>⚠️ March rent still unpaid ($77,261 · 39d past due) · Eversource $16,097 past due 4d</h4>
-    <p>As of <b>Apr 9, 12:03 AM</b>: March rent (JAC Real Estate) 39 days past due, April rent 8 days past due — $154,522 rent owed. Eversource past due 4 days. Overdue AR: <b>$62,313</b> across 13 invoices. Collected this week: $33,667 (5 payments). Operating cash $119,065 + $9,073 Eastern pending.</p>
+    <h4>⚠️ $43.8k collected this week (8 pmts) · Apr rent $77,261 still unpaid (16d) · 17 invoices overdue ($70.3k)</h4>
+    <p>Operating <b>$64,500</b> + Wholesale $100 = <b>$64,600</b> combined cash. This week: <b>$43,773</b> collected across 8 payments (Silver x3 $16.8k, Resinate $8.6k, EMBR $8.0k, Rev. Beverly $4.7k, Medicine Man $3.2k, CannaBarn $2.6k). March rent paid — April rent ($77,261 · <b>16d</b>) still outstanding with JAC. Eversource bill $20,423 due May 4. MMM Transport #11087 ($8,100) now <b>1d</b> past due. <b>$70,315</b> AR overdue across 17 invoices — Cannabis Healing $6.1k, Major Bloom $3.0k now 2d past due. Due this week: Great Barrington $4.2k, Greene Street $2.6k ($6,859 from 2 invoices). Apr MTD income <b>$78,940</b> + 5 pending estimates ($24.4k) = <b>$103.4k</b> pipeline.</p>
   </div>
 </div>
 
@@ -450,109 +662,111 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 <div class="card">
   <div class="section-label lime">
     <span>Receivables by Week</span>
-    <span class="meta">Live from QBO · 49 invoices · 39 customers</span>
+    <span class="meta">Live from QBO · 54 invoices · 45 customers</span>
   </div>
-  <!-- Clean summary bar (replaces chips) -->
+  <!-- LOCKED LAYOUT: AR summary bar is 7 segments in a 3-col mobile grid (3+3+1). Update VALUES only, not structure. -->
   <div class="ar-bar">
     <div class="ar-seg seg-red">
       <span class="ar-seg-l">Overdue</span>
-      <span class="ar-seg-v">$62,313</span>
-      <span class="ar-seg-c">13 invoices</span>
+      <span class="ar-seg-v">$70,315</span>
+      <span class="ar-seg-c">17 invoices</span>
     </div>
     <div class="ar-seg seg-gold">
-      <span class="ar-seg-l">Wk 1 · Apr 9–12</span>
-      <span class="ar-seg-v">$17,252</span>
-      <span class="ar-seg-c">4 invoices</span>
+      <span class="ar-seg-l">Wk 1 · Apr 13–19</span>
+      <span class="ar-seg-v">$6,859</span>
+      <span class="ar-seg-c">2 invoices</span>
     </div>
     <div class="ar-seg seg-grn">
-      <span class="ar-seg-l">Wk 2 · Apr 13–19</span>
-      <span class="ar-seg-v">$20,639</span>
-      <span class="ar-seg-c">5 invoices</span>
+      <span class="ar-seg-l">Wk 2 · Apr 20–26</span>
+      <span class="ar-seg-v">$60,085</span>
+      <span class="ar-seg-c">11 invoices</span>
     </div>
     <div class="ar-seg seg-grn">
-      <span class="ar-seg-l">Wk 3 · Apr 20–26</span>
-      <span class="ar-seg-v">$68,298</span>
-      <span class="ar-seg-c">12 invoices</span>
-    </div>
-    <div class="ar-seg seg-blue">
-      <span class="ar-seg-l">Wk 4 · Apr 27–May 3</span>
+      <span class="ar-seg-l">Wk 3 · Apr 27–May 3</span>
       <span class="ar-seg-v">$29,415</span>
       <span class="ar-seg-c">6 invoices</span>
     </div>
+    <div class="ar-seg seg-blue">
+      <span class="ar-seg-l">Wk 4 · May 4–10</span>
+      <span class="ar-seg-v">$20,424</span>
+      <span class="ar-seg-c">5 invoices</span>
+    </div>
     <div class="ar-seg seg-slate">
-      <span class="ar-seg-l">Consign./Later</span>
-      <span class="ar-seg-v">$24,474</span>
-      <span class="ar-seg-c">9 inv · EGCC + Plover</span>
+      <span class="ar-seg-l">Later · May 11+</span>
+      <span class="ar-seg-v">$45,694</span>
+      <span class="ar-seg-c">13 inv · Resinate Worc + new shipments</span>
     </div>
     <div class="ar-seg">
       <span class="ar-seg-l">Total</span>
-      <span class="ar-seg-v">$222,390</span>
-      <span class="ar-seg-c">49 invoices</span>
+      <span class="ar-seg-v">$232,793</span>
+      <span class="ar-seg-c">54 invoices</span>
     </div>
   </div>
-  <div class="ar-scroll-wrap">
   <table class="ar">
     <thead><tr>
       <th>Customer</th>
       <th>Overdue<span class="sub">past due</span></th>
-      <th>Wk 1<span class="sub">4/9–4/12</span></th>
-      <th>Wk 2<span class="sub">4/13–4/19</span></th>
-      <th>Wk 3<span class="sub">4/20–4/26</span></th>
-      <th>Wk 4<span class="sub">4/27–5/3</span></th>
-      <th>Consign.<span class="sub">Ember Gardens</span></th>
+      <th>Wk 1<span class="sub">4/13–4/19</span></th>
+      <th>Wk 2<span class="sub">4/20–4/26</span></th>
+      <th>Wk 3<span class="sub">4/27–5/3</span></th>
+      <th>Wk 4<span class="sub">5/4–5/10</span></th>
+      <th>Consign.<span class="sub">+ later</span></th>
       <th>Total</th>
     </tr></thead>
     <tbody id="arBody"></tbody>
     <tfoot>
       <tr class="totals">
         <td>TOTAL</td>
-        <td class="col-overdue">$62,313</td>
-        <td class="col-wk1">$17,252</td>
-        <td class="col-wk2">$20,639</td>
-        <td class="col-wk3">$68,298</td>
-        <td class="col-wk4">$29,415</td>
-        <td class="col-later">$24,474</td>
-        <td>$222,390</td>
+        <td class="col-overdue">$70,315</td>
+        <td class="col-wk1">$6,859</td>
+        <td class="col-wk2">$60,085</td>
+        <td class="col-wk3">$29,415</td>
+        <td class="col-wk4">$20,424</td>
+        <td class="col-later">$45,694</td>
+        <td>$232,793</td>
       </tr>
       <tr><td colspan="8" style="font-size:10px;color:var(--muted);padding-top:8px;border-top:none;font-weight:500">
-        Left bar = days overdue heat map · darker = older debt · 13 invoices overdue as of Apr 9
+        Left bar = days overdue heat map · darker = older debt · 17 invoices overdue as of Apr 17
       </td></tr>
     </tfoot>
   </table>
-  </div>
 </div>
 
 <!-- ── OPEN PAYABLES ──────────────────────────────────────── -->
 <div class="card">
   <div class="section-label gold">
     <span>Open Payables — Aging</span>
-    <span class="meta">$230.4k · 38 bills</span>
+    <span class="meta">$198.4k · 54 bills</span>
   </div>
-  <!-- AP Aging Bar -->
+  <!-- LOCKED LAYOUT: AP aging bar is 4 buckets + Total card in a 2x2 mobile grid. Update VALUES only, not structure. -->
   <div class="ap-aging">
     <div class="ap-seg ap-cur">
       <span class="ap-seg-l">Current</span>
-      <span class="ap-seg-v">$0.7k</span>
-      <span class="ap-seg-c">2 bills · not yet due</span>
+      <span class="ap-seg-v">$31.9k</span>
+      <span class="ap-seg-c">8 bills · Eversource/G7/Brewster/EBottles</span>
     </div>
     <div class="ap-seg ap-od30">
       <span class="ap-seg-l">1–30 Days Past Due</span>
-      <span class="ap-seg-v">$95.8k</span>
-      <span class="ap-seg-c">JAC Apr · Eversource · Airgas</span>
+      <span class="ap-seg-v">$104.5k</span>
+      <span class="ap-seg-c">JAC Apr rent · MMM x4 · G7 · Puff · Airgas</span>
     </div>
     <div class="ap-seg ap-od60">
       <span class="ap-seg-l">31–60 Days Past Due</span>
-      <span class="ap-seg-v">$84.1k</span>
-      <span class="ap-seg-c">JAC Mar rent 38d · HSA · Airgas</span>
+      <span class="ap-seg-v">$11.1k</span>
+      <span class="ap-seg-c">HSA 50d · G7 · Airgas · MMM · Creative</span>
     </div>
     <div class="ap-seg ap-od90">
       <span class="ap-seg-l">60+ Days Past Due</span>
-      <span class="ap-seg-v clr-red">$50.0k</span>
-      <span class="ap-seg-c">G7 · Cape Comp · Mass Bio · 26 bills</span>
+      <span class="ap-seg-v clr-red">$51.0k</span>
+      <span class="ap-seg-c">G7 · Cape Comp · Mass Bio · 27 bills</span>
+    </div>
+    <div class="ap-seg ap-total">
+      <span class="ap-seg-l">Total Open AP</span>
+      <span class="ap-seg-v" style="color:var(--gold)">$198,429</span>
+      <span class="ap-seg-c">54 bills</span>
     </div>
   </div>
   <!-- AP Detail — grouped by aging bucket -->
-  <div class="ap-scroll-wrap">
   <table class="ap">
     <thead><tr>
       <th style="text-align:left;font-size:10px;font-weight:700;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border)">Vendor</th>
@@ -561,42 +775,57 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
       <th style="text-align:right;font-size:10px;font-weight:700;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border)">Amount</th>
     </tr></thead>
     <tbody>
-      <!-- 31–60 Days Past Due -->
-      <tr class="ap-bucket od60"><td colspan="3">31–60 Days Past Due</td><td class="ap-amt">$84,054</td></tr>
-      <tr><td>JAC Real Estate <span class="tag red">Mar Rent</span></td><td class="ap-due">Mar 1</td><td class="ap-age clr-red">39d</td><td class="ap-amt clr-red">$77,261</td></tr>
-      <tr><td>HSA</td><td class="ap-due">Feb 25</td><td class="ap-age clr-red">43d</td><td class="ap-amt">$4,698</td></tr>
-      <tr><td>MMM Transport</td><td class="ap-due">Feb 11</td><td class="ap-age clr-red">57d</td><td class="ap-amt">$1,014</td></tr>
-      <tr><td>Airgas</td><td class="ap-due">Mar 2</td><td class="ap-age clr-red">38d</td><td class="ap-amt">$761</td></tr>
-      <tr><td>Creative Services</td><td class="ap-due">Mar 3</td><td class="ap-age clr-red">37d</td><td class="ap-amt">$319</td></tr>
-
       <!-- 1–30 Days Past Due -->
-      <tr class="ap-bucket od30"><td colspan="3">1–30 Days Past Due</td><td class="ap-amt">$95,782</td></tr>
-      <tr><td>JAC Real Estate <span class="tag gold">Apr Rent</span></td><td class="ap-due">Apr 1</td><td class="ap-age" style="color:var(--gold)">8d</td><td class="ap-amt" style="color:var(--gold)">$77,261</td></tr>
-      <tr><td>Eversource <span class="tag red">OVERDUE</span></td><td class="ap-due">Apr 5</td><td class="ap-age" style="color:var(--gold)">4d</td><td class="ap-amt">$16,097</td></tr>
-      <tr><td>Airgas</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">6d</td><td class="ap-amt">$1,453</td></tr>
-      <tr><td>Airgas</td><td class="ap-due">Mar 30</td><td class="ap-age" style="color:var(--gold)">10d</td><td class="ap-amt">$799</td></tr>
-      <tr><td>Seaside Alarms</td><td class="ap-due">Mar 15</td><td class="ap-age" style="color:var(--gold)">25d</td><td class="ap-amt">$172</td></tr>
+      <tr class="ap-bucket od30"><td colspan="3">1–30 Days Past Due</td><td class="ap-amt">$104,466</td></tr>
+      <tr><td>JAC Real Estate <span class="tag gold">Apr Rent</span></td><td class="ap-due">Apr 1</td><td class="ap-age" style="color:var(--gold)">16d</td><td class="ap-amt" style="color:var(--gold)">$77,261</td></tr>
+      <tr><td>MMM Transport <span class="tag">11087</span></td><td class="ap-due">Apr 16</td><td class="ap-age" style="color:var(--gold)">1d</td><td class="ap-amt">$8,100</td></tr>
+      <tr><td>MMM Transport <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar 19–26</td><td class="ap-age" style="color:var(--gold)">22–29d</td><td class="ap-amt">$6,363</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101532</span></td><td class="ap-due">Mar 22</td><td class="ap-age" style="color:var(--gold)">26d</td><td class="ap-amt">$3,715</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101558</span></td><td class="ap-due">Apr 8</td><td class="ap-age" style="color:var(--gold)">9d</td><td class="ap-amt">$3,650</td></tr>
+      <tr><td>Puff Products</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">14d</td><td class="ap-amt">$2,127</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Apr 3</td><td class="ap-age" style="color:var(--gold)">14d</td><td class="ap-amt">$1,453</td></tr>
+      <tr><td>TimRay Backhoe</td><td class="ap-due">Apr 1</td><td class="ap-age" style="color:var(--gold)">16d</td><td class="ap-amt">$900</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Mar 30</td><td class="ap-age" style="color:var(--gold)">18d</td><td class="ap-amt">$799</td></tr>
+      <tr><td>MMM Transport <span class="tag">10984</span></td><td class="ap-due">Mar 26</td><td class="ap-age" style="color:var(--gold)">22d</td><td class="ap-amt">$763</td></tr>
+      <tr><td>Seaside Alarms</td><td class="ap-due">Apr 10</td><td class="ap-age" style="color:var(--gold)">7d</td><td class="ap-amt">$98</td></tr>
+
+      <!-- 31–60 Days Past Due -->
+      <tr class="ap-bucket od60"><td colspan="3">31–60 Days Past Due</td><td class="ap-amt">$11,053</td></tr>
+      <tr><td>HSA</td><td class="ap-due">Feb 25</td><td class="ap-age clr-red">51d</td><td class="ap-amt">$4,698</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101509</span></td><td class="ap-due">Mar 13</td><td class="ap-age clr-red">35d</td><td class="ap-amt">$3,610</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101477</span></td><td class="ap-due">Feb 27</td><td class="ap-age clr-red">49d</td><td class="ap-amt">$950</td></tr>
+      <tr><td>Airgas</td><td class="ap-due">Mar 2</td><td class="ap-age clr-red">46d</td><td class="ap-amt">$761</td></tr>
+      <tr><td>Creative Services</td><td class="ap-due">Mar 3</td><td class="ap-age clr-red">45d</td><td class="ap-amt">$319</td></tr>
+      <tr><td>MMM Transport <span class="tag">10615</span></td><td class="ap-due">Mar 12</td><td class="ap-age clr-red">36d</td><td class="ap-amt">$318</td></tr>
+      <tr><td>TimRay Backhoe</td><td class="ap-due">Mar 14</td><td class="ap-age clr-red">34d</td><td class="ap-amt">$225</td></tr>
+      <tr><td>Seaside Alarms</td><td class="ap-due">Mar 15</td><td class="ap-age clr-red">33d</td><td class="ap-amt">$172</td></tr>
 
       <!-- Current -->
-      <tr class="ap-bucket cur"><td colspan="3">Current — Not Yet Due</td><td class="ap-amt">$651</td></tr>
-      <tr><td>Seaside Alarms</td><td class="ap-due">Apr 10</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$98</td></tr>
+      <tr class="ap-bucket cur"><td colspan="3">Current — Not Yet Due</td><td class="ap-amt">$31,938</td></tr>
+      <tr><td>Eversource</td><td class="ap-due">May 4</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$20,423</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101593</span></td><td class="ap-due">Apr 17</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$3,715</td></tr>
+      <tr><td>G7 Lab <span class="tag">INV-101626</span></td><td class="ap-due">Apr 26</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$2,370</td></tr>
+      <tr><td>Town of Brewster <span class="tag">Prop Tax</span></td><td class="ap-due">May 4</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$2,110</td></tr>
+      <tr><td>MMM Transport <span class="tag">11285</span></td><td class="ap-due">Apr 18</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$1,426</td></tr>
+      <tr><td>EBottles <span class="tag">Net 60</span></td><td class="ap-due">May 31</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$1,076</td></tr>
       <tr><td>Cintas</td><td class="ap-due">May 6</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$553</td></tr>
+      <tr><td>Creative Services <span class="tag">NEW</span></td><td class="ap-due">May 1</td><td class="ap-age" style="color:var(--green)">—</td><td class="ap-amt">$265</td></tr>
 
       <!-- 60+ Days Past Due -->
-      <tr class="ap-bucket od90"><td colspan="3">60+ Days Past Due</td><td class="ap-amt">$49,958</td></tr>
-      <tr><td>G7 Lab <span style="font-size:10px;color:var(--muted)">(4 bills)</span></td><td class="ap-due">Dec 21–Feb 4</td><td class="ap-age" style="color:#880000">64–109d</td><td class="ap-amt">$10,660</td></tr>
-      <tr><td>Cape Computer Solutions <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar '24–Jan '25</td><td class="ap-age" style="color:#880000">463–739d</td><td class="ap-amt">$10,463</td></tr>
-      <tr><td>Green Analytics MA</td><td class="ap-due">Oct 30 '25</td><td class="ap-age" style="color:#880000">161d</td><td class="ap-amt">$6,755</td></tr>
-      <tr><td>Seaside Alarms <span style="font-size:10px;color:var(--muted)">(prior)</span></td><td class="ap-due">Sep 29 '25</td><td class="ap-age" style="color:#880000">192d</td><td class="ap-amt">$5,429</td></tr>
-      <tr><td>Mass Biolytics</td><td class="ap-due">Dec 14 '24</td><td class="ap-age" style="color:#880000">481d</td><td class="ap-amt">$4,073</td></tr>
-      <tr><td>GreenLight LLC</td><td class="ap-due">Nov 20 '24</td><td class="ap-age" style="color:#880000">505d</td><td class="ap-amt">$3,811</td></tr>
-      <tr><td style="color:var(--muted)">Other · A&amp;A, TimRay, Northstar, etc.</td><td class="ap-due" style="color:var(--muted)">various</td><td class="ap-age" style="color:var(--muted)">—</td><td class="ap-amt" style="color:var(--muted)">$8,767</td></tr>
+      <tr class="ap-bucket od90"><td colspan="3">60+ Days Past Due</td><td class="ap-amt">$50,973</td></tr>
+      <tr><td>G7 Lab <span style="font-size:10px;color:var(--muted)">(4 bills)</span></td><td class="ap-due">Dec 21–Feb 4</td><td class="ap-age" style="color:#880000">72–117d</td><td class="ap-amt">$10,660</td></tr>
+      <tr><td>Cape Computer Solutions <span style="font-size:10px;color:var(--muted)">(2 bills)</span></td><td class="ap-due">Mar '24–Jan '25</td><td class="ap-age" style="color:#880000">471–747d</td><td class="ap-amt">$10,463</td></tr>
+      <tr><td>Green Analytics MA</td><td class="ap-due">Oct 30 '25</td><td class="ap-age" style="color:#880000">169d</td><td class="ap-amt">$6,755</td></tr>
+      <tr><td>Seaside Alarms <span style="font-size:10px;color:var(--muted)">(prior)</span></td><td class="ap-due">Sep 29 '25</td><td class="ap-age" style="color:#880000">200d</td><td class="ap-amt">$5,429</td></tr>
+      <tr><td>Mass Biolytics</td><td class="ap-due">Dec 14 '24</td><td class="ap-age" style="color:#880000">489d</td><td class="ap-amt">$4,073</td></tr>
+      <tr><td>GreenLight LLC</td><td class="ap-due">Nov 20 '24</td><td class="ap-age" style="color:#880000">513d</td><td class="ap-amt">$3,811</td></tr>
+      <tr><td>MMM Transport</td><td class="ap-due">Feb 11</td><td class="ap-age" style="color:#880000">65d</td><td class="ap-amt">$1,014</td></tr>
+      <tr><td style="color:var(--muted)">Other · A&amp;A, TimRay, Northstar, Sparks, RAM, etc.</td><td class="ap-due" style="color:var(--muted)">various</td><td class="ap-age" style="color:var(--muted)">—</td><td class="ap-amt" style="color:var(--muted)">$8,767</td></tr>
 
       <!-- Grand Total -->
-      <tr class="ap-grand"><td colspan="3">Total Open AP</td><td class="ap-amt">$230,445</td></tr>
+      <tr class="ap-grand"><td colspan="3">Total Open AP</td><td class="ap-amt">$198,429</td></tr>
     </tbody>
   </table>
-  </div>
 </div>
 
 
@@ -604,16 +833,12 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 <div class="card">
   <div class="section-label">This Week's Priorities</div>
   <ul class="actions">
-    <li><span><b>Resolve rent with JAC Real Estate</b> — March $77,261 now 39d past due, April $77,261 now 8d past due. Total rent owed: $154,522</span><span class="when">Today</span></li>
-    <li><span><b>Pay Eversource $16,097</b> — past due 4 days since Apr 5</span><span class="when">Today</span></li>
-    <li><span><b>Collect on $62.3k overdue AR</b> — Resinate $8.6k (41d), Silver Roslindale $7.7k (11d), Cannabis Healing $7.0k (38d), Bountiful Framingham $6.0k (32d), Kush Groove $5.0k (82d)</span><span class="when">Thu–Fri</span></li>
-    <li><span>Follow up on $17.3k due this week — Firehouse $6.5k, Enlite Indian Orchard $4.3k, Roadtrip $3.2k, Enlite Northampton $3.2k</span><span class="when">Thu–Fri</span></li>
-    <li><span>Track collections momentum — $33,667 collected this week (5 payments) vs $41,997 last week (7 payments)</span><span class="when">Ongoing</span></li>
+    <li><span><b>Collect on $70.3k overdue AR</b> — Cannabis Healing $13.1k (46d/2d), Firehouse $6.5k (7d), Bountiful F'ham $6.0k (40d), Kush Groove $5.0k (90d), Rev. Gloucester $4.9k (8d), Enlite IO $4.3k (5d), Local Cannabis $4.1k (15d), Ascend $3.8k (14d)</span><span class="when">Mon–Fri</span></li>
+    <li><span>Follow up on $6.9k due this week — Great Barrington $4.2k, Greene Street $2.6k</span><span class="when">Mon–Sat</span></li>
+    <li><span>Resolve April rent ($77,261) past-due <b>16 days</b> with <b>JAC Real Estate</b> — March rent was paid</span><span class="when">This week</span></li>
+    <li><span>Review new <b>Eversource bill $20,423</b> due May 4 — prior bill paid</span><span class="when">Review</span></li>
+    <li><span>5 pending estimates ($24.4k) in pipeline — House Premium $8.3k, New Dia $4.4k, Eastern Cannabis $4.6k, Prolific $4.1k, Resinate Worcester $3.1k</span><span class="when">Ship &amp; Invoice</span></li>
   </ul>
-</div>
-
-<div class="footer">
-  Cape Cod Grow Lab · Refreshed April 9, 2026 · QuickBooks Online live · Bank balances: screenshot → update
 </div>
 
 </div><!-- /wrap -->
@@ -622,37 +847,31 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 // ── AR DATA (with daysOD + due date for overdue rows) ──────────────────────
 const arBuckets = {
   "overdue":[
-    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":82,"due":"Jan 17"},
-    {"name":"Resinate, Inc.","amt":8580.0,"id":1448,"daysOD":41,"due":"Feb 27"},
-    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":38,"due":"Mar 2"},
-    {"name":"CannaBarn","amt":2575.0,"id":1419,"daysOD":36,"due":"Mar 4"},
-    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":32,"due":"Mar 8"},
-    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":32,"due":"Mar 8"},
-    {"name":"Silver Therapeutics Roslindale","amt":7718.0,"id":1438,"daysOD":11,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Palmer","amt":4950.0,"id":1439,"daysOD":11,"due":"Mar 29"},
-    {"name":"Silver Therapeutics Williamstown","amt":3725.0,"id":1440,"daysOD":11,"due":"Mar 29"},
-    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":11,"due":"Mar 29"},
-    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":7,"due":"Apr 2"},
-    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":6,"due":"Apr 3"},
-    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":4,"due":"Apr 5"}
+    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":90,"due":"Jan 17"},
+    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":46,"due":"Mar 2"},
+    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":40,"due":"Mar 8"},
+    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":40,"due":"Mar 8"},
+    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470,"daysOD":31,"due":"Mar 17"},
+    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":19,"due":"Mar 29"},
+    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406,"daysOD":18,"due":"Mar 30"},
+    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":15,"due":"Apr 2"},
+    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":14,"due":"Apr 3"},
+    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":12,"due":"Apr 5"},
+    {"name":"Reverie 73 Gloucester","amt":4939.25,"id":1506,"daysOD":8,"due":"Apr 9"},
+    {"name":"Firehouse","amt":6496.25,"id":1460,"daysOD":7,"due":"Apr 10"},
+    {"name":"Ember Gardens Cape Cod LLC","amt":3237.5,"id":1425,"daysOD":6,"due":"Apr 11"},
+    {"name":"Enlite Indian Orchard","amt":4315.0,"id":1467,"daysOD":5,"due":"Apr 12"},
+    {"name":"Enlite Northampton","amt":3200.0,"id":1466,"daysOD":5,"due":"Apr 12"},
+    {"name":"Cannabis Healing","amt":6101.0,"id":1468,"daysOD":2,"due":"Apr 15"},
+    {"name":"Major Bloom","amt":3017.6,"id":1465,"daysOD":2,"due":"Apr 15"}
   ],
   "wk1":[
-    {"name":"Firehouse","amt":6496.25,"id":1460},
-    {"name":"Enlite Indian Orchard","amt":4315.0,"id":1467},
-    {"name":"Roadtrip","amt":3241.23,"id":1464},
-    {"name":"Enlite Northampton","amt":3200.0,"id":1466}
-  ],
-  "wk2":[
-    {"name":"Cannabis Healing","amt":6101.0,"id":1468},
-    {"name":"Reverie 73 Beverly","amt":4661.0,"id":1469},
     {"name":"Great Barrington Dispensary","amt":4245.0,"id":1472},
-    {"name":"Major Bloom","amt":3017.6,"id":1465},
     {"name":"Greene Street Cannabis","amt":2613.91,"id":1473}
   ],
-  "wk3":[
+  "wk2":[
     {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490},
     {"name":"Kush Groove Cambridge","amt":9366.5,"id":1485},
-    {"name":"EMBR (Kur Retail)","amt":8212.5,"id":1480},
     {"name":"Fyre Ants (Apical)","amt":8137.5,"id":1483},
     {"name":"Hennep","amt":4250.0,"id":1489},
     {"name":"CannaBarn","amt":3900.0,"id":1488},
@@ -663,7 +882,7 @@ const arBuckets = {
     {"name":"RISE Maynard","amt":2358.75,"id":1476},
     {"name":"RISE Dracut","amt":2358.75,"id":1475}
   ],
-  "wk4":[
+  "wk3":[
     {"name":"Insa","amt":8245.0,"id":1492},
     {"name":"Eastern Cannabis Co.","amt":8100.75,"id":1487},
     {"name":"Seaside Joint Ventures Inc.","amt":5946.5,"id":1495},
@@ -671,16 +890,27 @@ const arBuckets = {
     {"name":"Peak Cannabis Co","amt":2487.5,"id":1493},
     {"name":"Blossom Flower","amt":1785.0,"id":1491}
   ],
+  "wk4":[
+    {"name":"Reverie 73 Lowell","amt":5116.25,"id":1505},
+    {"name":"Trinity Naturals","amt":5100.25,"id":1508},
+    {"name":"Reverie 73 Beverly","amt":5010.75,"id":1507},
+    {"name":"The Agriculturalist","amt":3050.5,"id":1502},
+    {"name":"Fresh Connection","amt":2146.4,"id":1503}
+  ],
   "later":[
     {"name":"Ember Gardens Cape Cod LLC","amt":5307.66,"id":1463},
-    {"name":"Ember Gardens Cape Cod LLC","amt":4243.91,"id":1406},
-    {"name":"Ember Gardens Cape Cod LLC","amt":3237.5,"id":1425},
-    {"name":"Ember Gardens Cape Cod LLC","amt":302.5,"id":1471},
-    {"name":"Ember Gardens Cape Cod LLC","amt":0.25,"id":1470},
-    {"name":"Pioneer Cannabis Co.","amt":3140.0,"id":1501},
-    {"name":"The Agriculturalist","amt":3050.5,"id":1502},
-    {"name":"The Old Bank LLC dba The Piping Plover","amt":3045.0,"id":1500},
-    {"name":"Fresh Connection","amt":2146.4,"id":1503}
+    {"name":"Botera Franklin","amt":5125.0,"id":1515},
+    {"name":"Botera Brockton","amt":5062.5,"id":1513},
+    {"name":"Botera Taunton","amt":4687.5,"id":1514},
+    {"name":"Surfs Up","amt":4175.0,"id":1516},
+    {"name":"Thrive Middleborough","amt":3945.0,"id":1510},
+    {"name":"Thrive Quincy","amt":3750.0,"id":1511},
+    {"name":"Cannabis Connection","amt":3123.85,"id":1517},
+    {"name":"Resinate Worcester","amt":3087.5,"id":1519},
+    {"name":"Thrive Beverly","amt":2750.0,"id":1509},
+    {"name":"Cannabis Connection West Springfield","amt":2231.35,"id":1518},
+    {"name":"Fresh Connection","amt":2146.25,"id":1512},
+    {"name":"Ember Gardens Cape Cod LLC","amt":302.5,"id":1471}
   ]
 };
 
@@ -777,6 +1007,7 @@ bankInputs.forEach(inp => {
 
 // ── INIT ─────────────────────────────────────────────────────────────────
 loadBank();
+window.scrollTo(0,0);
 
 // ── Password gate ────────────────────────────────────────────────
 (function(){
