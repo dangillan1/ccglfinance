@@ -518,12 +518,12 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
   <div class="bank-grid">
     <div class="bank-cell">
       <label>Operating</label>
-      <input type="text" id="b_op" data-key="op" data-live="55249.59" data-qb="55249.59" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_op" data-key="op" data-live="55249.59" data-live-ts="1776456783" data-qb="55249.59" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Bank: <b>$55,250</b> · Avail $54,925</div>
     </div>
     <div class="bank-cell">
       <label>Wholesale</label>
-      <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-qb="100.00" inputmode="decimal" placeholder="0">
+      <input type="text" id="b_wh" data-key="wh" data-live="100.00" data-live-ts="1776456783" data-qb="100.00" inputmode="decimal" placeholder="0">
       <div class="shadow-line">Avail: <b>$100</b> · depository pass-through</div>
     </div>
     <div class="bank-cell bank-total">
@@ -973,25 +973,35 @@ buildArRows().forEach(r => {
 
 // ── BANK PERSISTENCE ─────────────────────────────────────────────────────
 const bankInputs = document.querySelectorAll('.bank-cell input[data-key]');
-const STORAGE_KEY = 'ccgl_bank_v3';
+const STORAGE_KEY = 'ccgl_bank_v5';
 function parseMoney(s) { if (typeof s === 'number') return s; return parseFloat(String(s).replace(/[^0-9.\-]/g,'')) || 0; }
 function formatMoney(n) { return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
 function saveBank() {
   const obj = {};
+  const nowTs = Math.floor(Date.now()/1000);
   bankInputs.forEach(inp => obj[inp.dataset.key] = parseMoney(inp.value));
   obj.editedAt = new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  obj.editedAtTs = nowTs;
   document.getElementById('bankEdited').textContent = obj.editedAt;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
 }
 function loadBank() {
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+  const savedTs = parseInt(saved.editedAtTs || 0, 10);
+  let serverNewerThanSaved = false;
   bankInputs.forEach(inp => {
     const k = inp.dataset.key;
     const live = parseFloat(inp.dataset.live || inp.dataset.qb);
-    inp.value = formatMoney(saved[k] !== undefined ? saved[k] : live);
+    const liveTs = parseInt(inp.dataset.liveTs || 0, 10);
+    // Server push wins unless the user's local edit is strictly newer.
+    const useSaved = saved[k] !== undefined && savedTs > liveTs;
+    if (!useSaved && liveTs > savedTs) serverNewerThanSaved = true;
+    inp.value = formatMoney(useSaved ? saved[k] : live);
   });
-  if (saved.editedAt) document.getElementById('bankEdited').textContent = saved.editedAt;
+  if (saved.editedAt && !serverNewerThanSaved) {
+    document.getElementById('bankEdited').textContent = saved.editedAt;
+  }
   recalcBank();
 }
 function recalcBank() {
