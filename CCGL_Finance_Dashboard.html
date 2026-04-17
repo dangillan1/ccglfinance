@@ -254,11 +254,17 @@ ul.actions li b{color:var(--navy)}
   .ar-seg,.ap-seg{min-width:45%;border-right:1px solid var(--border)}
   /* Table horizontal scroll on mobile */
   .ar-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .ap-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .ap-scroll-wrap{overflow-x:hidden}
   table.ar{min-width:600px;font-size:11px}
   table.ar th,table.ar td{padding:5px 6px}
-  table.ap{min-width:420px;font-size:12px}
-  table.ap td{padding:5px 6px}
+  /* AP table: fit viewport, no horizontal scroll */
+  table.ap{width:100%;min-width:0;font-size:11px;table-layout:fixed}
+  table.ap td{padding:5px 4px;word-break:break-word}
+  table.ap td.ap-due{font-size:10px;padding-left:4px;white-space:normal}
+  table.ap td.ap-age{font-size:10px;white-space:normal}
+  table.ap td.ap-amt{font-size:11px;white-space:nowrap;padding-right:2px}
+  table.ap thead th{font-size:9px !important;padding:5px 4px !important}
+  table.ap thead th:nth-child(2){padding-left:4px !important}
   /* AP aging bar stacks cleanly */
   .ap-seg{min-width:48%}
   .ar-seg{min-width:48%}
