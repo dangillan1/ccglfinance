@@ -78,7 +78,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px;
 .bank-warn label{color:var(--red)}
 
 /* ── KPIs ─────────────────────────────────────────────────── */
-.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+/* LOCKED: 4 KPI chips after Overdue AR removal 2026-04-17 */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
 .kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
 .kpi-card h3{margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .kpi-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:2px}
@@ -282,7 +283,7 @@ ul.actions li b{color:var(--navy)}
   .kpis{grid-template-columns:repeat(5,1fr)}
 }
 @media(max-width:1000px){
-  .kpis{grid-template-columns:repeat(3,1fr)}
+  .kpis{grid-template-columns:repeat(2,1fr)}
   .pipeline-grid{grid-template-columns:1fr;gap:10px}
   .pipeline-op{display:none}
 }
