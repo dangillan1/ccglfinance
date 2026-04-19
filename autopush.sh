@@ -5,16 +5,21 @@
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-REPO="/Users/dangillan/Documents/Claude/Projects/CCGL Finance"
+REPO="/Users/dangillan/ccgl_dashboard"
 LOG="/tmp/ccgl_autopush.log"
+LOCKFILE="/tmp/ccgl_autopush.flock"
+
+# Prevent overlapping runs — exit immediately if another cycle is active
+exec 9>"$LOCKFILE"
+flock -n 9 || { echo "[$(date '+%Y-%m-%d %H:%M:%S')] skip: previous cycle still running" >> "$LOG"; exit 0; }
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] ── check started" >> "$LOG"
 
 # Enter repo
 cd "$REPO" || { echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: cd failed to $REPO" >> "$LOG"; exit 1; }
 
-# Clear any stale locks
-rm -f .git/HEAD.lock .git/index.lock .git/refs/heads/main.lock 2>/dev/null
+# Clear any stale git locks (all known lock files)
+rm -f .git/HEAD.lock .git/index.lock .git/ORIG_HEAD.lock .git/refs/heads/main.lock .git/MERGE_HEAD.lock .git/FETCH_HEAD.lock 2>/dev/null
 
 # Stage target files
 /usr/bin/git add CCGL_Finance_Dashboard.html index.html >> "$LOG" 2>&1
