@@ -1,39 +1,53 @@
 #!/bin/bash
-# CCGL Dashboard Auto-Push Script
-# Runs every 2 min via LaunchAgent com.ccgl.dashboard.autopush
+# CCGL Dashboard Auto-Push — self-locating, self-healing, heartbeat-aware.
+# Installed by rescue_nightly_pipeline.command. Runs every 2 min via LaunchAgent.
 # Log: /tmp/ccgl_autopush.log
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-REPO="/Users/dangillan/ccgl_dashboard"
+# Resolve our own directory — this is the repo root. No hardcoded paths.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 LOG="/tmp/ccgl_autopush.log"
-LOCKFILE="/tmp/ccgl_autopush.flock"
 
-# Prevent overlapping runs — exit immediately if another cycle is active
-exec 9>"$LOCKFILE"
-flock -n 9 || { echo "[$(date '+%Y-%m-%d %H:%M:%S')] skip: previous cycle still running" >> "$LOG"; exit 0; }
+stamp() { date '+%Y-%m-%d %H:%M:%S'; }
+log()   { echo "[$(stamp)] $*" >> "$LOG"; }
 
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] ── check started" >> "$LOG"
+log "── check started (repo=$SCRIPT_DIR)"
+cd "$SCRIPT_DIR" || { log "ERROR: cd failed to $SCRIPT_DIR"; exit 1; }
 
-# Enter repo
-cd "$REPO" || { echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: cd failed to $REPO" >> "$LOG"; exit 1; }
+# Clear any stale locks (main + worktree)
+find .git -maxdepth 4 -name '*.lock' -delete 2>/dev/null
+rm -f .git/index.new 2>/dev/null
 
-# Clear any stale git locks (all known lock files)
-rm -f .git/HEAD.lock .git/index.lock .git/ORIG_HEAD.lock .git/refs/heads/main.lock .git/MERGE_HEAD.lock .git/FETCH_HEAD.lock 2>/dev/null
+# ─── HEARTBEAT ──────────────────────────────────────────────────
+# If "Last refreshed:" doesn't show today's ET date, bump it.
+# Guarantees the dashboard always reflects the current day even if the
+# nightly QBO pull failed or produced zero diffs.
+HTML="CCGL_Finance_Dashboard.html"
+if [ -f "$HTML" ]; then
+  TODAY_ET="$(TZ=America/New_York date '+%b %-d, %Y')"
+  NOW_ET="$(TZ=America/New_York date '+%b %-d, %Y · %-I:%M %p')"
+  TODAY_SHORT="$(TZ=America/New_York date '+%b %-d')"
+  if ! /usr/bin/grep -q "Last refreshed: <b>$TODAY_ET" "$HTML" 2>/dev/null; then
+    /usr/bin/sed -i '' -E "s|Last refreshed: <b>[^<]+</b>|Last refreshed: <b>$NOW_ET</b>|" "$HTML"
+    /usr/bin/sed -i '' -E "s|(Finance Dashboard · Updated )[A-Z][a-z]+ [0-9]+|\\1$TODAY_SHORT|" "$HTML"
+    log "heartbeat: bumped timestamp to $NOW_ET"
+  fi
+fi
 
 # Stage target files
-/usr/bin/git add CCGL_Finance_Dashboard.html index.html >> "$LOG" 2>&1
+/usr/bin/git add CCGL_Finance_Dashboard.html index.html 2>/dev/null >> "$LOG" 2>&1
 
 # Commit if anything staged
 if /usr/bin/git diff --cached --quiet; then
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] nothing to commit" >> "$LOG"
+  log "nothing to commit"
 else
   MSG="auto: dashboard updated $(date '+%b %-d %Y · %-I:%M %p')"
   /usr/bin/git commit -m "$MSG" >> "$LOG" 2>&1
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ committed: $MSG" >> "$LOG"
+  log "✓ committed: $MSG"
 fi
 
-# Fetch so tracking ref is current (handles sandbox force-pushes, etc.)
+# Fetch
 /usr/bin/git fetch origin >> "$LOG" 2>&1
 
 # Move aside any untracked files that would collide with incoming tracked files
@@ -43,33 +57,33 @@ mkdir -p "$BACKUP_DIR"
   if [ -e "$f" ] && ! /usr/bin/git ls-files --error-unmatch -- "$f" >/dev/null 2>&1; then
     mkdir -p "$BACKUP_DIR/$(dirname "$f")"
     mv -- "$f" "$BACKUP_DIR/$f" 2>/dev/null \
-      && echo "[$(date '+%Y-%m-%d %H:%M:%S')] moved untracked collision: $f" >> "$LOG"
+      && log "moved untracked collision: $f"
   fi
 done
 
-# Heal any divergence automatically: rebase first, fall back to merge -X ours
+# Heal divergence: rebase first, fall back to merge -X ours
 BEHIND=$(/usr/bin/git rev-list --count 'HEAD..@{u}' 2>/dev/null || echo 0)
 if [ "${BEHIND:-0}" -gt 0 ]; then
   if /usr/bin/git rebase origin/main >> "$LOG" 2>&1; then
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ rebased onto origin ($BEHIND behind)" >> "$LOG"
+    log "✓ rebased onto origin ($BEHIND behind)"
   else
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] rebase conflicts — aborting and trying merge -X ours" >> "$LOG"
+    log "rebase conflicts — aborting and trying merge -X ours"
     /usr/bin/git rebase --abort >> "$LOG" 2>&1
     if /usr/bin/git merge --no-edit -X ours origin/main >> "$LOG" 2>&1; then
-      echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ merged origin with -X ours (local wins)" >> "$LOG"
+      log "✓ merged origin with -X ours (local wins)"
     else
-      echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: merge -X ours also failed, aborting" >> "$LOG"
+      log "ERROR: merge -X ours also failed, aborting"
       /usr/bin/git merge --abort >> "$LOG" 2>&1
     fi
   fi
 fi
 
-# Push if local main is ahead of origin
+# Push if ahead
 AHEAD=$(/usr/bin/git rev-list --count '@{u}..HEAD' 2>/dev/null || echo 0)
 if [ "${AHEAD:-0}" -gt 0 ]; then
   /usr/bin/git push >> "$LOG" 2>&1 \
-    && echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ pushed $AHEAD commit(s)" >> "$LOG" \
-    || echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: push failed" >> "$LOG"
+    && log "✓ pushed $AHEAD commit(s)" \
+    || log "ERROR: push failed"
 else
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] up to date with origin" >> "$LOG"
+  log "up to date with origin"
 fi
