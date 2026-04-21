@@ -1,7 +1,10 @@
 #!/bin/bash
-# CCGL Dashboard Auto-Push — self-locating, self-healing, heartbeat-aware.
-# Installed by rescue_nightly_pipeline.command. Runs every 2 min via LaunchAgent.
-# Log: /tmp/ccgl_autopush.log
+# CCGL Dashboard Auto-Push — self-locating, self-healing.
+# Runs every 2 min via LaunchAgent. Log: /tmp/ccgl_autopush.log
+#
+# Accuracy rule: timestamps on the dashboard reflect REAL data refreshes only.
+# No synthetic heartbeats. If the nightly update didn't run, "Last refreshed"
+# stays at its last true value — that is the correct behavior.
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -18,22 +21,6 @@ cd "$SCRIPT_DIR" || { log "ERROR: cd failed to $SCRIPT_DIR"; exit 1; }
 # Clear any stale locks (main + worktree)
 find .git -maxdepth 4 -name '*.lock' -delete 2>/dev/null
 rm -f .git/index.new 2>/dev/null
-
-# ─── HEARTBEAT ──────────────────────────────────────────────────
-# If "Last refreshed:" doesn't show today's ET date, bump it.
-# Guarantees the dashboard always reflects the current day even if the
-# nightly QBO pull failed or produced zero diffs.
-HTML="CCGL_Finance_Dashboard.html"
-if [ -f "$HTML" ]; then
-  TODAY_ET="$(TZ=America/New_York date '+%b %-d, %Y')"
-  NOW_ET="$(TZ=America/New_York date '+%b %-d, %Y · %-I:%M %p')"
-  TODAY_SHORT="$(TZ=America/New_York date '+%b %-d')"
-  if ! /usr/bin/grep -q "Last refreshed: <b>$TODAY_ET" "$HTML" 2>/dev/null; then
-    /usr/bin/sed -i '' -E "s|Last refreshed: <b>[^<]+</b>|Last refreshed: <b>$NOW_ET</b>|" "$HTML"
-    /usr/bin/sed -i '' -E "s|(Finance Dashboard · Updated )[A-Z][a-z]+ [0-9]+|\\1$TODAY_SHORT|" "$HTML"
-    log "heartbeat: bumped timestamp to $NOW_ET"
-  fi
-fi
 
 # Stage target files
 /usr/bin/git add CCGL_Finance_Dashboard.html index.html 2>/dev/null >> "$LOG" 2>&1
