@@ -829,11 +829,11 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 <div class="card">
   <div class="section-label">This Week's Priorities</div>
   <ul class="actions">
-    <li><span><b>Collect on $121.2k overdue AR</b> — Fyre Ants $24.4k (3d/2d), Kush Groove $14.4k (101d/3d), Cannabis Healing $13.1k (57d/13d), Firehouse $6.5k (18d), Bountiful F'ham $6.0k (51d), Rev. Gloucester $4.9k (19d), Hennep $4.3k (2d), Local Cannabis $4.1k (26d), CannaBarn $3.9k (2d), Ascend $3.8k (25d)</span><span class="when">Mon–Fri</span></li>
-    <li><span>Chase 3 invoices past due since Apr 26 (2d) — Fyre Ants $16.3k, Hennep $4.3k, CannaBarn $3.9k</span><span class="when">Today</span></li>
-    <li><span>Resolve April rent ($77,261) past-due <b>27 days</b> with <b>JAC Real Estate</b> — March rent was paid</span><span class="when">This week</span></li>
-    <li><span>Review <b>Eversource bill $20,423</b> due May 4 (6 days out) — prior bill paid</span><span class="when">Review</span></li>
-    <li><span>6 pending estimates ($36.9k) in pipeline — Firebrand $9.5k, Quincy Cannabis $7.0k, Uma Flowers $5.7k, Pioneer Valley $5.5k, Bliss $5.1k, Stories Cannabis $4.0k</span><span class="when">Ship &amp; Invoice</span></li>
+    <li><span><b>Collect on $107.1k overdue AR</b> — Fyre Ants $24.4k (4d/3d), Kush Groove $14.4k (102d/4d), Cannabis Healing $13.1k (58d/14d), Firehouse $6.5k (19d), Bountiful F'ham $6.0k (52d), Hennep $4.3k (3d), Local Cannabis $4.1k (27d), CannaBarn $3.9k (3d), Ascend $3.8k (26d), EMBR Northampton $3.5k (4d)</span><span class="when">Mon–Fri</span></li>
+    <li><span>Chase 3 invoices past due since Apr 26 (3d) — Fyre Ants $16.3k, Hennep $4.3k, CannaBarn $3.9k</span><span class="when">Today</span></li>
+    <li><span>Resolve April rent ($77,261) past-due <b>28 days</b> with <b>JAC Real Estate</b> — March rent was paid</span><span class="when">This week</span></li>
+    <li><span>Review <b>Eversource bill $20,423</b> due May 4 (5 days out) — prior bill paid</span><span class="when">Review</span></li>
+    <li><span>9 pending estimates ($53.5k) in pipeline — EMBR Kur $12.5k, Firebrand $9.5k, Fyre Ants $6.8k, Seaside $6.4k, Fresh Connection $5.1k, EMBR Northampton $4.7k, Ember Gardens $3.3k, Grateful Mind $2.6k, Emerald Grove $2.6k</span><span class="when">Ship &amp; Invoice</span></li>
   </ul>
 </div>
 
@@ -843,66 +843,64 @@ table.ap tr.ap-grand td{font-weight:700;border-top:2px solid var(--border);font-
 // ── AR DATA (with daysOD + due date for overdue rows) ──────────────────────
 const arBuckets = {
   "overdue":[
-    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":101,"due":"Jan 17"},
-    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":57,"due":"Mar 2"},
-    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":51,"due":"Mar 8"},
-    {"name":"Bountiful Rowley","amt":2950.0,"id":1420,"daysOD":51,"due":"Mar 8"},
-    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":30,"due":"Mar 29"},
-    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":26,"due":"Apr 2"},
-    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":25,"due":"Apr 3"},
-    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":23,"due":"Apr 5"},
-    {"name":"Reverie 73 Gloucester","amt":4939.25,"id":1506,"daysOD":19,"due":"Apr 9"},
-    {"name":"Firehouse","amt":6496.25,"id":1460,"daysOD":18,"due":"Apr 10"},
-    {"name":"Enlite Northampton","amt":3200.0,"id":1466,"daysOD":16,"due":"Apr 12"},
-    {"name":"Cannabis Healing","amt":6101.0,"id":1468,"daysOD":13,"due":"Apr 15"},
-    {"name":"Major Bloom","amt":3017.6,"id":1465,"daysOD":13,"due":"Apr 15"},
-    {"name":"Greene Street Cannabis","amt":2613.91,"id":1473,"daysOD":9,"due":"Apr 19"},
-    {"name":"Potency","amt":3633.85,"id":1478,"daysOD":4,"due":"Apr 24"},
-    {"name":"Resinate, Inc.","amt":3200.0,"id":1479,"daysOD":4,"due":"Apr 24"},
-    {"name":"Pineapple Express, LLC","amt":3087.5,"id":1474,"daysOD":4,"due":"Apr 24"},
-    {"name":"RISE Maynard","amt":2358.75,"id":1476,"daysOD":4,"due":"Apr 24"},
-    {"name":"RISE Dracut","amt":2358.75,"id":1475,"daysOD":4,"due":"Apr 24"},
-    {"name":"Kush Groove Cambridge","amt":9366.5,"id":1485,"daysOD":3,"due":"Apr 25"},
-    {"name":"Fyre Ants (Apical)","amt":8137.5,"id":1483,"daysOD":3,"due":"Apr 25"},
-    {"name":"EMBR (Northampton)","amt":3537.5,"id":1482,"daysOD":3,"due":"Apr 25"},
-    {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490,"daysOD":2,"due":"Apr 26"},
-    {"name":"Hennep","amt":4250.0,"id":1489,"daysOD":2,"due":"Apr 26"},
-    {"name":"CannaBarn","amt":3900.0,"id":1488,"daysOD":2,"due":"Apr 26"}
+    {"name":"Kush Groove Cambridge","amt":5037.5,"id":1371,"daysOD":102,"due":"Jan 17"},
+    {"name":"Cannabis Healing","amt":6975.0,"id":1408,"daysOD":58,"due":"Mar 2"},
+    {"name":"Bountiful Framingham","amt":5962.5,"id":1421,"daysOD":52,"due":"Mar 8"},
+    {"name":"Capeway Cannabis, LLC","amt":3275.0,"id":1437,"daysOD":31,"due":"Mar 29"},
+    {"name":"Local Cannabis Company","amt":4072.5,"id":1449,"daysOD":27,"due":"Apr 2"},
+    {"name":"Ascend Wellness","amt":3761.44,"id":1451,"daysOD":26,"due":"Apr 3"},
+    {"name":"Surfs Up","amt":2730.75,"id":1453,"daysOD":24,"due":"Apr 5"},
+    {"name":"Firehouse","amt":6496.25,"id":1460,"daysOD":19,"due":"Apr 10"},
+    {"name":"Enlite Northampton","amt":3200.0,"id":1466,"daysOD":17,"due":"Apr 12"},
+    {"name":"Cannabis Healing","amt":6101.0,"id":1468,"daysOD":14,"due":"Apr 15"},
+    {"name":"Major Bloom","amt":3017.6,"id":1465,"daysOD":14,"due":"Apr 15"},
+    {"name":"RISE Maynard","amt":2358.75,"id":1476,"daysOD":5,"due":"Apr 24"},
+    {"name":"RISE Dracut","amt":2358.75,"id":1475,"daysOD":5,"due":"Apr 24"},
+    {"name":"Resinate, Inc.","amt":3200.0,"id":1479,"daysOD":5,"due":"Apr 24"},
+    {"name":"Pineapple Express, LLC","amt":3087.5,"id":1474,"daysOD":5,"due":"Apr 24"},
+    {"name":"Kush Groove Cambridge","amt":9366.5,"id":1485,"daysOD":4,"due":"Apr 25"},
+    {"name":"Fyre Ants (Apical)","amt":8137.5,"id":1483,"daysOD":4,"due":"Apr 25"},
+    {"name":"EMBR (Northampton)","amt":3537.5,"id":1482,"daysOD":4,"due":"Apr 25"},
+    {"name":"Fyre Ants (Apical)","amt":16254.86,"id":1490,"daysOD":3,"due":"Apr 26"},
+    {"name":"Hennep","amt":4250.0,"id":1489,"daysOD":3,"due":"Apr 26"},
+    {"name":"CannaBarn","amt":3900.0,"id":1488,"daysOD":3,"due":"Apr 26"}
   ],
   "wk1":[
     {"name":"Insa","amt":8245.0,"id":1492},
-    {"name":"Eastern Cannabis Co.","amt":8100.75,"id":1487},
-    {"name":"Seaside Joint Ventures Inc.","amt":5946.5,"id":1495},
     {"name":"Hennep","amt":2850.0,"id":1494},
     {"name":"Peak Cannabis Co","amt":2487.5,"id":1493},
     {"name":"Blossom Flower","amt":1785.0,"id":1491}
   ],
   "wk2":[
-    {"name":"Trinity Naturals","amt":5100.25,"id":1508},
     {"name":"Reverie 73 Lowell","amt":5116.25,"id":1505},
+    {"name":"Trinity Naturals","amt":5100.25,"id":1508},
     {"name":"Reverie 73 Beverly","amt":5010.75,"id":1507},
+    {"name":"Reverie 73 Gloucester","amt":4939.25,"id":1506},
     {"name":"The Agriculturalist","amt":3050.5,"id":1502},
-    {"name":"Fresh Connection","amt":2146.4,"id":1503}
+    {"name":"Greene Street Cannabis","amt":2613.91,"id":1473}
   ],
   "wk3":[
-    {"name":"Botera Franklin","amt":5125.0,"id":1515},
-    {"name":"Botera Brockton","amt":5062.5,"id":1513},
-    {"name":"Botera Taunton","amt":4687.5,"id":1514},
     {"name":"Surfs Up","amt":4175.0,"id":1516},
     {"name":"Thrive Middleborough","amt":3945.0,"id":1510},
     {"name":"Thrive Quincy","amt":3750.0,"id":1511},
-    {"name":"Thrive Beverly","amt":2750.0,"id":1509},
-    {"name":"Fresh Connection","amt":2146.25,"id":1512}
+    {"name":"Thrive Beverly","amt":2750.0,"id":1509}
   ],
   "wk4":[
     {"name":"House Premium","amt":7485.73,"id":1523},
     {"name":"Eastern Cannabis Co.","amt":5945.5,"id":1522},
     {"name":"Low Key West Roxbury","amt":5925.25,"id":1521},
-    {"name":"Roslindale Cannabis Co","amt":4350.0,"id":1525},
     {"name":"Prolific","amt":4052.5,"id":1520}
   ],
   "later":[
+    {"name":"Quincy Cannabis","amt":6975.0,"id":1526},
+    {"name":"Uma Flowers","amt":5945.32,"id":1529},
+    {"name":"Reverie 73 Lowell","amt":5787.75,"id":1531},
+    {"name":"Bliss","amt":5663.23,"id":1530},
+    {"name":"Pioneer Valley Trading Co.","amt":5532.5,"id":1527},
+    {"name":"Reverie 73 Beverly","amt":5425.25,"id":1533},
     {"name":"Ember Gardens Cape Cod LLC","amt":5307.66,"id":1463},
+    {"name":"Reverie 73 Gloucester","amt":5300.25,"id":1532},
+    {"name":"Stories Cannabis","amt":4643.85,"id":1528},
     {"name":"Ember Gardens Cape Cod LLC","amt":2297.62,"id":1425},
     {"name":"Ember Gardens Cape Cod LLC","amt":931.75,"id":1524},
     {"name":"Ember Gardens Cape Cod LLC","amt":302.5,"id":1471}
